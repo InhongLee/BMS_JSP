@@ -1,0 +1,79 @@
+@CHARSET "UTF-8";
+
+body {
+	background: lightgray;
+	z-index: 1;
+}
+header{
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+.ctn_logo{
+	background: lightpink;
+	text-align: center;
+}
+.img_logo{
+	border: 1px solid white;
+	width: 300px;
+	height:100px;
+	margin:0px;
+	padding:0px;
+}
+nav {
+	background: lightblue;
+	text-align: center;
+	padding:0px;
+}
+nav ul{
+	margin:0px;
+	padding:0px;
+}
+nav ul li{
+	background: lightgreen;
+	display: inline-block;
+	width: 150px;
+	padding: 10px 20px 10px 20px;
+	margin: 10px;
+}
+section{
+	background: lightyellow;
+	width: 100%;
+	margin-top: 170px;
+	z-index: 2;
+}
+.atc_main{
+	border:1px solid black;
+	float: left;
+	width:70%;
+}
+.atc_side{
+	border:1px solid black;
+	float: right;
+	width: 25%;
+}
+footer{
+	background: lightpink;
+	text-align: center;
+	clear: both;
+	z-index: 2;
+}
+@media screen and (max-width:1024px) {
+	body {
+	
+	}
+}
+
+@media screen and (max-width:768px) {
+	body {
+	
+	}
+}
+
+@media screen and (max-width:320px) {
+	body {
+	
+	}
+}
