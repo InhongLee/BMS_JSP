@@ -1,99 +1,61 @@
 @CHARSET "UTF-8";
-a{
-	text-decoration: none;
+a,ul,li{
+	margin:0;
+	padding:0;
 }
-body {
-	background: lightgray;
-	margin:0 auto;
-	width:1024px;
-	z-index: 1;
-}
-header{
-  width: 100%;
-  position: relative;
-  top: 0px;
-  left: 0px;
-  z-index: 2;
-}
-.ctn_logo{
-	background: lightpink;
-	text-align: center;
-}
-.img_logo{
-	border: 1px solid white;
-	width: 300px;
-	height:100px;
-	margin:0px;
-	padding:0px;
-}
-nav {
-	background: lightblue;
-	text-align: center;
-	margin: 0px;
-	padding:0px;
-}
-nav ul{
-	margin:0px;
-	padding:0px;
-}
-nav ul li{
-	background: lightgreen;
-	display: inline-block;
-	width: 150px;
-	padding: 10px 20px 10px 20px;
-	margin: 0px;
-}
-section{
-	background: lightyellow;
-	width: 100%;
-	z-index: 2;
-}
-.atc_main{
-	border:1px solid black;
-	float: left;
-	width:77%;
-	margin:10px 0px;
-}
-.event_item{
-	border:1px solid black;
-	display: inline-block;
-}
-.event_item{
-	text-align: center;
-	margin:10px 15px;
-}
-.img_bookCover{
-	border:1px solid black;
-	width:150px;
+#main_header {
+	border: 1px solid red;
 	height:200px;
 }
-.atc_side{
-	border:1px solid black;
-	float: right;
-	width: 21%;
-	margin: 10px 0px;
+.navi{
+	height: 100px;
+	background: #000;
 }
-footer{
-	background: lightpink;
+.navi ul li {
+	display: inline-block;
+	width: 150px;
+	vertical-align: top;
 	text-align: center;
-	clear: both;
-	z-index: 2;
+}
+.navi a:link, .navi a:visited {
+	width: 150px;
+	color: #fff;
+	text-decoration: none;
+}
+.navi a:hover, .navi a:focus {
+	text-shadow: 0px 2px 2px #000;
+	color: #fc0;
+}
+.navi a:active {
+	color: red;
+}
+.menuName{
+	width: 150px;
+	color: #fff;
+}
+.menuName:hover, .menuName:focus{
+	text-shadow: 0px 2px 2px #000;
+	color: #fc0;
+}
+.sub_menu{
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+}
+#title a:link, #title a:visited{
+	color: #000;
+	text-decoration: none;
+}
+#main_section {
+	border: 1px solid green;
+	height: 400px;
 }
 
-@media screen and (max-width:1024px) {
-	body {
-	
-	}
+#main_footer{
+	border: 1px solid blue;
+	height:100px;
 }
-
-@media screen and (max-width:768px) {
-	body {
-	
-	}
-}
-
-@media screen and (max-width:320px) {
-	body {
-	
-	}
+#innerFrame{
+	border:1px solid yellow;
+	height: 400px;
 }

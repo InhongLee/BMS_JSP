@@ -6,142 +6,58 @@
 	content="width=device-width, height=device-height, initial-scale=1">
 <title>BMS_web</title>
 <link href="../style/styles.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../JS/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="../JS/scripts.js"></script>
 </head>
 <body>
-	<script type="text/javascript" src="../JS/scripts.js"></script>
-	<header>
-
-		<div class="ctn_logo">
-			<a href="main.html"><img class="img_logo" src="" alt="img_logo"></a>
+	<header id="main_header">
+		<div id="title">
+			<h1><a href="main.html">Book Management System</a></h1>
 		</div>
-
-		<nav>
+		<nav class="navi">
 			<ul>
-				<li><a href="category.html">분류</a></li>
-				<li><a href="search.html">검색</a></li>
-				<li><a href="join.html">회원가입</a></li>
-				<li><a href="login.html">회원로그인</a></li>
-				<li><a href="">장바구니</a></li>
+				<li id="sales"><span class="menuName">sales</span>
+					<ul class="sub_menu" id="sub_sales">
+						<li><a href="./viewSales/viewBuyNow.html">즉시구매</a></li>
+						<li><a href="./viewSales/viewCartBuy.html">장바구니</a></li>
+						<li><a href="./viewSales/viewReqRefund.html">환불요청</a></li>
+					</ul>
+				</li>
+				<li id="stock"><span class="menuName">stock</span>
+					<ul class="sub_menu" id="sub_stock">
+						<li><a href="./viewStock/viewRegister.html">제품등록</a></li>
+						<li><a href="./viewStock/viewInfo.html">제품정보</a></li>
+						<li><a href="./viewStock/viewStock.html">제품재고</a></li>
+					</ul>					
+				</li>
+				<li id="order"><span class="menuName">order</span>
+					<ul class="sub_menu" id="sub_order">
+						<li><a href="./viewOrder/viewConfirm.html">주문승인</a></li>
+						<li><a href="./viewOrder/viewRefund.html">환불승인</a></li>
+					</ul>				
+				</li>
+				<li id="member"><span class="menuName">member</span>
+					<ul class="sub_menu" id="sub_member">
+						<li><a href="./viewMember/viewSignIn.html">회원등록</a></li>
+						<li><a href="./viewMember/viewSignOut.html">회원탈퇴</a></li>
+					</ul>				
+				</li>
+				<li id="account"><span class="menuName">account</span>
+					<ul class="sub_menu" id="sub_account">
+						<li><a href="./viewAccount/viewRevenue.html">매출조회</a></li>
+					</ul>					
+				</li>
 			</ul>
 		</nav>
 	</header>
-	<section>
-		<article class="atc_main">
-			<!-- 
-				1.이벤트상품 목록
-				표시정보list
-					1.책 제목
-					2.책 이미지
-					3.책 가격
-			 -->
-			<hr>
-			<p>이벤트 상품</p>
-			<hr>
-			<div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <hr>
-			 <p>추천 도서</p>
-			 <hr>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <div class="event_item">
-			 	<table>
-			 		<tr><td>
-			 		<img class="img_bookCover" src="" alt="book_cover">
-			 		</td></tr>
-			 		<tr><td>headfirst java</td></tr>
-			 		<tr><td>정가: 35,000원<td></tr>
-			 	</table>
-			 </div>
-			 <hr>
+	<section id="main_section">
+	
+		<div id="section01">
 
-			 
-		</article>
-		<article class="atc_side">
-			<!-- 
-				1.장바구니 상품 목록
-				2.장바구니 상품 구매 버튼
-				3.장바구니 상품 빼기 버튼
-				4.장바구니 비우기 버튼
-			 -->
-			 <p>장바구니 상품 목록입니다.</p>
-			 <p>장바구니 상품 목록입니다.</p>
-			 <p>장바구니 상품 목록입니다.</p>
-			 <p>장바구니 상품 목록입니다.</p>
-			 <p>장바구니 상품 목록입니다.</p>
-			 <p>장바구니 상품 목록입니다.</p>
-			 <p>장바구니 상품 목록입니다.</p>
-		</article>
+		</div>
 	</section>
-	<footer>
-		<!-- 
-			1.주소
-			2.연락처
-			3.권리
-		 -->
-
-		 <p>주소  | 연락처  | 권리</p>
-		 <p>주소  | 연락처  | 권리</p>
+	<footer id="main_footer">
+	footer
 	</footer>
-
 </body>
 </html>
