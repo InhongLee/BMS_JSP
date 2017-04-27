@@ -66,10 +66,25 @@ a,ul,li{
 	background-color: #A9DFBF;
 	height: 400px;
 }
-#result{
-	border: 1px soldi red;
+#notice{
+	border: 1px solid red;
 	color: #FDFEFE;
 }
+#result{
+	border: 1px solid red;
+	color: #FDFEFE;
+}
+#site_info{
+	border: 1px solid red;
+	color: #FDFEFE;
+	font-size: small;
+}
+#bms_logo{
+	float: left;
+	margin-right: 10px;
+}
+
+
 
 
 

@@ -15,6 +15,6 @@
 </head>
 <body>
 
-
+<h1>Book Management System에 접속중입니다...</h1>
 </body>
 </html>

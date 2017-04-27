@@ -4,14 +4,16 @@
 $(document).ready(function() {
 		$(window).load(function() {
 			$(".sub_menu").hide();
-			$('#section01').load('viewHome.html');
+			$('#section01').load('./view/viewLogIn.html');
 			return false;
 		});
-		
+
 		$(".navi a").click(function() {
 			return false;
 		});
-		
+		$(".notice-list li a").click(function() {
+			return false;
+		});
 		$("#sales").mouseover(function() {
 			$("#sub_sales").show();
 		});
@@ -46,9 +48,15 @@ $(document).ready(function() {
 		$("#account").mouseout(function() {
 			$("#sub_account").hide();
 		});
+
 		$('.navi a').click(function() {
 			var url = $(this).attr('href');
 			$('#section01').load(url);
+			return false;
+		});
+		$(".notice-list li a").click(function() {
+			var url_notice = $(this).attr('href');
+			$('#section01').load(url_notice);
 			return false;
 		});
 	});
