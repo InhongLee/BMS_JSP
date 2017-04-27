@@ -53,9 +53,29 @@ a,ul,li{
 
 #main_footer{
 	border: 1px solid blue;
+	background-color: #566573;
 	height:100px;
 }
 #innerFrame{
 	border:1px solid yellow;
 	height: 400px;
 }
+
+#signIn{
+	border: 1px solid red;
+	background-color: #A9DFBF;
+	height: 400px;
+}
+#result{
+	border: 1px soldi red;
+	color: #FDFEFE;
+}
+
+
+
+
+
+
+
+
+

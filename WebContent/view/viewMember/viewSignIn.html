@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$(window).load(function() {
+				$("input[name='user_id']").focus();
+			});
+			
+			/* id="join"인 <form> 태크안의 submit 버튼 클릭한 경우 */
+			$('#join').submit(function() {
+				
+				/*
+					.append()	: 기존것에 이어서 쓰라 
+					.html()		: 기존것을 지우고 새로 쓰라.
+				*/
+				if($("#result").length == 0) {
+					$("#main_footer").append("<div id='result'></div>");
+				}
+				/* id가 미입력된 경우 */
+				/* $().val()는 사용자가 입력한 값을 반환한다. */
+				if(!$("input[name='user_id']").val()) {
+					$("#result").html("아이디를 입력하세요.");
+					$("input[name='user_id']").focus();
+					return false;
+				}
+				
+				/* ps가 미입력된 경우 */
+				if(!$("input[name='user_pw']").val()) {
+					$("#result").html("비밀번호를 입력하세요");
+					$("input[name='user_pw']").focus();
+					return false;
+				}
+				
+				/* 주민번호가 미입력된 경우 */
+				if(!$("input[name='user_juminNum']").val()) {
+					$("#result").html("주민번호를 입력하세요");
+					$("input[name='user_juminNum']").focus();
+					return false;
+				}
+				/* 성별 미입력 경우 radiobox의 경우 :eq(0)을 사용하여 개별box 선택 */
+				if(!$("input[name='gender']").is(":checked")) {
+					$("#result").html("성별을 선택하세요");
+					$("input[name='gender']:eq(0)").focus();
+					return false;
+				}
+				
+				/* 이메일 미선택된 경우*/
+				if(!$("input[name='email']").val()) {
+					$("#result").html("이메일을 입력하세요");
+					$("input[name='email']").focus();
+					return false;
+				}
+				
+				/* URL이 미입력된 경우 */
+				if(!$("input[name='url']").val()) {
+					$("#result").html("URL을 입력하세요");
+					$("input[name='url']").focus();
+					return false;
+				}
+				
+				/* 휴대폰번호가 미입력된 경우 */
+				if(!$("input[name='hphone']").val()) {
+					$("#result").html("휴대폰번호를 입력하세요");
+					$("input[name='hphone']").focus();
+					return false;
+				}
+				
+				/* 핸드폰 : 첫숫자는 010, 070, 011, 080중 하나로 시작하고, 다음숫자는 3~4개까지 오고 */
+				var reg02 = /^(010|070|011|080).\d{3,4}.\d{4}$/;
+				var result02 = reg02.test($("input[name='hphone']").val());
+				if(!result02) {
+					$("#result").html("휴대폰번호를 잘못입력하셨습니다");
+					$("input[name='hphone']").val("");
+					$("input[name='hphone']").focus();
+					return false;
+				}
+				
+				/* 취미가 미선택된 경우 */
+				if(!$("input[name='hobby']").is(":checked")) {
+					$("#result").html("취미를 선택하세요");
+					$("input[name='hobby']:eq(0)").focus();
+					return false;
+				}
+				
+				/* check된 취미를 변수이 대입 */
+				var hobby = $("input[name='hobby']:checked");
+				
+				/* 추출된 값을 누적하여 저장할 문자열 변수 */
+				var select_hobby = ""; 
+				
+				/* 체크박스의 값을 for-each문 처럼 돌려서 hobby의 객체수 만큼 반복하여 this로 반환 */
+				hobby.each(function() {
+					select_hobby += (!select_hobby) ? $(this).val(): ", "+$(this).val();
+				});
+					
+				/* 직업이 미선택된 경우 */
+				if($("select[name='job'] > option:selected").index() < 1) {
+					$("#result").html("직업을 선택하세요");
+					$("select[name='job']").focus();
+					return false;
+				}
+				
+				/* 정상적으로 입력된 경우 변수에 담는다. */
+				var user_id = $("input[name='user_id']").val();
+				var user_pw = $("input[name='user_pw']").val();
+				var user_juminNum = $("input[name='user_juminNum']").val();
+				var gender = $("input[name='gender']").val();
+				var email = $("input[name='email']").val();
+				var url = $("input[name='url']").val();
+				var hphone = $("input[name='hphone']").val();
+				var job = $("select[name='job'] > option:selected").val();
+				
+				/* 정상적으로 입력된 경우 출력한다. */
+				$("#result").html("회원등록이 완료되었습니다.");
+				return false;
+			});
+		});
+		
+	</script>
+</head>
+<body>
+	
+	<div id="signIn">
+		viewSignIn
+		<hr>
+		<form name="myForm" id="join">
+			<div id="indiv">
+				<label for="user_id">아이디&nbsp;</label>
+				<input type="text" name="user_id" id="user_id"> <br>
+				비밀번호<input type="password" name="user_pw"> <br>
+				주민번호<input type="text" name="user_juminNum"> <br>
+				성별<input type="radio" name="gender" value="남자">남자 
+				<input type="radio" name="gender" value="여자">여자 <br>
+				이메일<input type="email" name="email"> <br>
+				URL<input type="url" name="url"> <br>
+				휴대전화번호<input type="tel" name="hphone"> <br>
+				취미<input type="checkbox" name="hobby" value="수영">수영&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="hobby" value="축구">축구&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="hobby" value="야구">야구 <br>
+				직업<select name="job">
+					<option>직업을 선택하세요.</option>
+					<option value="프로그래머">프로그래머</option>
+					<option value="건물주">건물주</option>
+					<option value="금수저">금수저</option>
+					<option value="아이돌">아이돌</option>
+					<option value="작사가">작사가</option>
+					<option value="랩퍼">랩퍼</option>
+				</select> <br>
+				<br> <input type="submit" value="회원가입" class="myButton">
+				<input type="reset" value="다시작성" class="myButton">
+			</div>
+		</form>
+	</div>
+</body>
+</html>
