@@ -42,6 +42,18 @@
 					$("input[name='user_pw']").focus();
 					return false;
 				} else {
+					/*
+					*	!!!추가작업 필요!!!
+					*	입력받은 id, pw를 회원 db와 비교 하여 일치하지 않으면 불일치 내용을 띄우고 재입력 요청
+					*
+					*/
+					if(false) {
+						$("#result").html("입력정보와 일치하는 회원이 없습니다.");
+						$("input[name='user_id']").val("");
+						$("input[name='user_pw']").val("");
+						$("input[name='user_id']").focus();
+						return false;
+					}
 					$("#result").html("&nbsp");
 					$("#section01").load($("#btn_login a").attr("href"));
 					return false;
