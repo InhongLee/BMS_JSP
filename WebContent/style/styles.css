@@ -4,8 +4,8 @@ a,ul,li{
 	padding:0;
 }
 #main_header {
-	border: 1px solid red;
-	height:200px;
+	border: 1px solid white;
+	height:285px;
 }
 .navi{
 	height: 100px;
@@ -46,15 +46,27 @@ a,ul,li{
 	color: #000;
 	text-decoration: none;
 }
+#search{
+	height: 50px;
+	margin: 0 auto;
+	text-align:center;
+ 	border: 1px solid white;
+}
+#search > input[type='search']{
+	width: 400px;
+	height: 40px;
+	margin-top: 5px;
+	border: 2px solid green;
+}
 #main_section {
-	border: 1px solid green;
-	height: 400px;
+	border: 1px solid white;
+	
 }
 
 #main_footer{
-	border: 1px solid blue;
+	border: 1px solid white;
 	background-color: #566573;
-	height:100px;
+	height:60px;
 }
 #innerFrame{
 	border:1px solid yellow;
@@ -66,20 +78,21 @@ a,ul,li{
 	background-color: #A9DFBF;
 	height: 400px;
 }
-#notice{
-	border: 1px solid red;
-	color: #FDFEFE;
-}
 #result{
-	border: 1px solid red;
-	color: #FDFEFE;
+	border: 1px solid black;
+	background: #000;
+	color: #fff;
+}
+#notice{
+	/* border: 1px solid #B2BABB; */
+	color: #B2BABB;
 }
 #site_info{
-	border: 1px solid red;
+	border: 1px solid #566573;
 	color: #FDFEFE;
 	font-size: small;
 }
-#bms_logo{
+.bms_logo{
 	float: left;
 	margin-right: 10px;
 }

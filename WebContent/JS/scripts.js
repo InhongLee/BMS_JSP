@@ -4,7 +4,7 @@
 $(document).ready(function() {
 		$(window).load(function() {
 			$(".sub_menu").hide();
-			$('#section01').load('./view/viewLogIn.html');
+			$('#section01').load('./view/viewSales/viewSales.html');
 			return false;
 		});
 
@@ -12,6 +12,9 @@ $(document).ready(function() {
 			return false;
 		});
 		$(".notice-list li a").click(function() {
+			return false;
+		});
+		$(".book-list li a").click(function() {
 			return false;
 		});
 		$("#sales").mouseover(function() {
@@ -58,5 +61,5 @@ $(document).ready(function() {
 			var url_notice = $(this).attr('href');
 			$('#section01').load(url_notice);
 			return false;
-		});
+		});	
 	});

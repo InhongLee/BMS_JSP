@@ -7,7 +7,7 @@
 <title>BMS_web</title>
 <link href="./style/styles.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-	.news {padding:0px; background-color: #F9E79F;}
+	.news {padding:0px; background-color: #B2BABB;}
 	.news .open-event {height:20px; position:relative; border:1px solid #ccc; overflow:hidden;}
 	.news .open-event ul{position:absolute; top:0px;}
 	.news .open-event ul#notice1 {left:0;}
@@ -21,6 +21,8 @@
 <script type="text/javascript" src="./JS/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="./JS/scripts.js"></script>
 <script type="text/javascript" src="./JS/notice.js"></script>
+<script type="text/javascript" src="./JS/issue.js"></script>
+<script type="text/javascript" src="./JS/search.js"></script>
 </head>
 <body>
 	<header id="main_header">
@@ -62,15 +64,10 @@
 					</ul>					
 				</li>
 			</ul>
-		</nav>
-	</header>
-	<section id="main_section">
-	
-		<div id="section01">
-
+		</nav>	
+		<div id="result">
+			콘솔정보창
 		</div>
-	</section>
-	<footer id="main_footer">
 		<div id="notice" class="news" style="margin-top:0px; padding-top:0;">
 			<div class="open-event fl" style="width:100%;">
 				<ul class="notice-list">
@@ -83,11 +80,20 @@
 			</div>
 			<script type="text/javascript">fn_notice("notice");</script>		
 		</div>
-		<div id="result">
-			footer
+		<div id="search">
+			<input type="search" placeholder="&nbsp;검색하실 책의 정보를 입력하세요.">
 		</div>
+	</header>
+	<section id="main_section">
+	
+		<div id="section01">
+
+		</div>
+	</section>
+	<footer id="main_footer">
+		
 		<div id="site_info">
-			<img id="bms_logo" src="" alt="bms_logo" width="200px" height="50px">
+			<img class="bms_logo" src="" alt="bms_logo" width="200px" height="50px">
 			(주)BMS 서울시 금천구 가산동 426-5 월드메르디앙 2차 410호<br> 
 			대표이사: 이인홍 사업자등록번호: 111-11-11111 TEL: 010-9783-3038 E-mail: amaco78@gmail.com<br>
 			Copyright(C)2017 BMS. All right reserved.
