@@ -4,12 +4,94 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#viewBuyNow{height:400px; background:lightgreen; border:1px solid red;}
+	#viewBuyNow{height:400px; border:2px solid black;}
+	#buyNow_box1{width:90%; height:380px; margin:0 auto; margin-top:10px; /* border:1px solid green; */}
+	#buyNow_box2{width:200px; height:240px; margin:10px; padding:0px; display:inline-block; /* border:1px solid green; */}
+	#buyNow_box3{width:500px; height:360px; margin:10px; display:inline-block; vertical-align:top; /* border:1px solid green; */}
+	#buyNow_box4{width:90%; height:290px; margin:0 auto; margin-top:10px; vertical-align:top; /* border:1px solid green; */}
+	#buyNow_box5{width:90%; height:35px; margin:0 auto; margin-top:10px; padding:0px; /* border:1px solid green; */}
+	#buyNow_span1{font-size:large; font-weight:bold;}
+	#buyNow_table1{bored-collepse:collepse; /* border: 1px solid green; */}
+	#buyNow_table1 tr{height:25px;}
+	#buyNum{text-align:right; border:1px solid green;}
+	#buyNow_btn1{width:100px; padding:5px; border-radius:10px; display:inline-block; text-align:center; background:#2E86C1; /* border:1px solid red; */}
+	#buyNow_btn2{width:100px; padding:5px; border-radius:10px; display:inline-block; text-align:center; background:#17A589; /* border:1px solid red; */}
+	#buyNow_btn3{width:100px; padding:5px; border-radius:10px; display:inline-block; text-align:center; background:#D4AC0D; /* border:1px solid red; */}
+	#buyNow_box5 a:link, #buyNow_box5 a:visited{color:#ffffff; font-weight:bold; text-decoration:none;}
 </style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("td").eq(0).css("width","120px");
+	});
+	$("#buyNow_box5 a").click(function() {
+		var url = $(this).attr('href');
+		$('#section01').load(url);
+		return false;
+	});
+</script>
 </head>
 <body>
 	<div id="viewBuyNow">
-		viewBuyNow
+		<div id="buyNow_box1">
+			<div id="buyNow_box2">
+				<img class="img_book" src="./images/HeadFirst_Java.jpg" alt="책이미지  200x240" width="200px" height="240px">
+			</div>
+			<div id="buyNow_box3">
+				<div id="buyNow_box4">
+					<span id="buyNow_span1">Headfirst Java</span>
+					<hr>
+					<table id="buyNow_table1">
+						<tr>
+							<td>정가</td>
+							<td>35,000 원</td>
+						</tr>
+						<tr>
+							<td>판매가</td>
+							<td>32,000 원</td>
+						</tr>
+						<tr>
+							<td>포인트</td>
+							<td>600 원</td>
+						</tr>
+						<tr>
+							<td>출간일</td>
+							<td>2017년 04월 28일</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>372쪽 | 600g | 152*200*30㎜</td>
+						</tr>
+						<tr>
+							<td>ISBN</td>
+							<td>9791186137475</td>
+						</tr>
+						<tr>
+							<td>판매지수</td>
+							<td>104</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><label for="buyNum">주문수량</label></td>
+							<td><input name="buyNum" id="buyNum" type="number" placeholder="1"></td>
+						</tr>
+					</table>
+				</div>
+				<div id="buyNow_box5">
+					<div id="buyNow_btn1">
+						<a href="./view/viewSales/viewCartBuy.html">카트에 담기</a>
+					</div>
+					<div id="buyNow_btn2">
+						<a href="./view/viewSales/viewSales.html">바로 구매</a>
+					</div>
+					<div id="buyNow_btn3">
+						<a href="">리뷰 쓰기</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
