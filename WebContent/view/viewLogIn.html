@@ -16,22 +16,20 @@
 	#user_id	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
 	#user_pw			{margin:0 auto;		margin-top: 10px;	padding: 0px;		text-align: center;}
 	#user_pw	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
-	#btn_login			{width: 250px;		margin:0 auto;		margin-top: 10px;	padding: 10px 0px 10px 0px;	background: #E5E7E9;	text-align: center;	border: 1px solid green;}
-	#btn_login	a		{text-decoration: none;	padding: 0px;	font-size: large;	font-weight: bold;}	
-	#btn_signin			{width: 250px;		margin:0 auto;		margin-top: 5px;	padding: 5px 0px 5px 0px;	 background: #E5E7E9;	text-align: center;	border: 1px solid green;}
-	#btn_signin	a		{text-decoration: none;	padding: 0px;	font-size: large;	font-weight: bold;	}	
+	#btn_logIn			{width: 250px;		margin:0 auto;		margin-top: 10px;	padding: 10px 0px 10px 0px;	background: #E5E7E9;	text-align: center;	border: 1px solid green;}
+	#btn_logIn	a		{text-decoration: none;	padding: 0px;	font-size: large;	font-weight: bold;}	
+	#btn_signIn			{width: 250px;		margin:0 auto;		margin-top: 5px;	padding: 5px 0px 5px 0px;	 background: #E5E7E9;	text-align: center;	border: 1px solid green;}
+	#btn_signIn	a		{text-decoration: none;	padding: 0px;	font-size: large;	font-weight: bold;	}	
 </style>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$(window).load(function() {$("#result").html("&nbsp");});
-		
+	$(document).ready(function() {		
 		/* 회원가입 버튼 클릭 시 회원가입 페이지로 연결 */		
-		$("#btn_signin").bind({
-			"click":	function() {$("#result").html("&nbsp");$("#section01").load($("#btn_signin a").attr("href"));return false;},
-			"mouseout":	function() {$("#btn_signin a").css("color","green");$("#result").html("&nbsp");},
-			"mouseover":function() {$("#btn_signin a").css("color","blue");$("#result").html("회원가입 페이지로 이동합니다");}
+		$("#btn_signIn").bind({
+			"click":	function() {$("#result").html("&nbsp");$("#section01").load($("#btn_signIn a").attr("href"));return false;},
+			"mouseout":	function() {$("#btn_signIn a").css("color","green");$("#result").html("&nbsp");},
+			"mouseover":function() {$("#btn_signIn a").css("color","blue");$("#result").html("회원가입 페이지로 이동합니다");}
 		});
-		$("#btn_login").bind({
+		$("#btn_logIn").bind({
 			"click":	function() {
 				if(!$("input[name='user_id']").val()) {
 					$("#result").html("아이디를 입력하세요.");
@@ -55,19 +53,19 @@
 						return false;
 					}
 					$("#result").html("&nbsp");
-					$("#section01").load($("#btn_login a").attr("href"));
+					$("#section01").load($("#btn_logIn a").attr("href"));
 					return false;
 				}	
 			},
-			"mouseout":	function() {$("#btn_login a").css("color","green");$("#result").html("&nbsp");},
-			"mouseover":function() {$("#btn_login a").css("color","blue");$("#result").html("로그인을 시도합니다");}
+			"mouseout":	function() {$("#btn_logIn a").css("color","green");$("#result").html("&nbsp");},
+			"mouseover":function() {$("#btn_logIn a").css("color","blue");$("#result").html("로그인을 시도합니다");}
 		});
 	});
 </script>
 </head>
 <body>
-	<div id="view_login" style="height:400px; overflow: hidden;">
-		<form name="form_login" action="" method="post">
+	<div id="view_logIn" style="height:400px; overflow: hidden;">
+		<form name="form_logIn" action="" method="post">
 			<div id="catch_PR">
 				사이트의 목적을 보여주는 간단한 표어 배치
 			</div>
@@ -77,10 +75,10 @@
 			<div id="user_pw">
 				<input name="user_pw" type="password" placeholder="&nbsp비밀번호">
 			</div>
-			<div id="btn_login">
-				<a href="./view/viewMember/viewSignIn.html">로그인</a>
+			<div id="btn_logIn">
+				<a href="./view/viewSales/viewSales.html">로그인</a>
 			</div>	
-			<div id="btn_signin">
+			<div id="btn_signIn">
 				<a href="./view/viewMember/viewSignIn.html">회원가입</a>
 			</div>		
 		</form>

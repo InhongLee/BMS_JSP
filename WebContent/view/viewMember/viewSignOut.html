@@ -3,8 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	#catch_PR{
+		border: 1px solid green;
+		width: 60%;
+		margin:0 auto;
+		margin-top: 50px;
+		padding: 50px 25px 50px 25px;
+		text-align: center;
+	}
+	#user_id			{margin:0 auto;		margin-top: 20px;	padding: 0px;		text-align: center;}
+	#user_id	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
+	#user_pw			{margin:0 auto;		margin-top: 10px;	padding: 0px;		text-align: center;}
+	#user_pw	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
+	#btn_signOut		{width: 250px;		margin:0 auto;		margin-top: 20px;	padding: 15px 0px 15px 0px;	 background: #E5E7E9;	text-align: center;	border: 1px solid green;}
+	#btn_signOut	a	{text-decoration: none;	padding: 0px;	font-size: large;	font-weight: bold;	}	
+</style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* 회원가입 버튼 클릭 시 회원가입 페이지로 연결 */		
+		$("#btn_signOut").bind({
+			"click":	function() {
+				if(!$("input[name='user_id']").val()) {
+					$("#result").html("아이디를 입력하세요.");
+					$("input[name='user_id']").focus();
+					return false;
+				} else if(!$("input[name='user_pw']").val()) {
+					$("#result").html("비밀번호를 입력하세요");
+					$("input[name='user_pw']").focus();
+					return false;
+				} else {
+					/*
+					*	!!!추가작업 필요!!!
+					*	입력받은 id, pw를 회원 db와 비교 하여 일치하지 않으면 불일치 내용을 띄우고 재입력 요청
+					*
+					*/
+					if(false) {
+						$("#result").html("입력정보와 일치하는 회원이 없습니다.");
+						$("input[name='user_id']").val("");
+						$("input[name='user_pw']").val("");
+						$("input[name='user_id']").focus();
+						return false;
+					}
+					$("#result").html("&nbsp");
+					$("#section01").load($("#btn_signOut a").attr("href"));
+					return false;
+				}	
+			},
+			"mouseout":	function() {$("#btn_signOut a").css("color","green");$("#result").html("&nbsp");},
+			"mouseover":function() {$("#btn_signOut a").css("color","red");$("#result").html("정말 회원 탈퇴를 하시겠습니까?");}
+		});
+	});
+</script>
 </head>
 <body>
-viewSignOut
+	<div id="view_signOut" style="height:400px; overflow: hidden;">
+		<form name="form_signOut" action="" method="post">
+			<div id="catch_PR">
+				회원탈퇴 실시에 대한 주의사항
+			</div>
+			<div id="user_id">
+				<input name="user_id" type="text" placeholder="&nbsp;아이디" required autofocus>
+			</div>
+			<div id="user_pw">
+				<input name="user_pw" type="password" placeholder="&nbsp비밀번호">
+			</div>	
+			<div id="btn_signOut">
+				<a href="./view/viewSales/viewSales.html">탈퇴</a>
+			</div>		
+		</form>
+	</div>
 </body>
 </html>
