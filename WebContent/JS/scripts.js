@@ -4,7 +4,7 @@
 $(document).ready(function() {
 		$(window).load(function() {
 			$(".sub_menu").hide();
-			$('#section01').load('./view/viewSales/viewSales.html');
+			$('#section01').load('./view/viewLogIn.html');
 			return false;
 		});
 

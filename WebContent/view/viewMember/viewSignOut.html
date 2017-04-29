@@ -16,8 +16,9 @@
 	#user_id	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
 	#user_pw			{margin:0 auto;		margin-top: 10px;	padding: 0px;		text-align: center;}
 	#user_pw	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
-	#btn_signOut		{width: 250px;		margin:0 auto;		margin-top: 20px;	padding: 15px 0px 15px 0px;	 background: #E5E7E9;	text-align: center;	border: 1px solid green;}
-	#btn_signOut	a	{text-decoration: none;	padding: 0px;	font-size: large;	font-weight: bold;	}	
+	#btn_signOut		{width: 250px;		margin:0 auto;		margin-top: 20px;	padding: 15px 0px 15px 0px;	 background: green;	text-align: center;	border: 1px solid green;}
+	#btn_signOut a{padding:0px; font-size:large; text-decoration:none;}	
+	#btn_signOut a:link, #btn_signOut a:visited{color:white;}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -50,8 +51,14 @@
 					return false;
 				}	
 			},
-			"mouseout":	function() {$("#btn_signOut a").css("color","green");$("#result").html("&nbsp");},
-			"mouseover":function() {$("#btn_signOut a").css("color","red");$("#result").html("정말 회원 탈퇴를 하시겠습니까?");}
+			"mouseleave":function() {
+				$("#btn_signOut a").css("color","white");
+				$("#btn_signOut a").css("text-shadow","none");
+				$("#result").html("&nbsp");},
+			"mouseenter":function() {
+				$("#btn_signOut a").css("color","yellow");
+				$("#btn_signOut a").css("text-shadow","0px 2px 2px black");
+				$("#result").html("정말 회원 탈퇴를 하시겠습니까?");}
 		});
 	});
 </script>
