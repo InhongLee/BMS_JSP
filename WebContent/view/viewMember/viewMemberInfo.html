@@ -6,6 +6,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("td").eq(0).css("width","120px");
+		$("#myInfo_signOut").click(function() {
+			$('#section01').load("./view/viewMember/viewSignOut.html");
+			return false;
+		});
 	});
 </script>
 <style>
@@ -29,6 +33,7 @@
 					<span style="float:right;">
 						<input type="submit" value="수정" class="">
 						<input type="reset" value="초기화" class="">
+						<input type="button" value="회원탈퇴" id="myInfo_signOut">
 					</span>
 				</div>
 				<hr style="clear:both;">
