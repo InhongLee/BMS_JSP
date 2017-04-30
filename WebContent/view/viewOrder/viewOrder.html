@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#order_box1{/* border:1px solid green; */}
+
+#order_box2{/* border:1px solid green; */}
+#order_table1{width:100%; font-size:small; border-collapse:collapse;}
+#order_table1 th, #order_table1 td{height:25px; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid gray;}
+#order_table1 td:HOVER{background:lightgray;}
+#order_table1 tr:nth-child(1){background:lightgreen;}
+#order_table1 tr td:nth-child(1){width:10%; text-align:center;}
+#order_table1 tr td:nth-child(2){width:30%; text-align:left;}
+#order_table1 tr td:nth-child(3){width:20%; text-align:left;}
+#order_table1 tr td:nth-child(4){width:15%; text-align:center;}
+#order_table1 tr td:nth-child(5){width:10%; text-align:center;}
+#order_table1 tr td:nth-child(6){width:15%; text-align:center;}
+
+#order_box3{height:200px; /* border:1px solid green; */}
+#order_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
+#order_table2{width:280px; margin:10px 10px; font-size:small;}
+#order_table2 td{height:25px;}
+#order_table2 td:nth-child(1){width:80px;}
+#order_table2 td:nth-child(2){width:80px;}
+#order_table2 td:nth-child(3){width:20px;}
+#order_table2 tr td:nth-child(2){text-align:right;}
+#order_table2 tr:nth-child(1) td:nth-child(2){color:green;}
+#order_table2 tr:nth-child(2) td:nth-child(2){color:red;}
+#order_table2 tr:nth-child(3) td:nth-child(2){color:green;}
+#order_table2 tr:nth-child(4) td:nth-child(2){color:red;}
+#order_table2 tr:nth-child(5) td:nth-child(2){color:drakgreen; font-weight:bold; background:lightgreen}
+
+#order_box3_2{width:500px; vertical-align:top; float:right;}
+#order_table3{width:380px; margin:10px 10px; font-size:small;}
+#order_table3 td{height:25px;}
+#order_table3 tr td:nth-child(1){width:180px; text-align:left;}
+#order_table3 tr td:nth-child(2){width:100px; text-align:right;}
+#order_table3 tr td:nth-child(3){width:100px; text-align:left;}
+#order_table3 tr:nth-child(3) td:nth-child(2){color:green;}
+#order_table3 tr:nth-child(4) td:nth-child(2){color:red;}
+
+#order_table4{width:380px; margin:10px 10px; font-size:small;}
+#order_table4 td{height:25px;}
+#order_table4 tr td:nth-child(1){width:180px; text-align:left;}
+#order_table4 tr td:nth-child(2){width:100px; text-align:right;}
+#order_table4 tr td:nth-child(3){width:100px; text-align:left;}
+#order_table4 tr:nth-child(3) td:nth-child(2){color:red;}
+#order_table4 tr:nth-child(4) td:nth-child(2){color:green;}
+
+#order_table5{width:380px; margin:10px 10px; font-size:small;}
+#order_table5 td{height:25px;}
+#order_table5 tr td:nth-child(1){width:180px; text-align:left;}
+#order_table5 tr td:nth-child(2){width:100px; text-align:right;}
+#order_table5 tr td:nth-child(3){width:100px; text-align:left;}
+#order_table5 tr:nth-child(3) td:nth-child(2){color:green;}
+#order_table5 tr:nth-child(4) td:nth-child(2){color:red;}
+
+ul.tabs{width:100%; height:32px; margin:0; padding:0; border-bottom:1px solid green; border-left:1px solid green; float:left; list-style:none;}
+ul.tabs li{float:left; margin:0; padding:0; height:31px; line-height:31px; border:1px solid green; border-left:none; margin-bottom:-1px; background:lightgreen; overflow:hidden; position:relative;}
+ul.tabs li a{text-decoration:none; color:black; display:block; font-size:large; padding:0 20px; outline:none;}
+ul.tabs li a:hover{background:white;}
+html ul.tabs li.active, html ul.tabs li.active a:hover{background:white; border-bottom:1px solid white;}
+.tab_container{border:1px solid green; border-top:none; clear:both; float:left; width:100%; background:white;}
+
+h2.title2{margin:0px; padding:0px 10px; font-weight:normal;}
+td input, td select{width:100%; height:100%; box-sizing:border-box;}
+
+</style>
+</head>
+<body>
+
+<div id="order_box1">
+	<h2 class="title2">주문 관리</h2>
+	<hr>
+	<div id="order_box2">
+		<table id="order_table1">
+			<tr>
+				<th>OrderId</th>
+				<th>BookTitle</th>
+				<th>CustomName</th>
+				<th>State</th>
+				<th>Qty</th>
+				<th>Confirm</th>
+			</tr>
+			<tr id="item1">
+				<td>0001</td>
+				<td>Headfirst Java</td>
+				<td>필&굳</td>
+				<td>Req_Perchase</td>
+				<td>100</td>
+				<td>PENDING</td>
+			</tr>
+			<tr id="item2">
+				<td>0002</td>
+				<td>정보처리기사 필기</td>
+				<td>이인홍</td>
+				<td>Req_Sales</td>
+				<td>1</td>
+				<td>CONFIRMED</td>
+			</tr>
+			<tr id="item3">
+				<td>0003</td>
+				<td>Javascript & jQuery : Missing Menual</td>
+				<td>이인홍</td>
+				<td>Req_Refund</td>
+				<td>1</td>
+				<td>REJECTED</td>
+			</tr>
+			<tr id="item4">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr id="item5">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		<hr>
+		<div id="order_box3">
+			<div id="order_box3_1">
+				<h2 class="title2">총 매출현황</h2>
+				<table id="order_table2">
+					<tr>
+						<td>총 매출액</td>
+						<td>+4,100,000</td>
+						<td>원</td>
+					</tr>
+					<tr>
+						<td>총 비용</td>
+						<td>-3,560,000</td>
+						<td>원</td>
+					</tr>
+					<tr>
+						<td>매출 이익</td>
+						<td>+540,000</td>
+						<td>원</td>
+					</tr>
+					<tr>
+						<td>세금</td>
+						<td>-54,000</td>
+						<td>원</td>
+					</tr>
+					<tr>
+						<td>순 이익</td>
+						<td>+486,000</td>
+						<td>원</td>
+					</tr>
+				</table>
+			</div>
+			<div id="order_box3_2">
+				<ul class="tabs">
+					<li><a href="#tab1">구매승인</a></li>
+					<li><a href="#tab2">판매승인</a></li>
+					<li><a href="#tab3">환불승인</a></li>
+				</ul>
+				<div class="tab_container">
+					<div id="tab1" class="tab_content">
+						<form name="order_reqPerchase" action="" method="post">
+							<table id="order_table3">
+								<tr>
+									<td>주문번호</td>
+									<td>0001</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>비용/EA</td>
+									<td>30,000</td>
+									<td>원</td>
+								</tr>
+								<tr>
+									<td>요청수량</td>
+									<td>+10</td>
+									<td>EA</td>
+								</tr>
+								<tr>
+									<td>총 비용</td>
+									<td>-300,000</td>
+									<td>원</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="button" value="CONFIRM"></td>
+									<td><input type="button" value="REJECT"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div id="tab2" class="tab_content">
+						<form name="order_reqSales" action="" method="post">
+							<table id="order_table4">
+								<tr>
+									<td>주문번호</td>
+									<td>0002</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>단가/EA</td>
+									<td>30,000</td>
+									<td>원</td>
+								</tr>
+								<tr>
+									<td>요청수량</td>
+									<td>-10</td>
+									<td>EA</td>
+								</tr>
+								<tr>
+									<td>총 판매금액</td>
+									<td>+300,000</td>
+									<td>원</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="button" value="CONFIRM"></td>
+									<td><input type="button" value="REJECT"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div id="tab3" class="tab_content">
+						<form name="order_reqRefund" action="" method="post">
+							<table id="order_table5">
+								<tr>
+									<td>주문번호</td>
+									<td>0003</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>단가/EA</td>
+									<td>30,000</td>
+									<td>원</td>
+								</tr>
+								<tr>
+									<td>요청수량</td>
+									<td>+10</td>
+									<td>EA</td>
+								</tr>
+								<tr>
+									<td>총 환불금액</td>
+									<td>-300,000</td>
+									<td>원</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type="button" value="CONFIRM"></td>
+									<td><input type="button" value="REJECT"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".tab_content").hide();
+		$("ul.tabs li:first").addClass("active").show();
+		$(".tab_content:first").show();
+		
+		$("ul.tabs li").click(function() {
+			$("ul.tabs li").removeClass("active");
+			$(this).addClass("active");
+			$(".tab_content").hide();
+			var activeTab = $(this).find("a").attr("href");
+			$(activeTab).fadeIn();
+			return false;
+		});
+		
+		$("#order_table1 td").click(function() {
+			var col = $(this).parent().children().index($(this));
+			var row = $(this).parent().parent().children().index($(this).parent());
+			
+			var colName = $("#order_table1 th").eq(col).html();
+			var reqState = $(this).parent().children().eq(3).html();
+			
+			if (colName == "Confirm") {
+				var activeTab;
+				$("ul.tabs li").removeClass("active");
+				if(reqState == "Req_Perchase") {
+					$("ul.tabs li:eq(0)").addClass("active");
+					$(".tab_content").hide();
+					activeTab = $("ul.tabs li:eq(0)").find("a").attr("href");
+					$(activeTab).fadeIn();
+				} else if(reqState == "Req_Sales") {
+					$("ul.tabs li:eq(1)").addClass("active");
+					$(".tab_content").hide();
+					activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
+					$(activeTab).fadeIn();
+				} else if(reqState == "Req_Refund") {
+					$("ul.tabs li:eq(2)").addClass("active");
+					$(".tab_content").hide();
+					activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
+					$(activeTab).fadeIn();
+				}
+				$(activeTab + " input[type='submit']").focus();
+			}
+			return false;
+		});
+	});
+</script>
+
+</body>
+</html>
