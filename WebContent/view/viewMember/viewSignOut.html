@@ -3,34 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-	#catch_PR{
-		border: 1px solid green;
-		width: 60%;
-		margin:0 auto;
-		margin-top: 50px;
-		padding: 50px 25px 50px 25px;
-		text-align: center;
-	}
-	#user_id			{margin:0 auto;		margin-top: 20px;	padding: 0px;		text-align: center;}
-	#user_id	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
-	#user_pw			{margin:0 auto;		margin-top: 10px;	padding: 0px;		text-align: center;}
-	#user_pw	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
-	#btn_signOut		{width: 250px;		margin:0 auto;		margin-top: 20px;	padding: 15px 0px 15px 0px;	 background: green;	text-align: center;	border: 1px solid green;}
-	#btn_signOut a{padding:0px; font-size:large; text-decoration:none;}	
-	#btn_signOut a:link, #btn_signOut a:visited{color:white;}
-</style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		/* 회원가입 버튼 클릭 시 회원가입 페이지로 연결 */		
 		$("#btn_signOut").bind({
 			"click":	function() {
 				if(!$("input[name='user_id']").val()) {
-					$("#result").html("아이디를 입력하세요.");
+					$("#consoleInfo").html("아이디를 입력하세요.");
 					$("input[name='user_id']").focus();
 					return false;
 				} else if(!$("input[name='user_pw']").val()) {
-					$("#result").html("비밀번호를 입력하세요");
+					$("#consoleInfo").html("비밀번호를 입력하세요");
 					$("input[name='user_pw']").focus();
 					return false;
 				} else {
@@ -40,13 +23,13 @@
 					*
 					*/
 					if(false) {
-						$("#result").html("입력정보와 일치하는 회원이 없습니다.");
+						$("#consoleInfo").html("입력정보와 일치하는 회원이 없습니다.");
 						$("input[name='user_id']").val("");
 						$("input[name='user_pw']").val("");
 						$("input[name='user_id']").focus();
 						return false;
 					}
-					$("#result").html("&nbsp");
+					$("#consoleInfo").html("&nbsp");
 					$("#section01").load($("#btn_signOut a").attr("href"));
 					return false;
 				}	
@@ -54,17 +37,17 @@
 			"mouseleave":function() {
 				$("#btn_signOut a").css("color","white");
 				$("#btn_signOut a").css("text-shadow","none");
-				$("#result").html("&nbsp");},
+				$("#consoleInfo").html("&nbsp");},
 			"mouseenter":function() {
 				$("#btn_signOut a").css("color","yellow");
 				$("#btn_signOut a").css("text-shadow","0px 2px 2px black");
-				$("#result").html("정말 회원 탈퇴를 하시겠습니까?");}
+				$("#consoleInfo").html("정말 회원 탈퇴를 하시겠습니까?");}
 		});
 	});
 </script>
 </head>
 <body>
-	<div id="view_signOut" style="height:400px; overflow: hidden;">
+	<div id="view_signOut">
 		<form name="form_signOut" action="" method="post">
 			<div id="catch_PR">
 				회원탈퇴 실시에 대한 주의사항

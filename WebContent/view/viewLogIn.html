@@ -3,52 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-	#catch_PR{
-		border: 1px solid green;
-		width: 60%;
-		margin:0 auto;
-		margin-top: 50px;
-		padding: 50px 25px 50px 25px;
-		text-align: center;
-	}
-	#user_id			{margin:0 auto;		margin-top: 20px;	padding: 0px;		text-align: center;}
-	#user_id	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
-	#user_pw			{margin:0 auto;		margin-top: 10px;	padding: 0px;		text-align: center;}
-	#user_pw	input	{height: 30px;		width: 250px;		font-size: large;	font-weight: bold;	border: 1px solid green;}
-	#btn_logIn			{width: 250px;		margin:0 auto;		margin-top: 10px;	padding: 10px 0px 10px 0px;	background: green;	text-align: center;	border: 1px solid green;}
-	#btn_logIn a		{text-decoration:none; padding:0px; font-size:large;}
-	#btn_logIn a:link, #btn_logIn a:visited{color:white;}
-	#btn_signIn			{width: 250px;		margin:0 auto;		margin-top: 5px;	padding: 5px 0px 5px 0px;	 background: green;	text-align: center;	border: 1px solid green;}
-	#btn_signIn	a		{text-decoration:none; padding:0px; font-size:large;}
-	#btn_signIn a:link, #btn_signIn a:visited{color:white;}
-</style>
 <script type="text/javascript">
 	$(document).ready(function() {		
 		/* 회원가입 버튼 클릭 시 회원가입 페이지로 연결 */
 		
 		$("#btn_signIn").bind({
 			"click":	function() {
-				$("#result").html("&nbsp;");
+				$("#consoleInfo").html("&nbsp;");
 				$("#section01").load($("#btn_signIn a").attr("href"));
 				return false;},
 			"mouseenter":function() {
 				$("#btn_signIn a").css("color","yellow");
 				$("#btn_signIn a").css("text-shadow","0px 2px 2px black");
-				$("#result").html("회원가입 페이지로 이동합니다");},
+				$("#consoleInfo").html("회원가입 페이지로 이동합니다");},
 			"mouseleave":function() {
 				$("#btn_signIn a").css("color","white");
 				$("#btn_signIn a").css("text-shadow","none");
-				$("#result").html("&nbsp;");}
+				$("#consoleInfo").html("&nbsp;");}
 		});
 		$("#btn_logIn").bind({
 			"click":	function() {
 				if(!$("input[name='user_id']").val()) {
-					$("#result").html("아이디를 입력하세요.");
+					$("#consoleInfo").html("아이디를 입력하세요.");
 					$("input[name='user_id']").focus();
 					return false;
 				} else if(!$("input[name='user_pw']").val()) {
-					$("#result").html("비밀번호를 입력하세요");
+					$("#consoleInfo").html("비밀번호를 입력하세요");
 					$("input[name='user_pw']").focus();
 					return false;
 				} else {
@@ -60,13 +40,13 @@
 					var uId = $("input[name='user_id']").val();
 					var uPw = $("input[name='user_pw']").val();
 					if(uId != "guest" || uPw != "guest") {
-						$("#result").html("입력정보와 일치하는 회원이 없습니다.");
+						$("#consoleInfo").html("입력정보와 일치하는 회원이 없습니다.");
 						$("input[name='user_id']").val("");
 						$("input[name='user_pw']").val("");
 						$("input[name='user_id']").focus();
 						return false;
 					} else {
-						$("#result").html("&nbsp;");
+						$("#consoleInfo").html("&nbsp;");
 						$("#section01").load($("#btn_logIn a").attr("href"));
 						return false;						
 					}
@@ -75,17 +55,17 @@
 			"mouseleave":function() {
 				$("#btn_logIn a").css("color","white");
 				$("#btn_logIn a").css("text-shadow","none");
-				$("#result").html("&nbsp;");},
+				$("#consoleInfo").html("&nbsp;");},
 			"mouseenter":function() {
 				$("#btn_logIn a").css("color","yellow");
 				$("#btn_logIn a").css("text-shadow","0px 2px 2px black");
-				$("#result").html("로그인을 시도합니다");}
+				$("#consoleInfo").html("로그인을 시도합니다");}
 		});
 	});
 </script>
 </head>
 <body>
-	<div id="view_logIn" style="height:400px; overflow: hidden;">
+	<div id="view_logIn">
 		<form name="form_logIn" action="" method="post">
 			<div id="catch_PR">
 				사이트의 목적을 보여주는 간단한 표어 배치

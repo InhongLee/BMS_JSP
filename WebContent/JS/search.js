@@ -10,7 +10,14 @@
 		 * 검색창 자동완성 기능(searchBar_autoComplete)
 		 * 같은 책에대한 bookTitle과 bookInfo의 index는 동일해야 한다
 		 * DB연동후에는 bookTitle과 bookInfo에 순환문을 사용하여 정보 입력하도록 수정 필요
-		 * bookInfo의 가격정보는 DB에서 정보 받아올때 LPAD사용해서 자리수 맞추어야 한다  
+		 * bookInfo의 가격정보는 DB에서 정보 받아올때 LPAD사용해서 자리수 맞추어야 한다 
+		 * 
+		 * 문제점
+		 * 한글입력시 자동완성 기능을 사용하려면 스페이스바로 한칸 띄우고 다시 백스페이스바로 돌아와야 된다
+		 * 크롬을 기준으로 UI설계하여 IE에서는 검색결과가 재대로 보이지 않는다
+		 * 
+		 * 대안
+		 * jQuery.UI api사용시 동일한 효과 구현가능?
 		 * */ 
 		 
 		// 자동완성에 사용된 <datalist> 초기화

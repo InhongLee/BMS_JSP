@@ -14,7 +14,7 @@
 				var reg02 = /^(010|070|011|080)\d{3,4}\d{4}$/;
 				var result02 = reg02.test($("input[name='signIn_tel']").val());
 				if(!result02) {
-					$("#result").html("휴대폰번호를 잘못입력하셨습니다");
+					$("#consoleInfo").html("휴대폰번호를 잘못입력하셨습니다");
 					$("input[name='signIn_tel']").val("");
 					$("input[name='signIn_tel']").focus();
 					return false;
@@ -24,20 +24,11 @@
 				var hobby = $("input[name='signIn_hobby']:checked");
 				
 				/* 정상적으로 입력된 경우 출력한다. */
-				$("#result").html("회원등록이 완료되었습니다.");
+				$("#consoleInfo").html("회원등록이 완료되었습니다.");
 				return false;
 			});
 		});
-		
 	</script>
-<style>
-	#signIn{border:1px solid green;}
-	#join{margin:10px; /* border:1px solid green; */}
-	#signIn_title{font-size:large; font-weight:bold;}
-	#table_uInfo{border-collapse:collapse; /* border:1px solid green; */}
-	#table_uInfo tr{height: 25px;}
-	#table_uInfo input, #table_uInfo select{border:1px solid green;}
-</style>
 </head>
 <body>
 	
