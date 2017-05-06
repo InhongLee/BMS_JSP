@@ -7,7 +7,7 @@ $(document).ready(function() {
 			$('#section01').load('./view/viewLogIn.html');
 			return false;
 		});
-
+		
 		$(".navi a").click(function() {
 			return false;
 		});

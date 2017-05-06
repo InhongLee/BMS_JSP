@@ -5,6 +5,7 @@
 #main_header{}
 	#title a:link, #title a:visited{color:green; text-decoration:none;}
 	.navi{background:green; border:1px solid white;}
+	.navi>ul:hover{height:50px;}
 	.navi ul li{display:inline-block; width:150px; vertical-align:top; text-align:center;}
 	.navi a:link, .navi a:visited{width:150px; color:white; text-decoration:none;}
 	.navi a:hover, .navi a:focus{text-shadow:0px 2px 2px black; color:yellow;}
@@ -146,7 +147,7 @@
 				#stock_table3{width:280px; margin:10px 10px; font-size:small;}
 				#stock_table3 td{height:25px;}
 				#stock_table3 tr td:nth-child(1){width:45%; text-align:left;}
-				#stock_table3 tr td:nth-child(2){width:25%; text-align:right;}
+				#stock_table3 tr td:nth-child(2){width:25%; text-align:right; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 				#stock_table3 tr td:nth-child(3){width:25%; text-align:left;}
 				#stock_table3 tr:nth-child(2) td:nth-child(2) input::-webkit-input-placeholder{color:green; text-align:right;}
 				#stock_table3 tr:nth-child(2) td:nth-child(2) input:-moz-placeholder{color:green; opacity:1; text-align:right;}
@@ -156,7 +157,7 @@
 				#stock_table4{width:280px; margin:10px 10px; font-size:small;}
 				#stock_table4 td{height:25px;}
 				#stock_table4 tr td:nth-child(1){width:45%; text-align:left;}
-				#stock_table4 tr td:nth-child(2){width:25%; text-align:right;}
+				#stock_table4 tr td:nth-child(2){width:25%; text-align:right; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 				#stock_table4 tr td:nth-child(3){width:25%; text-align:left;}
 				#stock_table4 tr:nth-child(2) td:nth-child(2) input::-webkit-input-placeholder{color:red; text-align:right;}
 				#stock_table4 tr:nth-child(2) td:nth-child(2) input:-moz-placeholder{color:red; opacity:1; text-align:right;}
@@ -239,6 +240,7 @@
 	#main_header{}
 		/* index.html */
 		#title{font-size: x-small;}
+		.navi>ul:hover{height:auto;}
 		#search > input[type='search']{width:100%; height:40px; margin-top:5px; border:2px solid green;}
 	
 	#main_section {}
