@@ -4,17 +4,10 @@
 $(document).ready(function() {
 		$(window).load(function() {
 			$(".sub_menu").hide();
-			$('#section01').load('./view/viewLogIn.html');
-			return false;
-		});
-		
-		$(".navi a").click(function() {
+			$('#section01').load('./view/viewLogIn/viewLogIn.html');
 			return false;
 		});
 		$(".notice-list li a").click(function() {
-			return false;
-		});
-		$(".book-list li a").click(function() {
 			return false;
 		});
 		$("#sales").mouseover(function() {
@@ -52,11 +45,6 @@ $(document).ready(function() {
 			$("#sub_account").hide();
 		});
 
-		$('.navi a').click(function() {
-			var url = $(this).attr('href');
-			$('#section01').load(url);
-			return false;
-		});
 		$(".notice-list li a").click(function() {
 			var url_notice = $(this).attr('href');
 			$('#section01').load(url_notice);

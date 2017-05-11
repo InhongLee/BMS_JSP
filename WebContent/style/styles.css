@@ -2,8 +2,8 @@
 
 	a,ul,li{margin:0; padding:0;}
 	
-#main_header{}
-	#title a:link, #title a:visited{color:green; text-decoration:none;}
+.main_header{}
+	.title a:link, .title a:visited{color:green; text-decoration:none;}
 	.navi{background:green; border:1px solid white;}
 	.navi>ul:hover{height:50px;}
 	.navi ul li{display:inline-block; width:150px; vertical-align:top; text-align:center;}
@@ -14,7 +14,7 @@
 	.menuName:hover, .menuName:focus{text-shadow:0px 2px 2px black; color:yellow;}
 	.sub_menu{display:inline-block; width:150px; text-align:center;}
 	/* 콘솔출력창 스타일 */
-	#consoleInfo{color:white; background:green; border:1px solid green;}
+	.consoleInfo{color:white; background:green; border:1px solid green;}
 	#notice{color:white;}
 	/* 공지사항 롤업바 스타일 */
 	.news {padding:0px;}
@@ -30,7 +30,7 @@
 	#search{height:50px; margin:0 auto; text-align:center; border:1px solid white;}
 	#search > input[type='search']{width:600px; height:40px; margin-top:5px; border:2px solid green;}
 
-#main_section {border:1px solid white;}
+.main_section {border:1px solid white;}
 	/* viewLogIn.html */
 		#catch_PR{border:1px solid green; width:60%; margin:0 auto; margin-top:50px; padding:50px 25px 50px 25px; text-align:center;}
 		#user_id{margin:0 auto; margin-top:20px; padding:0px; text-align:center;}
@@ -52,7 +52,7 @@
 			#table_uInfo input, #table_uInfo select{border:1px solid green;}
 	/* viewSignOut.html */
 		#view_signOut{width:100%;}
-		#btn_signOut{width:100%; margin:0 auto; margin-top:10px; padding:15px 0px 15px 0px; background:green; text-align:center;}
+		#btn_signOut{width:250px; margin:0 auto; margin-top:10px; padding:15px 0px 15px 0px; background:green; text-align:center;}
 		#btn_signOut a{padding:0px;font-size:large;text-decoration:none;}	
 		#btn_signOut a:link, #btn_signOut a:visited{color:white;}
 	/* viewBuyNow.html */
@@ -229,7 +229,7 @@
 		h2.title2{margin:0px; padding:0px 10px; font-weight:normal;}
 		#order_table1 td input, #order_table1 td select{width:100%; height:100%; box-sizing:border-box;}
 
-#main_footer{height:60px; margin-top:10px; background-color:green; border:1px solid white;}
+.main_footer{height:60px; margin-top:10px; background-color:green; border:1px solid white;}
 	#site_info{color:white; font-size:small;}
 	.bms_logo{float:left; margin:5px 10px 5px 5px;}
 
@@ -237,13 +237,13 @@
 
 @media screen and (max-width:320px){
 	
-	#main_header{}
+	.main_header{}
 		/* index.html */
-		#title{font-size: x-small;}
+		.title{font-size: x-small;}
 		.navi>ul:hover{height:auto;}
 		#search > input[type='search']{width:100%; height:40px; margin-top:5px; border:2px solid green;}
 	
-	#main_section {}
+	.main_section {}
 		/* viewLogIn.html */
 		#view_logIn{text-align:center;}
 			#catch_PR{width:100%; height:100px; margin:0 auto; padding:0px; text-align:center; border:1px solid green;}
@@ -253,6 +253,11 @@
 			#user_pw input{width:100%; height:100%; box-sizing:border-box; font-size:large; font-weight:bold; border:1px solid green;}
 			#btn_logIn{width:49%; margin:5px 0px; padding:10px 0px 10px 0px; background:green; text-align:center; float:left;}
 			#btn_signIn{width:49%; margin:5px 0px; padding:10px 0px 10px 0px; background:green; text-align:center; float:right;}
+		/* viewSignOut.html */
+		#view_signOut{width:100%;}
+			#btn_signOut{width:100%; margin:0 auto; margin-top:10px; padding:15px 0px 15px 0px; background:green; text-align:center;}
+			#btn_signOut a{padding:0px;font-size:large;text-decoration:none;}	
+			#btn_signOut a:link, #btn_signOut a:visited{color:white;}
 		/* viewSales.html */
 		.issue .open-event ul li {width:200px; height:250px; display:inline-block; vertical-align:top; margin-right:10px;}
 		.issue .open-event .prev{position:absolute; top:150px; left:0px; width:30px; height:30px; line-height:0; font-size:0;}
@@ -285,7 +290,7 @@
 		#order_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
 		#order_box3_2{width:300px; margin:5px 0px; vertical-align:top; float:right;}
 			
-	#main_footer{height:auto; margin-top:5px; clear:both;}
+	.main_footer{height:auto; margin-top:5px; clear:both;}
 		/* index.html */
 		#site_info{height:50px; font-size:small; text-align:center; overflow:hidden;}
 		.bms_logo{width:100%; margin:0px;}
