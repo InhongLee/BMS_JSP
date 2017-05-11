@@ -1,0 +1,11 @@
+JSP 요소 적용 브랜치 2017.05.11
+
+2017.05.11	최초 분기
+			목적 JSP/Servlet 요소를 프로젝트에 적용
+			view/viewMain 폴더생성
+			view/viewMain/viewFooter.jsp 생성
+			view/viewMain/viewNavi.jsp 생성
+			view/viewMain/viewRoolUpNews.jsp 생성
+			
+			index.html 삭제
+			index.jsp를 시작페이지로 연결
