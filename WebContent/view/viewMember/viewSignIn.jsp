@@ -5,52 +5,47 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("td").eq(0).css("width","120px");
+		
+		/* id="join"인 <form> 태크안의 submit 버튼 클릭한 경우 */
+		$('#join').submit(function() {	
 
-	<link href="../../style/styles.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="../../JS/jquery-1.11.3.js"></script>
-	<script type="text/javascript" src="../../JS/scripts.js"></script>
-	<script type="text/javascript" src="../../JS/notice.js"></script>
-	<script type="text/javascript" src="../../JS/issue.js"></script>
-	<script type="text/javascript" src="../../JS/search.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("td").eq(0).css("width","120px");
-			
-			/* id="join"인 <form> 태크안의 submit 버튼 클릭한 경우 */
-			$('#join').submit(function() {	
-
-				/* 핸드폰 : 첫숫자는 010, 070, 011, 080중 하나로 시작하고, 다음숫자는 3~4개까지 오고 */
-				var reg02 = /^(010|070|011|080)\d{3,4}\d{4}$/;
-				var result02 = reg02.test($("input[name='signIn_tel']").val());
-				if(!result02) {
-					$(".consoleInfo").html("휴대폰번호를 잘못입력하셨습니다");
-					$("input[name='signIn_tel']").val("");
-					$("input[name='signIn_tel']").focus();
-					return false;
-				}
-				
-				/* check된 취미를 변수이 대입 */
-				var hobby = $("input[name='signIn_hobby']:checked");
-				
-				/* 정상적으로 입력된 경우 출력한다. */
-				$(".consoleInfo").html("회원등록이 완료되었습니다.");
+			/* 핸드폰 : 첫숫자는 010, 070, 011, 080중 하나로 시작하고, 다음숫자는 3~4개까지 오고 */
+			var reg02 = /^(010|070|011|080)\d{3,4}\d{4}$/;
+			var result02 = reg02.test($("input[name='signIn_tel']").val());
+			if(!result02) {
+				$(".consoleInfo").html("휴대폰번호를 잘못입력하셨습니다");
+				$("input[name='signIn_tel']").val("");
+				$("input[name='signIn_tel']").focus();
 				return false;
-			});
+			}
+			
+			/* check된 취미를 변수이 대입 */
+			var hobby = $("input[name='signIn_hobby']:checked");
+			
+			/* 정상적으로 입력된 경우 출력한다. */
+			$(".consoleInfo").html("회원등록이 완료되었습니다.");
+			return false;
 		});
-	</script>
-
+	});
+</script>
 </head>
 <body>
 
-	<div class="main_header">
-		<div class="title"><h1><a href="../../index.jsp">Book Management System</a></h1></div>
-		<jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/>
-		<div class="consoleInfo">콘솔정보창</div>
-		<jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/>
-		<jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/>
-	</div>
-	
-	<div class="main_section">
+	<table class="mainFrame">
+		<tr class="mainRow1"><td><div class="title"><h1><a href="<%=request.getContextPath() %>/index.jsp">Book Management System</a></h1></div></td></tr>
+		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>
+		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/></td></tr>
+		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
+		<tr class="mainRow5"><td>
 		<div id="signIn">
 			<form name="myForm" id="join">
 				<span id="signIn_title">회원가입</span>
@@ -126,12 +121,11 @@
 					</tr>
 				</table>
 			</form>
-		</div>		
-	</div>
+		</div>
+		</td></tr>
+		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
+		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>
+	</table>
 	
-	<div class="main_footer">
-		<jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/>
-	</div>
-
 </body>
 </html>

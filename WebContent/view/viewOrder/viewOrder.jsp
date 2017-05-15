@@ -5,24 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-	<link href="../../style/styles.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="../../JS/jquery-1.11.3.js"></script>
-	<script type="text/javascript" src="../../JS/scripts.js"></script>
-	<script type="text/javascript" src="../../JS/notice.js"></script>
-	<script type="text/javascript" src="../../JS/issue.js"></script>
-	<script type="text/javascript" src="../../JS/search.js"></script>
+<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
 </head>
 <body>
 
-	<div class="main_header">
-		<div class="title"><h1><a href="../../index.jsp">Book Management System</a></h1></div>
-		<jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/>
-		<div class="consoleInfo">콘솔정보창</div>
-		<jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/>
-		<jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/>
-	</div>
-	
-	<div class="main_section">
+	<table class="mainFrame">
+		<tr class="mainRow1"><td><div class="title"><h1><a href="<%=request.getContextPath() %>/index.jsp">Book Management System</a></h1></div></td></tr>
+		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>
+		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/></td></tr>
+		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
+		<tr class="mainRow5"><td>
 		<div id="order_box1">
 			<h2 class="title2">주문 관리</h2>
 			<hr>
@@ -214,61 +211,61 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$(".tab_content").hide();
-				$("ul.tabs li:first").addClass("active").show();
-				$(".tab_content:first").show();
-				
-				$("ul.tabs li").click(function() {
-					$("ul.tabs li").removeClass("active");
-					$(this).addClass("active");
-					$(".tab_content").hide();
-					var activeTab = $(this).find("a").attr("href");
-					$(activeTab).fadeIn();
-					return false;
-				});
-				
-				$("#order_table1 td").click(function() {
-					var col = $(this).parent().children().index($(this));
-					var row = $(this).parent().parent().children().index($(this).parent());
-					
-					var colName = $("#order_table1 th").eq(col).html();
-					var reqState = $(this).parent().children().eq(3).html();
-					
-					if (colName == "Confirm") {
-						var activeTab;
-						$("ul.tabs li").removeClass("active");
-						if(reqState == "Req_Perchase") {
-							$("ul.tabs li:eq(0)").addClass("active");
-							$(".tab_content").hide();
-							activeTab = $("ul.tabs li:eq(0)").find("a").attr("href");
-							$(activeTab).fadeIn();
-							$(activeTab + " input[type='button']").focus();
-						} else if(reqState == "Req_Sales") {
-							$("ul.tabs li:eq(1)").addClass("active");
-							$(".tab_content").hide();
-							activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
-							$(activeTab).fadeIn();
-							$(activeTab + " input[type='button']").focus();
-						} else if(reqState == "Req_Refund") {
-							$("ul.tabs li:eq(2)").addClass("active");
-							$(".tab_content").hide();
-							activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
-							$(activeTab).fadeIn();
-							$(activeTab + " input[type='button']").focus();
-						}
-						$(activeTab + " input[type='submit']").focus();
-					}
-					return false;
-				});
-			});
-		</script>
-	</div>
+		</td></tr>
+		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
+		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>
+	</table>
 	
-	<div class="main_footer">
-		<jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/>
-	</div>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".tab_content").hide();
+		$("ul.tabs li:first").addClass("active").show();
+		$(".tab_content:first").show();
+		
+		$("ul.tabs li").click(function() {
+			$("ul.tabs li").removeClass("active");
+			$(this).addClass("active");
+			$(".tab_content").hide();
+			var activeTab = $(this).find("a").attr("href");
+			$(activeTab).fadeIn();
+			return false;
+		});
+		
+		$("#order_table1 td").click(function() {
+			var col = $(this).parent().children().index($(this));
+			var row = $(this).parent().parent().children().index($(this).parent());
+			
+			var colName = $("#order_table1 th").eq(col).html();
+			var reqState = $(this).parent().children().eq(3).html();
+			
+			if (colName == "Confirm") {
+				var activeTab;
+				$("ul.tabs li").removeClass("active");
+				if(reqState == "Req_Perchase") {
+					$("ul.tabs li:eq(0)").addClass("active");
+					$(".tab_content").hide();
+					activeTab = $("ul.tabs li:eq(0)").find("a").attr("href");
+					$(activeTab).fadeIn();
+					$(activeTab + " input[type='button']").focus();
+				} else if(reqState == "Req_Sales") {
+					$("ul.tabs li:eq(1)").addClass("active");
+					$(".tab_content").hide();
+					activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
+					$(activeTab).fadeIn();
+					$(activeTab + " input[type='button']").focus();
+				} else if(reqState == "Req_Refund") {
+					$("ul.tabs li:eq(2)").addClass("active");
+					$(".tab_content").hide();
+					activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
+					$(activeTab).fadeIn();
+					$(activeTab + " input[type='button']").focus();
+				}
+				$(activeTab + " input[type='submit']").focus();
+			}
+			return false;
+		});
+	});
+</script>
 </body>
 </html>

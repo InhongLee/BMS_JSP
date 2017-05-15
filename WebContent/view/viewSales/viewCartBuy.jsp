@@ -5,24 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-	<link href="../../style/styles.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="../../JS/jquery-1.11.3.js"></script>
-	<script type="text/javascript" src="../../JS/scripts.js"></script>
-	<script type="text/javascript" src="../../JS/notice.js"></script>
-	<script type="text/javascript" src="../../JS/issue.js"></script>
-	<script type="text/javascript" src="../../JS/search.js"></script>
+<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
 </head>
 <body>
 
-	<div class="main_header">
-		<div class="title"><h1><a href="../../index.jsp">Book Management System</a></h1></div>
-		<jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/>
-		<div class="consoleInfo">콘솔정보창</div>
-		<jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/>
-		<jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/>
-	</div>
-	
-	<div class="main_section">
+	<table class="mainFrame">
+		<tr class="mainRow1"><td><div class="title"><h1><a href="<%=request.getContextPath() %>/index.jsp">Book Management System</a></h1></div></td></tr>
+		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>
+		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/></td></tr>
+		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
+		<tr class="mainRow5"><td>
 		<div id="cartBuy_box1">
 			<span id="cartBuy_title">카트구매</span>
 			<hr>
@@ -100,18 +97,17 @@
 					<a href="../viewSales/viewSales.jsp">일괄 구매</a>
 				</div>
 				<div id="cartBuy_btn2">
-					<a href="../viewSales/viewSales.jsp">카트 비우기</a>
+					<a href="../viewSales/viewSales.jsp">카트비우기</a>
 				</div>
 				<div id="cartBuy_btn3">
 					<a href="../viewSales/viewSales.jsp">계속 쇼핑</a>
 				</div>
 			</div>
-		</div>		
-	</div>
-	
-	<div class="main_footer">
-		<jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/>
-	</div>
+		</div>	
+		</td></tr>
+		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
+		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>
+	</table>
 	
 </body>
 </html>
