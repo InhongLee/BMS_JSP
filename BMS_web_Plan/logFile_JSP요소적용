@@ -30,7 +30,16 @@ JSP 요소 적용 브랜치 2017.05.11
 				대책
 					- 테이블을 사용하여 화면의 구성을 구조화시킴
 
-			session 사용한 login/out algorithm구현 필요...
+			session 사용한 회원가입 module구현 중...
+				화면 연결 완료
+					로그인 페이지(viewLogIn.jsp)				:	회원가입 버튼 클릭
+					회원가입 페이지(viewSignIn.jsp)			:	회원정보 입력후 회원가입 버튼 클릭
+					약관동의 페이지(viewSignIn_agree.jsp)	:	약관내용 확인후 동의시 동의함 클릭후 확인 클릭
+					가입처리 페이지(viewSignIn_subscribe.jsp):	가입내용 DB전달(추후 구현) 후 처리 처리결과 페이지로 redirect
+					처리결과 페이지(viewSignIn_result.jsp)	:	가입처리결과 출력 후 지정된 페이지로 자동 이동 처리
+				각 화면 UI, 유효성검증, 통일성 부여 작업 필요...
+			
+			jdbc 연동 구현 필요...
 			
 			화면구성요소중 반복되는 부분을 JSP 스크립트로 코드 간소화 필요...
 				현상황
