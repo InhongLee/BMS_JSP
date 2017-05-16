@@ -55,12 +55,12 @@
 				}	
 			},
 			"mouseleave":function() {
-				$("#btn_logIn a").css("color","white");
-				$("#btn_logIn a").css("text-shadow","none");
+				$("#btn_logIn input").css("color","white");
+				$("#btn_logIn input").css("text-shadow","none");
 				$(".consoleInfo").html("&nbsp;");},
 			"mouseenter":function() {
-				$("#btn_logIn a").css("color","yellow");
-				$("#btn_logIn a").css("text-shadow","0px 2px 2px black");
+				$("#btn_logIn input").css("color","yellow");
+				$("#btn_logIn input").css("text-shadow","0px 2px 2px black");
 				$(".consoleInfo").html("로그인을 시도합니다");}
 		});
 	});
@@ -86,7 +86,7 @@
 					<input name="user_pw" type="password" placeholder="&nbsp비밀번호">
 				</div>
 				<div id="btn_logIn">
-					<a href="../viewSales/viewSales.jsp">로그인</a>
+					<input type="submit" value="로그인">
 				</div>	
 				<div id="btn_signIn">
 					<a href="../viewMember/viewSignIn.jsp">회원가입</a>

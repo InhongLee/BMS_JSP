@@ -27,13 +27,6 @@
 				$("input[name='signIn_tel']").focus();
 				return false;
 			}
-			
-			/* check된 취미를 변수이 대입 */
-			var hobby = $("input[name='signIn_hobby']:checked");
-			
-			/* 정상적으로 입력된 경우 출력한다. */
-			$(".consoleInfo").html("회원등록이 완료되었습니다.");
-			return false;
 		});
 	});
 </script>
@@ -47,7 +40,7 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="signIn">
-			<form name="myForm" id="join">
+			<form action="viewSignIn_agree.jsp" name="myForm" id="join">
 				<span id="signIn_title">회원가입</span>
 				<hr>
 				<table id="table_uInfo">
