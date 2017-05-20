@@ -6,12 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link href="../../style/styles.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
 
 </head>
 <body>

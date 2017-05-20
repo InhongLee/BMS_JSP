@@ -13,6 +13,12 @@ a,ul,li{margin:0; padding:0;}
 .mainRow7{height:60px; background-color:green;}
 .mainFrame tr>td{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
+.input			{width:100%; height:100%; margin:0; padding:0;}
+.inputButton	{width:100%; height:100%; margin:0; padding:0; text-align:center; color:white; background-color:green; border:1px solid green;}
+.fontSizeS		{font-size: small;}
+.fontSizeM		{font-size: medium;}
+.fontSizeL		{font-size: large;}
+
 .main_header{}
 	.title a:link, .title a:visited{color:green; text-decoration:none;}
 	.navi{text-align:center;}
@@ -42,18 +48,15 @@ a,ul,li{margin:0; padding:0;}
 .main_section {border:1px solid white;}
 	/* viewLogIn.html */
 		#catch_PR{border:1px solid green; width:60%; margin:0 auto; margin-top:50px; padding:50px 25px 50px 25px; text-align:center;}
-		#user_id{margin:0 auto; margin-top:20px; padding:0px; text-align:center;}
-		#user_id input{height:30px; width:250px; font-size:large; font-weight:bold; border:1px solid green;}
-		#user_pw{margin:0 auto; margin-top:10px; padding:0px; text-align:center;}
-		#user_pw input{height:30px; width:250px; font-size:large; font-weight:bold; border:1px solid green;}
-		#btn_logIn{width:250px; height:50px; margin:0 auto; margin-top:10px; padding:0px;  text-align:center;}
-		#btn_logIn input{width:100%; height:100%; padding:0px; font-size:large;  text-decoration:none; color:white; background:green; border:1px solid green;}
-		#btn_signIn{width:250px; margin:0 auto; margin-top:5px; padding:5px 0px 5px 0px; background:green; text-align:center;}
-		#btn_signIn	a{text-decoration:none; padding:0px; font-size:large;}
-		#btn_signIn a:link, #btn_signIn a:visited{color:white;}
+		#customer_id{margin:0 auto; margin-top:20px; padding:0px; text-align:center;}
+		#customer_id input{height:30px; width:250px; font-size:large; font-weight:bold; border:1px solid green;}
+		#customer_pw{margin:0 auto; margin-top:10px; padding:0px; text-align:center;}
+		#customer_pw input{height:30px; width:250px; font-size:large; font-weight:bold; border:1px solid green;}
+		#btn_logIn	{width:250px; height:50px; margin:0 auto; margin-top:10px; padding:0px;}
+		#btn_signIn	{width:250px; height:50px; margin:0 auto; margin-top:5px; padding:0px;}
 	/* viewSignIn.html */
 		#signIn{border:1px solid green;}
-			#join{margin:10px;}
+			form[name="form_signIn"]{margin:10px;}
 			#signIn_title{font-size:large; font-weight:bold;}
 			#table_uInfo{border-collapse:collapse;}
 			#table_uInfo tr{height: 25px; background-color:white;}
@@ -258,10 +261,10 @@ a,ul,li{margin:0; padding:0;}
 		/* viewLogIn.html */
 		#view_logIn{text-align:center;}
 			#catch_PR{width:100%; height:100px; margin:0 auto; padding:0px; text-align:center; border:1px solid green;}
-			#user_id{width:100%; height:50px; margin:0 auto; margin-top:5px; padding:0px; text-align:center;}
-			#user_id input{width:100%; height:100%; box-sizing:border-box; font-size:large; font-weight:bold; border:1px solid green;}
-			#user_pw{width:100%; height:50px; margin:0 auto; margin-top:5px; padding:0px; text-align:center;}
-			#user_pw input{width:100%; height:100%; box-sizing:border-box; font-size:large; font-weight:bold; border:1px solid green;}
+			#customer_id{width:100%; height:50px; margin:0 auto; margin-top:5px; padding:0px; text-align:center;}
+			#customer_id input{width:100%; height:100%; box-sizing:border-box; font-size:large; font-weight:bold; border:1px solid green;}
+			#customer_pw{width:100%; height:50px; margin:0 auto; margin-top:5px; padding:0px; text-align:center;}
+			#customer_pw input{width:100%; height:100%; box-sizing:border-box; font-size:large; font-weight:bold; border:1px solid green;}
 			#btn_logIn{width:49%; margin:5px 0px; padding:10px 0px 10px 0px; background:green; text-align:center; float:left;}
 			#btn_signIn{width:49%; margin:5px 0px; padding:10px 0px 10px 0px; background:green; text-align:center; float:right;}
 		/* viewSignOut.html */

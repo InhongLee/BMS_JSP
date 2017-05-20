@@ -19,9 +19,6 @@
 <link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("td").eq(0).css("width","120px");

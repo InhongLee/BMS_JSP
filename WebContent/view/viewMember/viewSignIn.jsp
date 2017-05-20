@@ -1,35 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("td").eq(0).css("width","120px");
-		
-		/* id="join"인 <form> 태크안의 submit 버튼 클릭한 경우 */
-		$('#join').submit(function() {	
-
-			/* 핸드폰 : 첫숫자는 010, 070, 011, 080중 하나로 시작하고, 다음숫자는 3~4개까지 오고 */
-			var reg02 = /^(010|070|011|080)\d{3,4}\d{4}$/;
-			var result02 = reg02.test($("input[name='signIn_tel']").val());
-			if(!result02) {
-				$(".consoleInfo").html("휴대폰번호를 잘못입력하셨습니다");
-				$("input[name='signIn_tel']").val("");
-				$("input[name='signIn_tel']").focus();
-				return false;
-			}
-		});
-	});
-</script>
 </head>
 <body>
 
@@ -40,65 +14,61 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="signIn">
-			<form action="viewSignIn_agree.jsp" name="myForm" id="join">
+			<form name="form_signIn" action="viewSignIn_agree.do" method="post" onsubmit="return viewSignIn_check();">
+				<input type="hidden" name="hiddenId" value="0">
 				<span id="signIn_title">회원가입</span>
 				<hr>
 				<table id="table_uInfo">
 					<tr>
-						<td><label for="signIn_uId">아이디</label></td>
-						<td><input type="text" name="signIn_uId" id="signIn_uId" autofocus required></td>
+						<td style="width:15%; min-width:100px;"><label for="signIn_uId">아이디 *</label></td>
+						<td style="width:35%; min-width:200px;">
+							<input type="text" name="customer_id" id="signIn_uId" maxlength="20" autofocus onchange="resetHiddenId();">
+							<input class="inputButton" type="button" name="dupChk" value="중복확인" onclick="confirmId();" style="width:100px;">
+						</td>
+						<td style="width:50%;"></td>
 					</tr>
 					<tr>
-						<td><label for="signIn_uPw">비밀번호</label></td>
-						<td><input type="password" name="signIn_uPw" id="signIn_uPw" required></td>
+						<td><label for="signIn_uPw">비밀번호 *</label></td>
+						<td><input class="input" type="password" name="customer_pw" id="signIn_uPw" maxlength="10"></td>
 					</tr>
 					<tr>
-						<td><label for="signIn_sId">주민번호</label></td>
-						<td><input type="password" name="signIn_sId" id="signIn_sId" required></td>
+						<td><label for="signIn_reuPw">비밀번호 확인 *</label></td>
+						<td><input class="input" type="password" name="customer_repw" id="signIn_reuPw" maxlength="10"></td>
 					</tr>
 					<tr>
-						<td>성별</td>
+						<td><label for="signIn_name">이름 *</label></td>
+						<td><input class="input" type="text" name="customer_name" id="signIn_name" maxlength="20"></td>
+					</tr>
+					<tr>
+						<td><label for="signIn_sId">주민번호 *</label></td>
 						<td>
-							<input type="radio" name="signIn_gender" id="signIn_gen_m" value="남자">
-							<label for="signIn_gen_m">남자&nbsp;&nbsp;</label>
-							<input type="radio" name="signIn_gender" id="signIn_gen_w" value="여자">
-							<label for="signIn_gen_w">여자</label>
+							<input type="text" name="customer_sid1" id="signIn_sId" maxlength="6" style="width:60px;" onkeyup="next_sId1();">
+							-
+							<input type="text" name="customer_sid2" maxlength="7" style="width:70px;" onkeyup="next_sId2();">
 						</td>
 					</tr>
 					<tr>
-						<td><label for="signIn_eMail">이메일</label></td>
-						<td><input type="email" name="signIn_eMail" id="signIn_eMail" required></td>
-					</tr>
-					<tr>
-						<td><label for="signIn_url">URL</label></td>
-						<td><input type="url" name="signIn_url" id="signIn_url"></td>
-					</tr>
-					<tr>
-						<td><label for="signIn_tel">전화번호</label></td>
-						<td><input type="tel" name="signIn_tel" id="signIn_tel" required></td>
-					</tr>
-					<tr>
-						<td>취미</td>
+						<td><label for="signIn_hp">연락처</label></td>
 						<td>
-							<input type="checkbox" name="signIn_hobby" id="signIn_hobby1" value="축구">
-							<label for="signIn_hobby1">축구&nbsp;&nbsp;</label>
-							<input type="checkbox" name="signIn_hobby" id="signIn_hobby2" value="야구">
-							<label for="signIn_hobby2">야구&nbsp;&nbsp;</label>
-							<input type="checkbox" name="signIn_hobby" id="signIn_hobby3" value="수영">
-							<label for="signIn_hobby3">수영</label>
+							<input type="text" name="customer_hp1" id="signIn_hp" maxlength="3" style="width:30px;" onkeyup="next_hp1();">
+							-
+							<input type="text" name="customer_hp2" maxlength="4" style="width:40px;" onkeyup="next_hp2();">
+							-
+							<input type="text" name="customer_hp3" maxlength="4" style="width:40px;" onkeyup="next_hp3();">
 						</td>
 					</tr>
 					<tr>
-						<td><label for="signIn_job">직업</label></td>
+						<td><label for="signIn_eMail">이메일 *</label></td>
 						<td>
-							<select name="signIn_job" id="signIn_job">
-								<option>직업을 선택하세요.</option>
-								<option value="프로그래머">프로그래머</option>
-								<option value="건물주">건물주</option>
-								<option value="금수저">금수저</option>
-								<option value="아이돌">아이돌</option>
-								<option value="작사가">작사가</option>
-								<option value="랩퍼">랩퍼</option>
+							<input type="text" name="customer_email1" id="signIn_eMail" maxlength="10" style="width:100px;">
+							@
+							<input type="text" name="customer_email2" maxlength="19" style="width:100px;">
+							<select name="customer_email3" onchange="emailChk();">
+								<option value="0" selected>직접 입력</option>
+								<option value="gmail.com">gmail.com</option>
+								<option value="naver.com">naver.com</option>
+								<option value="daum.net">daum.net</option>
+								<option value="nate.com">nate.com</option>
 							</select>
 						</td>
 					</tr>
@@ -108,8 +78,9 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="submit" value="회원가입" class="submit">
-							<input type="reset" value="다시작성" class="reset">
+							<div style="width:30%; height:30px; display:inline-block;"><input class="inputButton" type="submit" value="회원가입" ></div>
+							<div style="width:30%; height:30px; display:inline-block;"><input class="inputButton" type="reset" value="다시작성" ></div>
+							<div style="width:30%; height:30px; display:inline-block;"><input class="inputButton" type="button" value="가입취소" onclick="window.location='viewLogIn.do'"></div>
 						</td>
 					</tr>
 				</table>

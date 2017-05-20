@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link href="../../style/styles.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
 <style>
 	.issue {margin:0 auto; margin-top:10px; padding:0px; width:95%;}
 	.issue .open-event {height:350px; position:relative; border:1px solid gray; overflow:hidden;}
@@ -20,9 +20,6 @@
 </style>
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/notice.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/issue.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/search.js"></script>
 </head>
 <body>
 	<table class="mainFrame">
@@ -37,49 +34,49 @@
 		<div class="open-event" style="width:100%;">
 			<ul class="book-list">
 				<li >
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/HeadFirst_Java.jpg" alt="책이미지  200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/HeadFirst_Java.jpg" alt="책이미지  200x240"></a>
 					<div class="bookTitle">Headfirst Java</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/자바스크립트.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/자바스크립트.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">JavaScript N jQuery: The Missing Manual</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">정보처리기사 필기</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/HTML5+CSS3.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/HTML5+CSS3.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">HTML5+CSS3 웹 표준의 정석</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/해킹방어를위한JAVA시큐어코딩.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/해킹방어를위한JAVA시큐어코딩.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">해킹방어를 위한 JAVA 시큐어코딩</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">정보처리기사 필기</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/HTML5+CSS3.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/HTML5+CSS3.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">HTML5+CSS3 웹 표준의 정석</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
@@ -87,8 +84,8 @@
 				</li>
 			</ul>
 			<span id="btn_issue">
-				<a href="#" class="prev"><img src="../../images/icon_arrow_left.png" alt="Prev"></a>
-				<a href="#" class="next"><img src="../../images/icon_arrow_right.png" alt="Next"></a>
+				<a href="#" class="prev"><img src="<%=request.getContextPath() %>/images/icon_arrow_left.png" alt="Prev"></a>
+				<a href="#" class="next"><img src="<%=request.getContextPath() %>/images/icon_arrow_right.png" alt="Next"></a>
 			</span>
 		</div>
 		<script type="text/javascript">fn_issue('btn_issue','issue')</script>
@@ -100,49 +97,49 @@
 		<div class="open-event" style="width:100%;">
 			<ul class="book-list">
 				<li >
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/HeadFirst_Java.jpg" alt="책이미지  200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/HeadFirst_Java.jpg" alt="책이미지  200x240"></a>
 					<div class="bookTitle">Headfirst Java</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/자바스크립트.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/자바스크립트.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">JavaScript N jQuery: The Missing Manual</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">정보처리기사 필기</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/HTML5+CSS3.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/HTML5+CSS3.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">HTML5+CSS3 웹 표준의 정석</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/해킹방어를위한JAVA시큐어코딩.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/해킹방어를위한JAVA시큐어코딩.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">해킹방어를 위한 JAVA 시큐어코딩</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/정보처리기사필기.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">정보처리기사 필기</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
 					<div class="bookAuthor">D.S. 맥파랜드 지음 | 지앤선 출판</div>
 				</li>
 				<li>
-					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="../../images/자바스크립트.jpg" alt="책이미지 200x240"></a>
+					<a href="../viewSales/viewBuyNow.jsp"><img class="img_book" src="<%=request.getContextPath() %>/images/자바스크립트.jpg" alt="책이미지 200x240"></a>
 					<div class="bookTitle">JavaScript N jQuery: The Missing Manual</div>
 					<div class="bookComment">간략한 묘사</div>
 					<div class="bookPrice">35,000원</div>
@@ -150,8 +147,8 @@
 				</li>
 			</ul>
 			<span id="btn_bestseller">
-				<a href="#" class="prev"><img src="../../images/icon_arrow_left.png" alt="Prev"></a>
-				<a href="#" class="next"><img src="../../images/icon_arrow_right.png" alt="Next"></a>
+				<a href="#" class="prev"><img src="<%=request.getContextPath() %>/images/icon_arrow_left.png" alt="Prev"></a>
+				<a href="#" class="next"><img src="<%=request.getContextPath() %>/images/icon_arrow_right.png" alt="Next"></a>
 			</span>
 		</div>
 		<script type="text/javascript">fn_issue('btn_bestseller','bestseller')</script>
