@@ -11,7 +11,7 @@
 		<ul>
 			<li id="sales"><span class="menuName">sales</span>
 				<ul class="sub_menu" id="sub_sales">
-					<li><a href="../viewSales/viewCartBuy.jsp">장바구니</a></li>
+					<li><a href="viewCartBuy.do">장바구니</a></li>
 				</ul>
 			</li>
 			<li id="stock"><span class="menuName">stock</span>
@@ -26,7 +26,7 @@
 			</li>
 			<li id="member"><span class="menuName">member</span>
 				<ul class="sub_menu" id="sub_member">
-					<li><a href="../viewMember/viewMemberInfo.jsp">마이페이지</a></li>
+					<li><a href="viewMemberInfo.do">마이페이지</a></li>
 				</ul>				
 			</li>
 		</ul>

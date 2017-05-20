@@ -4,9 +4,10 @@
 <head>
 	<title>Insert title here</title>
 	<script type="text/javascript">
-		setTimeout(function() {
-			window.location='viewLogIn.do';
-		}, 1000);
+		<%
+		session.invalidate();
+		%>
+		setTimeout(function() {window.location='viewLogIn.do';}, 1000);
 	</script>
 </head>
 

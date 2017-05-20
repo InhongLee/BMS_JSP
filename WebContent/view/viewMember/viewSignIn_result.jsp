@@ -6,15 +6,7 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
 <script type="text/javascript">
 	var result = <%=(Integer)request.getAttribute("cnt")%>;
-	if(result == 1) {
-		setTimeout(function() {
-			window.location='viewSales.do';
-		}, 1000);
-	} else {
-		setTimeout(function() {
-			window.location='viewLogIn.do';
-		}, 1000);
-	}
+	setTimeout(function() {window.location='viewLogIn.do';}, 1000);
 </script>
 </head>
 <body>
@@ -28,7 +20,7 @@
 			<%
 				if((Integer)request.getAttribute("cnt") == 1) { %>
 					<h1>회원가입에 성공하였습니다.</h1>
-					<p>잠시후 메인페이지로 이동합니다.</p>
+					<p>잠시후 로그인페이지로 이동합니다.</p>
 			<%	} else { %>
 					<h1>회원가입에 실패하였습니다.</h1>
 					<p>잠시후 로그인페이지로 돌아갑니다.</p>

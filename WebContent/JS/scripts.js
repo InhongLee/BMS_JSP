@@ -58,12 +58,12 @@ function viewSignIn_check() { //회원가입 정보(id,pw,이름,주민번호,�
 }
 
 function emailChk() {
-	if(document.form_signIn.customer_email3.value != 0) 	{document.form_signIn.customer_email2.value = document.form_signIn.customer_email3.value;
-															 document.form_signIn.customer_email2.setAttribute("disabled",true);
-															 return false;}
-	else if(document.form_signIn.customer_email3.value == 0){document.form_signIn.customer_email2.value = "";
-															 document.form_signIn.customer_email2.removeAttribute("disabled");
-															 return false;}
+	if($(".emailChk3").val() != 0) 						{$(".emailChk2").val($(".emailChk3").val());
+														 $(".emailChk2").attr("readonly", true);
+														 return false;}
+	else if($(".emailChk3").val() == 0)					{$(".emailChk2").val("");
+														 $(".emailChk2").removeAttr("readonly");
+														 return false;}
 }
 
 function confirmId() { //회원가입 페이지에서 입력한 id가 이미 있는 아이디인지 확인
@@ -88,6 +88,34 @@ function next_sId2()	{if(document.form_signIn.customer_sid2.value.length >= 7)	{
 function next_hp1()		{if(document.form_signIn.customer_hp1.value.length >= 3)	{document.form_signIn.customer_hp2.focus();}}
 function next_hp2()		{if(document.form_signIn.customer_hp2.value.length >= 4)	{document.form_signIn.customer_hp3.focus();}}
 function next_hp3()		{if(document.form_signIn.customer_hp3.value.length >= 4)	{document.form_signIn.customer_email1.focus();}}
+/*************************************************************************************************************************************************************/
+/*viewMemberInfo.jsp																																		 */
+/*************************************************************************************************************************************************************/
+function viewInfo_check() { //회원정보 수정(id,pw,이름,주민번호,연락처,이메일)입력 후 수정 버튼 클릭 > 입력정보 검증
+	if(!$(".idChk").val())								{$(".idChk").val($(".idChk").attr("placeholder"));}
+	if(!$(".pwChk").val())								{$(".pwChk").val($(".pwChk").attr("placeholder"));}
+	if(!$(".repwChk").val())							{$(".repwChk").val($(".repwChk").attr("placeholder"));}
+	if($(".pwChk").val() != $(".repwChk").val()) //비밀번호 != 비밀번호 확인
+														{$(".consoleInfo").html(msg_repwdChk);
+														 $(".pwChk").val("");
+														 $(".repwChk").val("");
+														 $(".pwChk").focus();
+														 return false;}
+	if(!$(".nameChk").val())							{$(".nameChk").val($(".nameChk").attr("placeholder"));}
+	if(!$(".sIdChk1").val())							{$(".sIdChk1").val($(".sIdChk1").attr("placeholder"));}
+	if(!$(".sIdChk2").val())							{$(".sIdChk2").val($(".sIdChk2").attr("placeholder"));}
+	if(!$(".hpChk1").val())								{$(".hpChk1").val($(".hpChk1").attr("placeholder"));}
+	if(!$(".hpChk2").val())								{$(".hpChk2").val($(".hpChk2").attr("placeholder"));}
+	if(!$(".hpChk3").val())								{$(".hpChk3").val($(".hpChk3").attr("placeholder"));}
+	if(!$(".emailChk1").val())							{$(".emailChk1").val($(".emailChk1").attr("placeholder"));}
+	if(!$(".emailChk2").val())							{$(".emailChk2").val($(".emailChk2").attr("placeholder"));}
+}
+function next_sId1()	{if($(".sIdChk1").val().length >= 6)	{$(".sIdChk2").focus();}}
+function next_sId2()	{if($(".sIdChk2").val().length >= 7)	{$(".hpChk1").focus();}}
+function next_hp1()		{if($(".hpChk1").val().length >= 3)		{$(".hpChk2").focus();}}
+function next_hp2()		{if($(".hpChk2").val().length >= 4)		{$(".hpChk3").focus();}}
+function next_hp3()		{if($(".hpChk3").val().length >= 4)		{$(".emailChk1").focus();}}
+
 /**
  * 공지사항 롤링바 구현 javascript
  */

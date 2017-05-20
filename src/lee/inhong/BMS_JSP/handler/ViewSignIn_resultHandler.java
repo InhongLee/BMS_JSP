@@ -12,15 +12,12 @@ public class ViewSignIn_resultHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
 		int cnt = 0;
-		Customer dto = (Customer) req.getSession().getAttribute("customerInfo");
+		Customer dto = (Customer) req.getAttribute("customerInfo");
 		String agree = req.getParameter("agree");
 		
 		if(agree.equals("YES")) {
 			BMSDAO dao = BMSDAOImpl.getInstance();
 			cnt = dao.addCustomer(dto);			
-		} else if(agree.equals("NO")) {
-			req.getSession().removeAttribute("customer_id");
-			req.getSession().removeAttribute("customerInfo");
 		}
 		
 		req.setAttribute("cnt", cnt);

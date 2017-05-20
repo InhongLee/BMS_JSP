@@ -4,10 +4,18 @@ CREATE TABLE publisher (
 );
 
 CREATE TABLE customer (
-    customer_id VARCHAR2(20) PRIMARY KEY,
-    customer_pw VARCHAR2(12) NOT NULL,
-    customer_name VARCHAR2(50) NOT NULL
+    customer_id         VARCHAR2(20)    PRIMARY KEY,
+    customer_pw         VARCHAR2(10)    NOT NULL,
+    customer_name       VARCHAR2(20)    NOT NULL,
+    customer_sid1       VARCHAR2(6)     NOT NULL,
+    customer_sid2       VARCHAR2(7)     NOT NULL,
+    customer_hp         VARCHAR2(13),
+    customer_email      VARCHAR2(30)    NOT NULL,
+    customer_regDate    TIMESTAMP       DEFAULT SYSDATE,
+    CONSTRAINT customer_customer_email_uk UNIQUE(customer_email)
 );
+INSERT INTO customer(customer_id,customer_pw,customer_name,customer_sid1,customer_sid2,customer_hp,customer_email)
+    VALUES('in6121','amaco78','¿Ã¿Œ»´','781216','1695713','01097833038','amaco78@gmail.com');
 
 CREATE TABLE department (
     department_id NUMBER(4) PRIMARY KEY,

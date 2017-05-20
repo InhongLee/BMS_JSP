@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import lee.inhong.BMS_JSP.handler.CommandHandler;
 import lee.inhong.BMS_JSP.handler.ConfirmIdHandler;
+import lee.inhong.BMS_JSP.handler.ViewInfo_updateHandler;
+import lee.inhong.BMS_JSP.handler.ViewLogIn_checkHandler;
+import lee.inhong.BMS_JSP.handler.ViewMemberInfoHandler;
 import lee.inhong.BMS_JSP.handler.ViewSignIn_agreeHandler;
 import lee.inhong.BMS_JSP.handler.ViewSignIn_resultHandler;
 
@@ -43,7 +46,8 @@ public class BMSFrontController extends HttpServlet {
 		
 		switch(url) {
 		case "/viewLogIn.do":				viewPage = "/view/viewLogIn/viewLogIn.jsp";				System.out.println(viewPage);	break;
-		case "/viewLogIn_check.do":			viewPage = "/view/viewLogIn/viewLogIn_check.jsp";		System.out.println(viewPage);	break;
+		case "/viewLogIn_check.do":			CommandHandler viewLogIn_checkHandler = new ViewLogIn_checkHandler();
+											viewPage = viewLogIn_checkHandler.process(req, res);	System.out.println(viewPage);	break;
 		case "/viewSignIn.do":				viewPage = "/view/viewMember/viewSignIn.jsp";			System.out.println(viewPage);	break;
 		case "/confirmId.do":				CommandHandler confirmIdHandler = new ConfirmIdHandler();
 											viewPage = confirmIdHandler.process(req, res);			System.out.println(viewPage);	break;
@@ -51,7 +55,11 @@ public class BMSFrontController extends HttpServlet {
 											viewPage = viewSignIn_agreeHandler.process(req, res);	System.out.println(viewPage);	break;
 		case "/viewSignIn_result.do":		CommandHandler viewSignIn_resultHandler = new ViewSignIn_resultHandler();
 											viewPage = viewSignIn_resultHandler.process(req, res);	System.out.println(viewPage);	break;
-		case "/viewMemberInfo.do":			viewPage = "/view/viewMember/viewMemberInfo.jsp";		System.out.println(viewPage);	break;
+		case "/viewMemberInfo.do":			CommandHandler viewMemberInfoHandler = new ViewMemberInfoHandler();
+											viewPage = viewMemberInfoHandler.process(req, res);		System.out.println(viewPage);	break;
+		case "/viewInfo_update.do":			CommandHandler viewInfo_updateHandler = new ViewInfo_updateHandler();
+											viewPage = viewInfo_updateHandler.process(req, res);	System.out.println(viewPage);	break;
+		case "/viewSignOut.do":				viewPage = "/view/viewMember/viewSignOut.jsp";			System.out.println(viewPage);	break;
 		case "/viewSales.do":				viewPage = "/view/viewSales/viewSales.jsp";				System.out.println(viewPage);	break;
 		default:break;
 		}

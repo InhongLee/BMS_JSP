@@ -62,8 +62,8 @@
 						<td>
 							<input type="text" name="customer_email1" id="signIn_eMail" maxlength="10" style="width:100px;">
 							@
-							<input type="text" name="customer_email2" maxlength="19" style="width:100px;">
-							<select name="customer_email3" onchange="emailChk();">
+							<input class="emailChk2" type="text" name="customer_email2" maxlength="19" style="width:100px;">
+							<select class="emailChk3" name="customer_email3" onchange="emailChk();">
 								<option value="0" selected>직접 입력</option>
 								<option value="gmail.com">gmail.com</option>
 								<option value="naver.com">naver.com</option>

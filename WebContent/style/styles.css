@@ -18,6 +18,7 @@ a,ul,li{margin:0; padding:0;}
 .fontSizeS		{font-size: small;}
 .fontSizeM		{font-size: medium;}
 .fontSizeL		{font-size: large;}
+.title			{font-size: large; font-weight:bold;}
 
 .main_header{}
 	.title a:link, .title a:visited{color:green; text-decoration:none;}
@@ -68,6 +69,16 @@ a,ul,li{margin:0; padding:0;}
 		#btn_signOut{width:250px; margin:0 auto; margin-top:10px; padding:15px 0px 15px 0px; background:green; text-align:center;}
 		#btn_signOut a{padding:0px;font-size:large;text-decoration:none;}	
 		#btn_signOut a:link, #btn_signOut a:visited{color:white;}
+	
+	/* viewMemberInfo.jsp */
+		#myInfo_box1{}
+			#myInfo_box2{border:1px solid green;}
+				#form_info{margin:10px;}
+				#table_myInfo{border-collapse:collapse;}
+				#table_myInfo tr{height:25px; background-color:white;}
+				#table_myInfo input, #table_myInfo select{border:1px solid green;}
+			#myInfo_box3{margin-top:10px; padding:10px; border:1px solid green;}
+				#myInfo_box4{margin-top:10px; text-align:center; color:white; background:green;}
 	/* viewBuyNow.html */
 	#viewBuyNow{}
 		#buyNow_box1{width:90%; margin:0 auto; margin-top:10px;}
