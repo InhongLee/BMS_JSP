@@ -22,45 +22,45 @@
 					<tr>
 						<td style="width:15%; min-width:100px;"><label for="signIn_uId">아이디 *</label></td>
 						<td style="width:35%; min-width:200px;">
-							<input type="text" name="customer_id" id="signIn_uId" maxlength="20" autofocus onchange="resetHiddenId();">
+							<input class="idChk" type="text" name="customer_id" id="signIn_uId" maxlength="20" autofocus onchange="resetHiddenId();">
 							<input class="inputButton" type="button" name="dupChk" value="중복확인" onclick="confirmId();" style="width:100px;">
 						</td>
 						<td style="width:50%;"></td>
 					</tr>
 					<tr>
 						<td><label for="signIn_uPw">비밀번호 *</label></td>
-						<td><input class="input" type="password" name="customer_pw" id="signIn_uPw" maxlength="10"></td>
+						<td><input class="input pwChk" type="password" name="customer_pw" id="signIn_uPw" maxlength="10"></td>
 					</tr>
 					<tr>
 						<td><label for="signIn_reuPw">비밀번호 확인 *</label></td>
-						<td><input class="input" type="password" name="customer_repw" id="signIn_reuPw" maxlength="10"></td>
+						<td><input class="input repwChk" type="password" name="customer_repw" id="signIn_reuPw" maxlength="10"></td>
 					</tr>
 					<tr>
 						<td><label for="signIn_name">이름 *</label></td>
-						<td><input class="input" type="text" name="customer_name" id="signIn_name" maxlength="20"></td>
+						<td><input class="input nameChk" type="text" name="customer_name" id="signIn_name" maxlength="20"></td>
 					</tr>
 					<tr>
 						<td><label for="signIn_sId">주민번호 *</label></td>
 						<td>
-							<input type="text" name="customer_sid1" id="signIn_sId" maxlength="6" style="width:60px;" onkeyup="next_sId1();">
+							<input class="sIdChk1" type="text" name="customer_sid1" id="signIn_sId" maxlength="6" style="width:60px;" onkeyup="next_sId1();">
 							-
-							<input type="text" name="customer_sid2" maxlength="7" style="width:70px;" onkeyup="next_sId2();">
+							<input class="sIdChk2" type="text" name="customer_sid2" maxlength="7" style="width:70px;" onkeyup="next_sId2();">
 						</td>
 					</tr>
 					<tr>
 						<td><label for="signIn_hp">연락처</label></td>
 						<td>
-							<input type="text" name="customer_hp1" id="signIn_hp" maxlength="3" style="width:30px;" onkeyup="next_hp1();">
+							<input class="hpChk1" type="text" name="customer_hp1" id="signIn_hp" maxlength="3" style="width:30px;" onkeyup="next_hp1();">
 							-
-							<input type="text" name="customer_hp2" maxlength="4" style="width:40px;" onkeyup="next_hp2();">
+							<input class="hpChk2" type="text" name="customer_hp2" maxlength="4" style="width:40px;" onkeyup="next_hp2();">
 							-
-							<input type="text" name="customer_hp3" maxlength="4" style="width:40px;" onkeyup="next_hp3();">
+							<input class="hpChk3" type="text" name="customer_hp3" maxlength="4" style="width:40px;" onkeyup="next_hp3();">
 						</td>
 					</tr>
 					<tr>
 						<td><label for="signIn_eMail">이메일 *</label></td>
 						<td>
-							<input type="text" name="customer_email1" id="signIn_eMail" maxlength="10" style="width:100px;">
+							<input class="emailChk1" type="text" name="customer_email1" id="signIn_eMail" maxlength="10" style="width:100px;">
 							@
 							<input class="emailChk2" type="text" name="customer_email2" maxlength="19" style="width:100px;">
 							<select class="emailChk3" name="customer_email3" onchange="emailChk();">

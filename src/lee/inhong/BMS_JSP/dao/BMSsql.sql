@@ -1,6 +1,6 @@
 CREATE TABLE publisher (
     publisher_id NUMBER(4) PRIMARY KEY,
-    publisher_name VARCHAR2(255)NOT NULL
+    publisher_name VARCHAR2(255) NOT NULL
 );
 
 CREATE TABLE customer (
@@ -17,19 +17,19 @@ CREATE TABLE customer (
 
 CREATE TABLE department (
     department_id NUMBER(4) PRIMARY KEY,
-    department_name VARCHAR2(255)NOT NULL
+    department_name VARCHAR2(255) NOT NULL
 );
 
 CREATE TABLE employee (
     employee_id NUMBER(4) PRIMARY KEY,
-    employee_name VARCHAR2(50)NOT NULL,
-    department_id NUMBER(4)NOT NULL,
+    employee_name VARCHAR2(50) NOT NULL,
+    department_id NUMBER(4) NOT NULL,
     CONSTRAINT employee_department_id_fk FOREIGN KEY(department_id) REFERENCES department(department_id)
 );
 
 CREATE TABLE book (
     ISBN CHAR(13) PRIMARY KEY,
-    publisher_id NUMBER(4)NOT NULL,
+    publisher_id NUMBER(4) NOT NULL,
     book_title VARCHAR2(255) NOT NULL,
     book_author VARCHAR2(50) NOT NULL,
     purchase_price NUMBER(6) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE orderID (
     order_id CHAR(10) PRIMARY KEY,
     order_code CHAR(2) NOT NULL,
     order_date DATE DEFAULT SYSDATE,
-    serial_number NUMBER(2)NOT NULL
+    serial_number NUMBER(2) NOT NULL
 );
 
 CREATE TABLE orders (

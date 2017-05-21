@@ -16,7 +16,7 @@ CREATE TABLE customer (
 );
 INSERT INTO customer(customer_id,customer_pw,customer_name,customer_sid1,customer_sid2,customer_hp,customer_email)
     VALUES('in6121','amaco78','¿Ã¿Œ»´','781216','1695713','01097833038','amaco78@gmail.com');
-
+DELETE FROM customer WHERE customer_id = 'ddd';
 CREATE TABLE department (
     department_id NUMBER(4) PRIMARY KEY,
     department_name VARCHAR2(255)NOT NULL

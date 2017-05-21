@@ -5,7 +5,7 @@
 	<title>Insert title here</title>
 	<script type="text/javascript">
 		<%
-		session.invalidate();
+		session.removeAttribute("customer_id");
 		%>
 		setTimeout(function() {window.location='viewLogIn.do';}, 1000);
 	</script>

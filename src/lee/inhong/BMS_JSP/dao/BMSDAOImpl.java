@@ -197,4 +197,31 @@ public class BMSDAOImpl implements BMSDAO {
 		return cnt;
 	}
 
+	@Override
+	public int deleteCustomer(String strId, String strPw) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = datasource.getConnection();
+			String sql =	"DELETE FROM customer WHERE customer_id = ? AND customer_pw = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, strId);
+			pstmt.setString(2, strPw);
+			cnt = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null)	pstmt.close();
+				if(conn != null)	conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+
 }

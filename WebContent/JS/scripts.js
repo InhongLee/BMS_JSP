@@ -3,11 +3,16 @@
  */
 
 var msg_id	= "아이디를 입력하세요.";
+var msg_idChk = "아이디는 영문자,숫자 6~20글자로만 입력할 수 있습니다."
 var msg_pwd	= "비밀번호를 입력하세요.";
+var msg_pwdChk = "비밀번호는 영문자,숫자,특수문자 8~10글자로만 입력할 수 있습니다.";
 var msg_repwd = "비밀번호 확인을 입력하세요.";
 var msg_repwdChk = "비밀번호가 다릅니다.";
 var msg_name = "이름을 입력하세요.";
-var msg_birth = "주민번호를 입력하세요.";
+var msg_nameChk = "이름은 한글 2~5글자로만 입력할 수 있습니다.";
+var msg_sId = "주민번호를 입력하세요.";
+var msg_sIdChk = "주민번호를 정확하게 입력하세요.";
+var msg_hp = "전화번호를 정확하게 입력하세요."
 var msg_email = "이메일을 입력하세요.";
 var msg_emailChk = "이메일 형식에 맞지 않습니다.";
 var msg_confirmId = "중복확인을 해주세요.";
@@ -34,8 +39,8 @@ $(document).ready(function() {
 });
 
 function viewLogIn_check() { //로그인 정보(id,pw)입력 후 로그인 버튼 클릭 > 입력정보 검증
-	if(!document.form_logIn.customer_id.value)			{$(".consoleInfo").html(msg_id);	document.form_logIn.customer_id.focus();	return false;}
-	else if(!document.form_logIn.customer_pw.value)		{$(".consoleInfo").html(msg_pwd);	document.form_logIn.customer_pw.focus();	return false;}
+	if(!$(".idChk").val())								{$(".consoleInfo").html(msg_id);	$(".idChk").focus();	return false;}
+	else if(!$(".pwChk").val())							{$(".consoleInfo").html(msg_pwd);	$(".pwChk").focus();	return false;}
 	else 												{$(".consoleInfo").html("&nbsp;");}
 }
 
@@ -50,11 +55,62 @@ function viewSignIn_check() { //회원가입 정보(id,pw,이름,주민번호,�
 														document.form_signIn.customer_pw.focus();
 														return false;}
 	else if(!document.form_signIn.customer_name.value)	{$(".consoleInfo").html(msg_name);	document.form_signIn.customer_name.focus(); return false;}
-	else if(!document.form_signIn.customer_sid1.value)	{$(".consoleInfo").html(msg_birth);	document.form_signIn.customer_sid1.focus();	return false;}
-	else if(!document.form_signIn.customer_sid2.value)	{$(".consoleInfo").html(msg_birth);	document.form_signIn.customer_sid2.focus();	return false;}
+	else if(!document.form_signIn.customer_sid1.value)	{$(".consoleInfo").html(msg_sId);	document.form_signIn.customer_sid1.focus();	return false;}
+	else if(!document.form_signIn.customer_sid2.value)	{$(".consoleInfo").html(msg_sId);	document.form_signIn.customer_sid2.focus();	return false;}
 	else if(!document.form_signIn.customer_email1.value){$(".consoleInfo").html(msg_email);	document.form_signIn.customer_email1.focus();return false;}
 	else if(!document.form_signIn.customer_email2.value){$(".consoleInfo").html(msg_email);	document.form_signIn.customer_email2.focus();return false;}
 	else if(document.form_signIn.hiddenId.value == 0)	{$(".consoleInfo").html(msg_confirmId);document.form_signIn.hiddenId.focus();	return false;}
+	
+	var req_id = /^[0-9a-zA-Z]{6,20}$/; //아이디 유효성검사
+	var $customer_id = $(".idChk");
+	var result_id = req_id.test($customer_id.val());
+	if(!result_id)										{$(".consoleInfo").html(msg_idChk); $customer_id.val(""); $customer_id.focus(); return false;}
+	
+	var reg_pw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,10}$/; //비밀번호 유효성검사
+	var $customer_pw = $(".pwChk");
+	var result_pw = reg_pw.test(customer_pw.val());
+	if(!result_pw)										{$(".consoleInfo").html(msg_pwdChk); $customer_pw.val(""); $customer_pw.focus(); return false;}
+		
+	var reg_name = /^[가-힣]{2,5}$/; //이름 유효성검사
+	var $customer_name = $(".nameChk");
+	var result_name = reg_name.test(customer_name.val());
+	if(!result_name) 									{$(".consoleInfo").html(msg_nameChk); $customer_name.val(""); $customer_name.focus();	return false;}
+	
+	var reg_sId1 = /^\d{6}$/; //주민번호 유효성 검사
+	var reg_sId2 = /^(1|2|3|4)\d{6}$/;
+	var $customer_sid1 = $(".sIdChk1");
+	var $customer_sid2 = $(".sIdChk2");
+	var result_sId1 = reg_sId1.test(customer_sid1.val());
+	var result_sId2 = reg_sId2.test(customer_sid2.val());
+	if(!result_sId1)									{$(".consoleInfo").html(msg_sIdChk); $customer_sid1.val(""); $customer_sid1.focus(); return false;}
+	else if(!result_sId2)								{$(".consoleInfo").html(msg_sIdChk); $customer_sid2.val(""); $customer_sid2.focus(); return false;}
+	
+	var reg_hp1 = /^01(?:0|1|[6-9])$/; //전화번호 유효성 검사
+	var reg_hp2 = /^(?:\d{3}|\d{4})$/;
+	var reg_hp3 = /^\d{4}$/;
+	var $customoer_hp1 = $(".hpChk1");
+	var $customoer_hp2 = $(".hpChk2");
+	var $customoer_hp3 = $(".hpChk3");
+	var result_hp1 = reg_hp1.test(customoer_hp1.val());
+	var result_hp2 = reg_hp2.test(customoer_hp2.val());
+	var result_hp3 = reg_hp3.test(customoer_hp3.val());
+	if		(!result_hp1)								{$(".consoleInfo").html(msg_hp);	$customoer_hp1.val("");	$customoer_hp1.focus();	return false;}
+	else if	(!result_hp2)								{$(".consoleInfo").html(msg_hp);	$customoer_hp2.val("");	$customoer_hp2.focus();	return false;}
+	else if	(!result_hp3)								{$(".consoleInfo").html(msg_hp);	$customoer_hp3.val("");	$customoer_hp3.focus();	return false;}
+	
+	var tld = [".co.kr",".com",".net",".or.kr",".org",".go.kr"]; //이메일 유효성 검사
+	var reg_email1 = /^[_0-9a-zA-Z\-]+$/; 
+	var reg_email2 = /^[0-9a-zA-Z\-]+(\.[_0-9a-zA-Z\-]+)*$/;
+	var $customer_email1 = $(".emailChk1");
+	var $customer_email2 = $(".emailChk2");
+	var result_email1 = reg_email1.test(customer_email1.val());
+	var result_email2 = reg_email2.test(customer_email2.val());
+	var checkTLD;
+	for(var i in tld) 									{checkTLD = (customer_email2.value.indexOf(tld[i]) == -1) ? false : true; if(checkTLD) break;}
+	if		(!result_email1)							{$(".consoleInfo").html(msg_emailChk); $customer_email1.val(""); $customer_email1.focus(); return false;}
+	else if	(!result_email2)							{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
+	else if	(!checkTLD) 								{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
+	
 }
 
 function emailChk() {
@@ -83,11 +139,11 @@ function resetHiddenId() {
 	document.form_signIn.hiddenId.value = 0;
 }
 // 입력값이 정해진 숫자를 채우면 자동으로 다음 입력란으로 이동
-function next_sId1()	{if(document.form_signIn.customer_sid1.value.length >= 6)	{document.form_signIn.customer_sid2.focus();}}
-function next_sId2()	{if(document.form_signIn.customer_sid2.value.length >= 7)	{document.form_signIn.customer_hp1.focus();}}
-function next_hp1()		{if(document.form_signIn.customer_hp1.value.length >= 3)	{document.form_signIn.customer_hp2.focus();}}
-function next_hp2()		{if(document.form_signIn.customer_hp2.value.length >= 4)	{document.form_signIn.customer_hp3.focus();}}
-function next_hp3()		{if(document.form_signIn.customer_hp3.value.length >= 4)	{document.form_signIn.customer_email1.focus();}}
+function next_sId1()	{if($(".sIdChk1").val().length >= 6)	{$(".sIdChk2").focus();}}
+function next_sId2()	{if($(".sIdChk2").val().length >= 7)	{$(".hpChk1").focus();}}
+function next_hp1()		{if($(".hpChk1").val().length >= 3)		{$(".hpChk2").focus();}}
+function next_hp2()		{if($(".hpChk2").val().length >= 4)		{$(".hpChk3").focus();}}
+function next_hp3()		{if($(".hpChk3").val().length >= 4)		{$(".emailChk1").focus();}}
 /*************************************************************************************************************************************************************/
 /*viewMemberInfo.jsp																																		 */
 /*************************************************************************************************************************************************************/
@@ -110,11 +166,6 @@ function viewInfo_check() { //회원정보 수정(id,pw,이름,주민번호,연�
 	if(!$(".emailChk1").val())							{$(".emailChk1").val($(".emailChk1").attr("placeholder"));}
 	if(!$(".emailChk2").val())							{$(".emailChk2").val($(".emailChk2").attr("placeholder"));}
 }
-function next_sId1()	{if($(".sIdChk1").val().length >= 6)	{$(".sIdChk2").focus();}}
-function next_sId2()	{if($(".sIdChk2").val().length >= 7)	{$(".hpChk1").focus();}}
-function next_hp1()		{if($(".hpChk1").val().length >= 3)		{$(".hpChk2").focus();}}
-function next_hp2()		{if($(".hpChk2").val().length >= 4)		{$(".hpChk3").focus();}}
-function next_hp3()		{if($(".hpChk3").val().length >= 4)		{$(".emailChk1").focus();}}
 
 /**
  * 공지사항 롤링바 구현 javascript

@@ -8,5 +8,6 @@ public interface BMSDAO {
 	public int idCheck(String strId); //회원가입 페이지 > id 중복확인
 	public int addCustomer(Customer dto); //회원가입 페이지 > 회원DB에 회원추가
 	public Customer selectCustomer(String strId); //내정보 페이지 > 회원정보 보기
-	public int updateCustomer(Customer dto);
+	public int updateCustomer(Customer dto); //내정보 페이지 > 회원DB에 회원정보 수정
+	public int deleteCustomer(String strId, String strPw);
 }

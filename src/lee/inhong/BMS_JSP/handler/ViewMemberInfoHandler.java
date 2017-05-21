@@ -11,13 +11,16 @@ public class ViewMemberInfoHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
-		String customer_id = (String) req.getSession().getAttribute("customer_id");
-		
-		BMSDAO dao = BMSDAOImpl.getInstance();
-		Customer dto = dao.selectCustomer(customer_id);
-		
-		req.setAttribute("memberInfo", dto);
-		return "/view/viewMember/viewMemberInfo.jsp";
+		if(req.getSession().getAttribute("customer_id") == null) {
+			return "/view/viewLogIn/viewLogIn.jsp";
+		} else {
+			String customer_id = (String) req.getSession().getAttribute("customer_id");
+			
+			BMSDAO dao = BMSDAOImpl.getInstance();
+			Customer dto = dao.selectCustomer(customer_id);
+			
+			req.setAttribute("memberInfo", dto);
+			return "/view/viewMember/viewMemberInfo.jsp";
+		}
 	}
-
 }
