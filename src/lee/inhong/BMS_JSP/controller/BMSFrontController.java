@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import lee.inhong.BMS_JSP.handler.CommandHandler;
 import lee.inhong.BMS_JSP.handler.ConfirmIdHandler;
+import lee.inhong.BMS_JSP.handler.ViewBuyNowHandler;
 import lee.inhong.BMS_JSP.handler.ViewInfo_updateHandler;
 import lee.inhong.BMS_JSP.handler.ViewLogIn_checkHandler;
 import lee.inhong.BMS_JSP.handler.ViewMemberInfoHandler;
+import lee.inhong.BMS_JSP.handler.ViewSalesHandler;
+import lee.inhong.BMS_JSP.handler.ViewSearchHandler;
 import lee.inhong.BMS_JSP.handler.ViewSignIn_agreeHandler;
 import lee.inhong.BMS_JSP.handler.ViewSignIn_resultHandler;
 import lee.inhong.BMS_JSP.handler.ViewSignOut_checkHandler;
@@ -46,6 +49,8 @@ public class BMSFrontController extends HttpServlet {
 		String url = uri.substring(contextPath.length());
 		
 		switch(url) {
+		case "/viewSearch.do":				CommandHandler viewSearchHandler = new ViewSearchHandler();
+											viewSearchHandler.process(req, res);			 	break;
 		case "/viewLogIn.do":				viewPage = "/view/viewLogIn/viewLogIn.jsp";				System.out.println(viewPage);	break;
 		case "/viewLogIn_check.do":			CommandHandler viewLogIn_checkHandler = new ViewLogIn_checkHandler();
 											viewPage = viewLogIn_checkHandler.process(req, res);	System.out.println(viewPage);	break;
@@ -63,7 +68,10 @@ public class BMSFrontController extends HttpServlet {
 		case "/viewSignOut.do":				viewPage = "/view/viewMember/viewSignOut.jsp";			System.out.println(viewPage);	break;
 		case "/viewSignOut_check.do":		CommandHandler viewSignOut_checkHandler = new ViewSignOut_checkHandler();
 											viewPage = viewSignOut_checkHandler.process(req, res);	System.out.println(viewPage);	break;
-		case "/viewSales.do":				viewPage = "/view/viewSales/viewSales.jsp";				System.out.println(viewPage);	break;
+		case "/viewSales.do":				CommandHandler viewSalesHandler = new ViewSalesHandler();
+											viewPage = viewSalesHandler.process(req, res);			System.out.println(viewPage);	break;
+		case "/viewBuyNow.do":				CommandHandler viewBuyNowHandler = new ViewBuyNowHandler();
+											viewPage = viewBuyNowHandler.process(req, res);			System.out.println(viewPage);	break;
 		default:break;
 		}
 		

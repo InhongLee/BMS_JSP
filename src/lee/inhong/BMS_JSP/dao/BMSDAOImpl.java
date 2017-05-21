@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import lee.inhong.BMS_JSP.dto.Customer;
+import lee.inhong.BMS_JSP.dto.ViewBook;
 
 public class BMSDAOImpl implements BMSDAO {
 
@@ -222,6 +224,90 @@ public class BMSDAOImpl implements BMSDAO {
 			}
 		}
 		return cnt;
+	}
+
+	@Override
+	public ArrayList<ViewBook> selectBookList() {
+		ArrayList<ViewBook> dtos = new ArrayList<ViewBook>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ViewBook dto = null;
+		try {
+			conn = datasource.getConnection();
+			String sql =	"SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author, B.purchase_price, B.sell_price, P.publisher_name"+
+							" FROM book B, publisher P"+
+							" WHERE B.publisher_id = P.publisher_id";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				dto = new ViewBook();
+				dto.setISBN(rs.getString("ISBN"));
+				dto.setPublisher_id(rs.getInt("publisher_id"));
+				dto.setBook_title(rs.getString("book_title"));
+				dto.setBook_author(rs.getString("book_author"));
+				dto.setPurchase_price(rs.getInt("purchase_price"));
+				dto.setSell_price(rs.getInt("sell_price"));
+				dto.setPublisher_name(rs.getString("publisher_name"));
+				dtos.add(dto);
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) 		rs.close();
+				if(pstmt != null)	pstmt.close();
+				if(conn != null)	conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dtos;
+	}
+
+	@Override
+	public ViewBook selectBookInfo(String strISBN) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ViewBook dto = null;
+		try {
+			conn = datasource.getConnection();
+			String sql =	"SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author, B.purchase_price, B.sell_price, P.publisher_name"+
+							" FROM book B, publisher P"+
+							" WHERE B.publisher_id = P.publisher_id AND B.ISBN = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, strISBN);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new ViewBook();
+				dto.setISBN(rs.getString("ISBN"));
+				dto.setPublisher_id(rs.getInt("publisher_id"));
+				dto.setBook_title(rs.getString("book_title"));
+				dto.setBook_author(rs.getString("book_author"));
+				dto.setPurchase_price(rs.getInt("purchase_price"));
+				dto.setSell_price(rs.getInt("sell_price"));
+				dto.setPublisher_name(rs.getString("publisher_name"));
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) 		rs.close();
+				if(pstmt != null)	pstmt.close();
+				if(conn != null)	conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dto;
 	}
 
 }
