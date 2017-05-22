@@ -7,7 +7,7 @@
 		<%
 		session.removeAttribute("customer_id");
 		%>
-		setTimeout(function() {window.location='viewLogIn.do';}, 1000);
+		setTimeout(function() {window.location='viewSales.do';}, 1000);
 	</script>
 </head>
 

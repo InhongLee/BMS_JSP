@@ -14,6 +14,7 @@ import lee.inhong.BMS_JSP.handler.ConfirmIdHandler;
 import lee.inhong.BMS_JSP.handler.ViewBuyNowHandler;
 import lee.inhong.BMS_JSP.handler.ViewInfo_updateHandler;
 import lee.inhong.BMS_JSP.handler.ViewLogIn_checkHandler;
+import lee.inhong.BMS_JSP.handler.ViewLogOutHandler;
 import lee.inhong.BMS_JSP.handler.ViewMemberInfoHandler;
 import lee.inhong.BMS_JSP.handler.ViewSalesHandler;
 import lee.inhong.BMS_JSP.handler.ViewSearchHandler;
@@ -54,6 +55,8 @@ public class BMSFrontController extends HttpServlet {
 		case "/viewLogIn.do":				viewPage = "/view/viewLogIn/viewLogIn.jsp";				System.out.println(viewPage);	break;
 		case "/viewLogIn_check.do":			CommandHandler viewLogIn_checkHandler = new ViewLogIn_checkHandler();
 											viewPage = viewLogIn_checkHandler.process(req, res);	System.out.println(viewPage);	break;
+		case "/viewLogOut.do":				CommandHandler viewLogOutHandler = new ViewLogOutHandler();
+											viewPage = viewLogOutHandler.process(req, res);			System.out.println(viewPage);	break;
 		case "/viewSignIn.do":				viewPage = "/view/viewMember/viewSignIn.jsp";			System.out.println(viewPage);	break;
 		case "/confirmId.do":				CommandHandler confirmIdHandler = new ConfirmIdHandler();
 											viewPage = confirmIdHandler.process(req, res);			System.out.println(viewPage);	break;
