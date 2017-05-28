@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file = "/view/setting.jsp" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="lee.inhong.BMS_JSP.dto.ViewBook" %>
+
 <html>
-<head>
-<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-</head>
 <body>
 	<% ArrayList<ViewBook> bookList = (ArrayList<ViewBook>)request.getAttribute("bookList");%>
 

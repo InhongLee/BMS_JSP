@@ -8,8 +8,7 @@ public class ViewLogOutHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
 		
-		req.getSession().removeAttribute("customer_id");
-		req.getSession().invalidate();
+		req.getSession().setAttribute("customer_id", null);
 		
 		return "/view/viewLogIn/viewLogOut.jsp";
 	}

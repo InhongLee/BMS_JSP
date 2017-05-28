@@ -1,19 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="lee.inhong.BMS_JSP.dto.Customer" %>
+<%@ include file = "/view/setting.jsp" %>
+
 <html>
-<head>
-<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-</head>
 <body>
-
-	<%
-	/* 입력받은 값을 받아온다. (한글 인코딩 처리) */
-	Customer customerInfo = (Customer) request.getAttribute("customerInfo");
-	session.setAttribute("customerInfo", customerInfo);
-	%>
-
+	<c:set var="customerInfo" value="${requestScope.customerInfo}" scope="session"></c:set>
 	<table class="mainFrame">
 		<tr class="mainRow1"><td><jsp:include page="/view/viewMain/viewTitle.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>

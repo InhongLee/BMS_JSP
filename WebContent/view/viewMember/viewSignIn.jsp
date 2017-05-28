@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file = "/view/setting.jsp" %>
+
 <html>
-<head>
-<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-</head>
-<body>
+<body onload="initFocus('form_signIn')">
 
 	<table class="mainFrame">
 		<tr class="mainRow1"><td><jsp:include page="/view/viewMain/viewTitle.jsp"		flush="false"/></td></tr>
@@ -14,15 +11,14 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="signIn">
-			<form name="form_signIn" action="viewSignIn_agree.do" method="post" onsubmit="return viewSignIn_check();">
-				<input type="hidden" name="hiddenId" value="0">
+			<form action="viewSignIn_agree.do" method="post" id="form_signIn" name="form_signIn" onsubmit="return viewSignIn_check();">
 				<span id="signIn_title">회원가입</span>
 				<hr>
 				<table id="table_uInfo">
 					<tr>
 						<td style="width:15%; min-width:100px;"><label for="signIn_uId">아이디 *</label></td>
 						<td style="width:35%; min-width:200px;">
-							<input class="idChk" type="text" name="customer_id" id="signIn_uId" maxlength="20" autofocus onchange="resetHiddenId();">
+							<input class="idChk" type="text" name="customer_id" id="signIn_uId" maxlength="20" onchange="resetHiddenId();">
 							<input class="inputButton" type="button" name="dupChk" value="중복확인" onclick="confirmId();" style="width:100px;">
 						</td>
 						<td style="width:50%;"></td>
@@ -42,28 +38,35 @@
 					<tr>
 						<td><label for="signIn_sId">주민번호 *</label></td>
 						<td>
-							<input class="sIdChk1" type="text" name="customer_sid1" id="signIn_sId" maxlength="6" style="width:60px;" onkeyup="next_sId1();">
+							<input class="sIdChk1" type="text" name="customer_sid1" id="customer_sid1"
+							maxlength="6" style="width:60px;" onkeyup="autoTab('form_signIn', 'customer_sid1', 6, 'customer_sid2');">
 							-
-							<input class="sIdChk2" type="text" name="customer_sid2" maxlength="7" style="width:70px;" onkeyup="next_sId2();">
+							<input class="sIdChk2" type="text" name="customer_sid2" id="customer_sid2"
+							maxlength="7" style="width:70px;" onkeyup="autoTab('form_signIn', 'customer_sid2', 7, 'customer_hp1');">
 						</td>
 					</tr>
 					<tr>
 						<td><label for="signIn_hp">연락처</label></td>
 						<td>
-							<input class="hpChk1" type="text" name="customer_hp1" id="signIn_hp" maxlength="3" style="width:30px;" onkeyup="next_hp1();">
+							<input class="hpChk1" type="text" name="customer_hp1" id="customer_hp1"
+							maxlength="3" style="width:30px;" onkeyup="autoTab('form_signIn', 'customer_hp1', 3, 'customer_hp2');">
 							-
-							<input class="hpChk2" type="text" name="customer_hp2" maxlength="4" style="width:40px;" onkeyup="next_hp2();">
+							<input class="hpChk2" type="text" name="customer_hp2" id="customer_hp2"
+							 maxlength="4" style="width:40px;" onkeyup="autoTab('form_signIn', 'customer_hp2', 4, 'customer_hp3');">
 							-
-							<input class="hpChk3" type="text" name="customer_hp3" maxlength="4" style="width:40px;" onkeyup="next_hp3();">
+							<input class="hpChk3" type="text" name="customer_hp3" id="customer_hp3"
+							 maxlength="4" style="width:40px;" onkeyup="autoTab('form_signIn', 'customer_hp3', 4, 'signIn_eMail');">
 						</td>
 					</tr>
 					<tr>
 						<td><label for="signIn_eMail">이메일 *</label></td>
 						<td>
-							<input class="emailChk1" type="text" name="customer_email1" id="signIn_eMail" maxlength="10" style="width:100px;">
+							<input class="emailChk1" type="text" name="customer_email1" id="signIn_eMail"
+							maxlength="10" style="width:100px;">
 							@
-							<input class="emailChk2" type="text" name="customer_email2" maxlength="19" style="width:100px;">
-							<select class="emailChk3" name="customer_email3" onchange="emailChk();">
+							<input class="emailChk2" type="text" name="customer_email2"
+							maxlength="19" style="width:100px;">
+							<select class="emailChk3" name="customer_email3" onchange="emailChk('form_signIn');">
 								<option value="0" selected>직접 입력</option>
 								<option value="gmail.com">gmail.com</option>
 								<option value="naver.com">naver.com</option>
@@ -84,6 +87,7 @@
 						</td>
 					</tr>
 				</table>
+				<input type="hidden" name="hiddenId" value="0">
 			</form>
 		</div>
 		</td></tr>

@@ -15,8 +15,9 @@ public class ViewSignOut_checkHandler implements CommandHandler {
 		
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		int cnt = dao.deleteCustomer(customer_id, customer_pw);
+		System.out.println("cnt : "+cnt);
+		if(cnt == 1) req.getSession().invalidate();
 		req.setAttribute("cnt", cnt);
-		
 		return "/view/viewMember/viewSignOut_check.jsp";
 	}
 

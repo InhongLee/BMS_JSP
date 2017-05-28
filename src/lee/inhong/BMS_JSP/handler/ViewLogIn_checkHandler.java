@@ -15,9 +15,9 @@ public class ViewLogIn_checkHandler implements CommandHandler {
 		
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		int cnt = dao.logInCheck(customer_id, customer_pw);
-		
+		System.out.println("cnt: "+cnt);
 		req.setAttribute("cnt", cnt);
-		req.setAttribute("customer_id", customer_id);
+		if(cnt == 1) req.getSession().setAttribute("customer_id", customer_id);
 		return "/view/viewLogIn/viewLogIn_check.jsp";
 	}
 

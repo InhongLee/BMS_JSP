@@ -2,40 +2,34 @@
  * 
  */
 
-var msg_id	= "아이디를 입력하세요.";
-var msg_idChk = "아이디는 영문자,숫자 6~20글자로만 입력할 수 있습니다."
-var msg_pwd	= "비밀번호를 입력하세요.";
-var msg_pwdChk = "비밀번호는 영문자,숫자,특수문자 8~10글자로만 입력할 수 있습니다.";
-var msg_repwd = "비밀번호 확인을 입력하세요.";
-var msg_repwdChk = "비밀번호가 다릅니다.";
-var msg_name = "이름을 입력하세요.";
-var msg_nameChk = "이름은 한글 2~5글자로만 입력할 수 있습니다.";
-var msg_sId = "주민번호를 입력하세요.";
-var msg_sIdChk = "주민번호를 정확하게 입력하세요.";
-var msg_hp = "전화번호를 정확하게 입력하세요."
-var msg_email = "이메일을 입력하세요.";
-var msg_emailChk = "이메일 형식에 맞지 않습니다.";
-var msg_confirmId = "중복확인을 해주세요.";
 
 $(document).ready(function() {
-	$(window).load(function()				{$(".sub_menu").hide();
-											 return false;												});
-	$("#sales").mouseover(function()		{$("#sub_sales").show();									});
-	$("#sales").mouseout(function()			{$("#sub_sales").hide();									});
-	$("#stock").mouseover(function()		{$("#sub_stock").show();									});
-	$("#stock").mouseout(function()			{$("#sub_stock").hide();									});
-	$("#order").mouseover(function()		{$("#sub_order").show();									});
-	$("#order").mouseout(function()			{$("#sub_order").hide();									});
-	$("#member").mouseover(function()		{$("#sub_member").show();									});
-	$("#member").mouseout(function()		{$("#sub_member").hide();									});
-	$("#account").mouseover(function()		{$("#sub_account").show();									});
-	$("#account").mouseout(function()		{$("#sub_account").hide();									});
+	$(window).load(function()							{$(".sub_menu").hide();
+														return false;												});
+	$("#sales").mouseover(function()					{$("#sub_sales").show();									});
+	$("#sales").mouseout(function()						{$("#sub_sales").hide();									});
+	$("#stock").mouseover(function()					{$("#sub_stock").show();									});
+	$("#stock").mouseout(function()						{$("#sub_stock").hide();									});
+	$("#order").mouseover(function()					{$("#sub_order").show();									});
+	$("#order").mouseout(function()						{$("#sub_order").hide();									});
+	$("#member").mouseover(function()					{$("#sub_member").show();									});
+	$("#member").mouseout(function()					{$("#sub_member").hide();									});
+	$("#account").mouseover(function()					{$("#sub_account").show();									});
+	$("#account").mouseout(function()					{$("#sub_account").hide();									});
 
-	$(".inputButton").bind(					{
-		"mouseenter":function() 			{$(this).css("color","yellow");
-											 $(this).css("text-shadow","0px 2px 2px black");			},
-		"mouseleave":function() 			{$(this).css("color","white");
-											 $(this).css("text-shadow","none");							}});
+	$(".inputButton").bind(								{
+		"mouseenter":function() 						{$(this).css("color","yellow");
+											 			 $(this).css("text-shadow","0px 2px 2px black");			},
+		"mouseleave":function() 						{$(this).css("color","white");
+														 $(this).css("text-shadow","none");							}});
+	$("input").focus(function() 						{var msgId = $(this).attr("name");	console(msgId);			});
+	$("input").focusout(function()						{$(".consoleInfo").html("");								});
+	$("input[type='submit']").mouseenter(function()		{$(".consoleInfo").html(submit);							});
+	$("input[type='submit']").mouseleave(function()		{$(".consoleInfo").html("");								});
+	$("input[type='reset']").mouseenter(function()		{$(".consoleInfo").html(reset);								});
+	$("input[type='reset']").mouseleave(function()		{$(".consoleInfo").html("");								});
+	$("input[type='button']").mouseenter(function()		{var msgId = $(this).attr("value");	console(msgId);			});
+	$("input[type='button']").mouseleave(function()		{$(".consoleInfo").html("");								});
 });
 
 function viewLogIn_check() { //로그인 정보(id,pw)입력 후 로그인 버튼 클릭 > 입력정보 검증
@@ -113,15 +107,6 @@ function viewSignIn_check() { //회원가입 정보(id,pw,이름,주민번호,�
 	
 }
 
-function emailChk() {
-	if($(".emailChk3").val() != 0) 						{$(".emailChk2").val($(".emailChk3").val());
-														 $(".emailChk2").attr("readonly", true);
-														 return false;}
-	else if($(".emailChk3").val() == 0)					{$(".emailChk2").val("");
-														 $(".emailChk2").removeAttr("readonly");
-														 return false;}
-}
-
 function confirmId() { //회원가입 페이지에서 입력한 id가 이미 있는 아이디인지 확인
 	if(!document.form_signIn.customer_id.value)			{$(".consoleInfo").html(msg_id);	document.form_signIn.customer_id.focus();	return false;}
 	var url = "confirmId.do?customer_id=" + document.form_signIn.customer_id.value;
@@ -138,35 +123,88 @@ function setId(customer_id) { //회원가입 페이지에서 입력한 id 중복
 function resetHiddenId() {
 	document.form_signIn.hiddenId.value = 0;
 }
-// 입력값이 정해진 숫자를 채우면 자동으로 다음 입력란으로 이동
-function next_sId1()	{if($(".sIdChk1").val().length >= 6)	{$(".sIdChk2").focus();}}
-function next_sId2()	{if($(".sIdChk2").val().length >= 7)	{$(".hpChk1").focus();}}
-function next_hp1()		{if($(".hpChk1").val().length >= 3)		{$(".hpChk2").focus();}}
-function next_hp2()		{if($(".hpChk2").val().length >= 4)		{$(".hpChk3").focus();}}
-function next_hp3()		{if($(".hpChk3").val().length >= 4)		{$(".emailChk1").focus();}}
 /*************************************************************************************************************************************************************/
 /*viewMemberInfo.jsp																																		 */
 /*************************************************************************************************************************************************************/
 function viewInfo_check() { //회원정보 수정(id,pw,이름,주민번호,연락처,이메일)입력 후 수정 버튼 클릭 > 입력정보 검증
-	if(!$(".idChk").val())								{$(".idChk").val($(".idChk").attr("placeholder"));}
-	if(!$(".pwChk").val())								{$(".pwChk").val($(".pwChk").attr("placeholder"));}
-	if(!$(".repwChk").val())							{$(".repwChk").val($(".repwChk").attr("placeholder"));}
 	if($(".pwChk").val() != $(".repwChk").val()) //비밀번호 != 비밀번호 확인
 														{$(".consoleInfo").html(msg_repwdChk);
 														 $(".pwChk").val("");
 														 $(".repwChk").val("");
 														 $(".pwChk").focus();
 														 return false;}
-	if(!$(".nameChk").val())							{$(".nameChk").val($(".nameChk").attr("placeholder"));}
-	if(!$(".sIdChk1").val())							{$(".sIdChk1").val($(".sIdChk1").attr("placeholder"));}
-	if(!$(".sIdChk2").val())							{$(".sIdChk2").val($(".sIdChk2").attr("placeholder"));}
-	if(!$(".hpChk1").val())								{$(".hpChk1").val($(".hpChk1").attr("placeholder"));}
-	if(!$(".hpChk2").val())								{$(".hpChk2").val($(".hpChk2").attr("placeholder"));}
-	if(!$(".hpChk3").val())								{$(".hpChk3").val($(".hpChk3").attr("placeholder"));}
-	if(!$(".emailChk1").val())							{$(".emailChk1").val($(".emailChk1").attr("placeholder"));}
-	if(!$(".emailChk2").val())							{$(".emailChk2").val($(".emailChk2").attr("placeholder"));}
+	var reg_pw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,10}$/; //비밀번호 유효성검사
+	var $customer_pw = $(".pwChk");
+	var result_pw = reg_pw.test(customer_pw.val());
+	if(!result_pw)										{$(".consoleInfo").html(msg_pwdChk); $customer_pw.val(""); $customer_pw.focus(); return false;}
+		
+	var reg_name = /^[가-힣]{2,5}$/; //이름 유효성검사
+	var $customer_name = $(".nameChk");
+	var result_name = reg_name.test(customer_name.val());
+	if(!result_name) 									{$(".consoleInfo").html(msg_nameChk); $customer_name.val(""); $customer_name.focus();	return false;}
+
+	var reg_hp1 = /^01(?:0|1|[6-9])$/; //전화번호 유효성 검사
+	var reg_hp2 = /^(?:\d{3}|\d{4})$/;
+	var reg_hp3 = /^\d{4}$/;
+	var $customoer_hp1 = $(".hpChk1");
+	var $customoer_hp2 = $(".hpChk2");
+	var $customoer_hp3 = $(".hpChk3");
+	var result_hp1 = reg_hp1.test(customoer_hp1.val());
+	var result_hp2 = reg_hp2.test(customoer_hp2.val());
+	var result_hp3 = reg_hp3.test(customoer_hp3.val());
+	if		(!result_hp1)								{$(".consoleInfo").html(msg_hp);	$customoer_hp1.val("");	$customoer_hp1.focus();	return false;}
+	else if	(!result_hp2)								{$(".consoleInfo").html(msg_hp);	$customoer_hp2.val("");	$customoer_hp2.focus();	return false;}
+	else if	(!result_hp3)								{$(".consoleInfo").html(msg_hp);	$customoer_hp3.val("");	$customoer_hp3.focus();	return false;}
+	
+	var tld = [".co.kr",".com",".net",".or.kr",".org",".go.kr"]; //이메일 유효성 검사
+	var reg_email1 = /^[_0-9a-zA-Z\-]+$/; 
+	var reg_email2 = /^[0-9a-zA-Z\-]+(\.[_0-9a-zA-Z\-]+)*$/;
+	var $customer_email1 = $(".emailChk1");
+	var $customer_email2 = $(".emailChk2");
+	var result_email1 = reg_email1.test(customer_email1.val());
+	var result_email2 = reg_email2.test(customer_email2.val());
+	var checkTLD;
+	for(var i in tld) 									{checkTLD = (customer_email2.value.indexOf(tld[i]) == -1) ? false : true; if(checkTLD) break;}
+	if		(!result_email1)							{$(".consoleInfo").html(msg_emailChk); $customer_email1.val(""); $customer_email1.focus(); return false;}
+	else if	(!result_email2)							{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
+	else if	(!checkTLD) 								{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
+
+}
+/**************************************************************************/
+/*	공유 script	*/
+/**************************************************************************/
+function errorAlert(msg) { //미리 설정된 에러메시지 표시 후 이전페이지로 이동
+	alert(msg);
+	window.history.back();
 }
 
+function console(msg) { //콘솔창에 메시지 표시
+	$(".consoleInfo").html(eval(msg));
+}
+
+function initFocus(formId) { //페이지 로드 시 폼의 첫번째 입력위치로 포커스 이동 해당페이지의 if문 주의
+	var target = document.getElementById(formId).getElementsByTagName('input');
+	target[0].focus();
+}
+
+function emailChk(formId) { //이메일 드롭다운 직접입력외의 선택시 자동삽입
+	var form = document.getElementById(formId);
+	if(form.customer_email3.value != 0) {
+		form.customer_email2.value = form.customer_email3.value;
+		form.customer_email2.setAttribute("disabled",true);
+	} else if(form.customer_email3.value == 0) {
+		form.customer_email2.value = "";
+		form.customer_email2.removeAttribute("disabled");
+		form.customer_email2.focus();
+	}	
+}
+
+function autoTab(formId, preId, setNum, postId) { //입력문자수setNum에 도달하면 preId에서 postId로 포커스이동
+	var $preId = $('#'+formId+' #'+preId);
+	var $postId = $('#'+formId+' #'+postId);
+	if($preId.val().length >= setNum) {
+		$postId.focus();}
+}
 /**
  * 공지사항 롤링바 구현 javascript
  */

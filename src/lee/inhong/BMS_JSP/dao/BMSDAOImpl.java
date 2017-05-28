@@ -175,16 +175,14 @@ public class BMSDAOImpl implements BMSDAO {
 
 		try {
 			conn = datasource.getConnection();
-			String sql =	"UPDATE customer SET customer_pw = ?, customer_name = ?, customer_sid1 = ?, customer_sid2 = ?, customer_hp = ?, customer_email = ? "+
+			String sql =	"UPDATE customer SET customer_pw = ?, customer_name = ?, customer_hp = ?, customer_email = ? "+
 							" WHERE customer_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getCustomer_pw());
 			pstmt.setString(2, dto.getCustomer_name());
-			pstmt.setString(3, dto.getCustomer_sid1());
-			pstmt.setString(4, dto.getCustomer_sid2());
-			pstmt.setString(5, dto.getCustomer_hp());
-			pstmt.setString(6, dto.getCustomer_email());
-			pstmt.setString(7, dto.getCustomer_id());
+			pstmt.setString(3, dto.getCustomer_hp());
+			pstmt.setString(4, dto.getCustomer_email());
+			pstmt.setString(5, dto.getCustomer_id());
 			cnt = pstmt.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
