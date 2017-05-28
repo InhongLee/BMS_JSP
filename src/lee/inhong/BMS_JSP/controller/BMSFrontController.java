@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import lee.inhong.BMS_JSP.handler.CommandHandler;
 import lee.inhong.BMS_JSP.handler.ConfirmIdHandler;
+import lee.inhong.BMS_JSP.handler.DeSelectCartAllHandler;
+import lee.inhong.BMS_JSP.handler.DeSelectCartHandler;
 import lee.inhong.BMS_JSP.handler.ViewBuyNowHandler;
+import lee.inhong.BMS_JSP.handler.ViewCartBuyHandler;
 import lee.inhong.BMS_JSP.handler.ViewInfo_updateHandler;
 import lee.inhong.BMS_JSP.handler.ViewLogIn_checkHandler;
 import lee.inhong.BMS_JSP.handler.ViewLogOutHandler;
@@ -75,6 +78,12 @@ public class BMSFrontController extends HttpServlet {
 											viewPage = viewSalesHandler.process(req, res);			System.out.println(url);	break;
 		case "/viewBuyNow.do":				CommandHandler viewBuyNowHandler = new ViewBuyNowHandler();
 											viewPage = viewBuyNowHandler.process(req, res);			System.out.println(url);	break;
+		case "/viewCartBuy.do":				CommandHandler viewCartBuyHandler = new ViewCartBuyHandler();
+											viewPage = viewCartBuyHandler.process(req, res);		System.out.println(url);	break;
+		case "/deSelectCart.do":			CommandHandler deSelectCartHandler = new DeSelectCartHandler();
+											viewPage =  deSelectCartHandler.process(req, res);		System.out.println(url);	break;
+		case "/deSelectCartAll.do":			CommandHandler deSelectCartAllHandler = new DeSelectCartAllHandler();
+											viewPage = deSelectCartAllHandler.process(req, res);	System.out.println(url);	break;	
 		default:break;
 		}
 		

@@ -9,12 +9,16 @@
 			<td style="font-size:large; font-weight:bold; text-align:right;">
 			<c:if test="${sessionScope.customer_id != null}">
 				${sessionScope.customer_id}
-				<button style="font-size:large; color:white; background-color:green; border:1px solid green"
-				onclick="window.location='viewLogOut.do';">로그아웃</button>
+				<div id="title_btn1">
+					<input class="inputButton fontSizeL" type="button" value="로그아웃" 
+					onclick="window.location='viewLogOut.do';">
+				</div>
 			</c:if>
 			<c:if test="${sessionScope.customer_id == null}">
-				<button style="font-size:large; color:white; background-color:green; border:1px solid green" 
-				onclick="window.location='viewLogIn.do';">로그인</button>
+				<div id="title_btn2">
+					<input class="inputButton fontSizeL" type="button" value="로그인"
+					onclick="window.location='viewLogIn.do';">
+				</div>	
 			</c:if>
 			</td>
 		</tr>

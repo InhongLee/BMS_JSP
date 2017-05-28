@@ -16,4 +16,7 @@ public interface BMSDAO {
 	
 	public ArrayList<ViewBook> selectBookList(); //전체 책목록 검색
 	public ViewBook selectBookInfo(String strISBN); //선택된 책 정보 검색
+	
+	/****************************************************************/
+	public int ISBNCheck(String ISBN);
 }

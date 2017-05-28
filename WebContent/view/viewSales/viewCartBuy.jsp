@@ -1,14 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file = "/view/setting.jsp" %>
+
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-</head>
 <body>
 
 	<table class="mainFrame">
@@ -22,82 +15,39 @@
 			<hr>
 			<div id="cartBuy_box2">
 				<div class="cartBuy_cell1">상품명</div>
-				<div class="cartBuy_cell2">정가</div>
-				<div class="cartBuy_cell3">판매가</div>
-				<div class="cartBuy_cell4">수량</div>
-				<div class="cartBuy_cell5">합계</div>
+				<div class="cartBuy_cell2">저자</div>
+				<div class="cartBuy_cell3">출판사</div>
+				<div class="cartBuy_cell5">가격</div>
 				<div class="cartBuy_cell6">주문</div>
 			</div>
-			<div class="cartBuy_addBox">
-				<div class="cartBuy_cell1"><a href="../viewSales/viewBuyNow.jsp">Headfirst Java</a></div>
-				<div class="cartBuy_cell2">35,000원</div>
-				<div class="cartBuy_cell3">32,000원</div>
-				<div class="cartBuy_cell4">2권</div>
-				<div class="cartBuy_cell5">64,000원</div>
-				<div class="cartBuy_cell6">
-					<div class="cartBuy_btn1">
-						<a href="#">구매</a>
-					</div>
-					<div class="cartBuy_btn2">
-						<a href="#">X</a>
-					</div>
-				</div>
-			</div>
-			<div class="cartBuy_addBox">
-				<div class="cartBuy_cell1"><a href="../viewSales/viewBuyNow.jsp">Headfirst Java</a></div>
-				<div class="cartBuy_cell2">35,000원</div>
-				<div class="cartBuy_cell3">32,000원</div>
-				<div class="cartBuy_cell4">2권</div>
-				<div class="cartBuy_cell5">64,000원</div>
-				<div class="cartBuy_cell6">
-					<div class="cartBuy_btn1">
-						<a href="#">구매</a>
-					</div>
-					<div class="cartBuy_btn2">
-						<a href="#">X</a>
+			<c:forEach var="bookInfos" items="${requestScope.bookInfos}">
+				<div class="cartBuy_addBox">
+					<div class="cartBuy_cell1">
+					<a href="viewBuyNow.do?ISBN=${bookInfos.ISBN}">${bookInfos.book_title}</a></div>
+					<div class="cartBuy_cell2">${bookInfos.book_author}</div>
+					<div class="cartBuy_cell3">${bookInfos.publisher_name}</div>
+					<div class="cartBuy_cell5">${bookInfos.sell_price}원</div>
+					<div class="cartBuy_cell6">
+						<div class="cartBuy_btn1">
+							<input class="inputButton fontSizeM" type="button" value="구매"
+							onclick="#">
+						</div>
+						<div class="cartBuy_btn2">
+							<input class="inputButton fontSizeM red" type="button" value="X"
+							onclick="window.location='deSelectCart.do?ISBN='+${bookInfos.ISBN}">
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="cartBuy_addBox">
-				<div class="cartBuy_cell1"><a href="../viewSales/viewBuyNow.jsp">Headfirst Java</a></div>
-				<div class="cartBuy_cell2">35,000원</div>
-				<div class="cartBuy_cell3">32,000원</div>
-				<div class="cartBuy_cell4">2권</div>
-				<div class="cartBuy_cell5">64,000원</div>
-				<div class="cartBuy_cell6">
-					<div class="cartBuy_btn1">
-						<a href="#">구매</a>
-					</div>
-					<div class="cartBuy_btn2">
-						<a href="#">X</a>
-					</div>
-				</div>
-			</div>
-			<div class="cartBuy_addBox">
-				<div class="cartBuy_cell1"><a href="../viewSales/viewBuyNow.jsp">Headfirst Java</a></div>
-				<div class="cartBuy_cell2">35,000원</div>
-				<div class="cartBuy_cell3">32,000원</div>
-				<div class="cartBuy_cell4">2권</div>
-				<div class="cartBuy_cell5">64,000원</div>
-				<div class="cartBuy_cell6">
-					<div class="cartBuy_btn1">
-						<a href="#">구매</a>
-					</div>
-					<div class="cartBuy_btn2">
-						<a href="#">X</a>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
 			<hr>
 			<div id="cartBuy_box3">
 				<div id="cartBuy_btn1">
-					<a href="../viewSales/viewSales.jsp">일괄 구매</a>
+					<input class="inputButton fontSizeM" type="button" value="카트비우기"
+					onclick="window.location='deSelectCartAll.do'">
 				</div>
 				<div id="cartBuy_btn2">
-					<a href="../viewSales/viewSales.jsp">카트비우기</a>
-				</div>
-				<div id="cartBuy_btn3">
-					<a href="../viewSales/viewSales.jsp">계속 쇼핑</a>
+					<input class="inputButton fontSizeM orange" type="button" value="계속쇼핑"
+					onclick="window.location='viewSales.do'">
 				</div>
 			</div>
 		</div>	

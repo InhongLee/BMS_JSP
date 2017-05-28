@@ -308,4 +308,31 @@ public class BMSDAOImpl implements BMSDAO {
 		return dto;
 	}
 
+	@Override
+	public int ISBNCheck(String ISBN) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = datasource.getConnection();
+			String sql = "SELECT * FROM book WHERE ISBN = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ISBN);
+			rs = pstmt.executeQuery();
+			if(rs.next()) cnt = 1;
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+
 }

@@ -17,8 +17,10 @@ public class ViewBuyNowHandler implements CommandHandler {
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		dto = dao.selectBookInfo(strISBN);
 		
-		req.setAttribute("bookInfo", dto);
+		int point = (int)(dto.getSell_price()*0.05);
 		
+		req.setAttribute("bookInfo", dto);
+		req.setAttribute("point", point);
 		return "/view/viewSales/viewBuyNow.jsp";
 	}
 
