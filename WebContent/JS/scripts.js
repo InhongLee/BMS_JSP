@@ -30,6 +30,84 @@ $(document).ready(function() {
 	$("input[type='reset']").mouseleave(function()		{$(".consoleInfo").html("");								});
 	$("input[type='button']").mouseenter(function()		{var msgId = $(this).attr("value");	console(msgId);			});
 	$("input[type='button']").mouseleave(function()		{$(".consoleInfo").html("");								});
+	/**************************************************************************/
+	/* tab menu interface */
+	/**************************************************************************/
+	$(".tab_content").hide();
+	$("ul.tabs li:first").addClass("active").show();
+	$(".tab_content:first").show();
+	
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active");
+		$(this).addClass("active");
+		$(".tab_content").hide();
+		var activeTab = $(this).find("a").attr("href");
+		$(activeTab).fadeIn();
+		return false;
+	});
+	/**************************************************************************/
+	/* table interface */
+	/**************************************************************************/
+	$("#stock_table1 td").click(function() {
+		var col = $(this).parent().children().index($(this));
+		var row = $(this).parent().parent().children().index($(this).parent());
+		
+		var colName = $("#stock_table1 th").eq(col).html();
+		if(colName == "Title"||colName == "Author"||colName == "Cost"||colName == "Price"||colName == "State") {
+			var placeholder = $(this).html();
+			
+			if(placeholder.indexOf("<input") == -1 && placeholder.indexOf("<select") == -1) {
+				if(colName == "Title") {
+					$(this).html("<input type='text' placeholder='"+placeholder+"'>");
+				} else if(colName == "Author") {
+					$(this).html("<input type='text' placeholder='"+placeholder+"'>");
+				} else if(colName == "Cost") {
+					$(this).html("<input type='number' placeholder='"+placeholder+"'>");
+				} else if(colName == "Price") {
+					$(this).html("<input type='number' placeholder='"+placeholder+"'>");
+				}else if (colName == "State") {
+					var defaultVar = $(this).html();
+					$(this).html("<select>"+
+							"<option readonly>SELECT State</option>"+
+							"<option value='ON_SALE'>ON_SALE</option>"+
+							"<option value='PENDING'>PENDING</option>"+
+							"<option value='SOLD_OUT'>SOLD_OUT</option>"+
+							"</select>");
+				}
+				$(this).children().focus();
+			}
+		} else if (colName == "Stock") {
+			var activeTab = $(".active").find("a").attr("href");
+			$(activeTab + " td").eq(1).html($(this).parent().children().eq(3).html());
+			$(activeTab + " input[type='number']").focus();
+		} 
+		return false;
+	});
+	
+	$("#stock_table1 td").on("keyup", function(key) {
+		if(key.keyCode == 13) {
+			key.preventDefault();
+			key.stopPropagation();
+			var ISBN = $(this).parent().children().eq(0).html();
+			var col = $(this).parent().children().index($(this));
+			var cellValue = $(this).children().val();
+			if(cellValue == "") {
+				cellValue = $(this).children().attr("placeholder");
+			}
+			window.location="stockUpdate.do?ISBN="+ISBN+"&columnNo="+col+"&updateStr="+cellValue;
+			/*$(this).html(cellValue);*/
+		}
+		return false;
+	});
+	
+	$("#stock_table1 td").change(function() {
+		var ISBN = $(this).parent().children().eq(0).html();
+		var col = $(this).parent().children().index($(this));
+		var cellValue = $(this).children().val();
+		window.location="stockUpdate.do?ISBN="+ISBN+"&columnNo="+col+"&updateStr="+cellValue;
+		/*$(this).html(cellValue);*/
+		return false;
+	});
 });
 
 function viewLogIn_check() { //로그인 정보(id,pw)입력 후 로그인 버튼 클릭 > 입력정보 검증
@@ -171,6 +249,17 @@ function viewInfo_check() { //회원정보 수정(id,pw,이름,주민번호,연�
 
 }
 /**************************************************************************/
+/*	viewStock.jsp1	*/
+/**************************************************************************/
+function totalCostChk() {
+	var reqQty = $("#stock_table3 #reqQty").val();
+	var cost = parseInt($("#stock_t3_cost").html());
+	var totalCost = reqQty * cost;
+	var activeTab = $(".active").find("a").attr("href");
+	$(activeTab + " td").eq(7).html("-"+totalCost);
+	return false;
+}
+/**************************************************************************/
 /*	공유 script	*/
 /**************************************************************************/
 function errorAlert(msg) { //미리 설정된 에러메시지 표시 후 이전페이지로 이동
@@ -205,9 +294,9 @@ function autoTab(formId, preId, setNum, postId) { //입력문자수setNum에 도
 	if($preId.val().length >= setNum) {
 		$postId.focus();}
 }
-/**
- * 공지사항 롤링바 구현 javascript
- */
+/**************************************************************************/
+/* 공지사항 롤링바 구현 javascript */
+/**************************************************************************/
 function fn_notice(containerID){
 	/* .find()
 	 * ---------------------------------------------------
@@ -285,9 +374,9 @@ function fn_notice(containerID){
 	}
 }
 
-/**
- * 메인페이지 좌우 자동 이동 구현
- */
+/**************************************************************************/
+/* 메인페이지 좌우 자동 이동 구현 */
+/**************************************************************************/
 function fn_issue(buttonID,containerID){
 	var $element = $('#'+containerID).find('.book-list');
 	var $prev = $('#'+buttonID).find('.prev');
@@ -366,4 +455,5 @@ function fn_issue(buttonID,containerID){
 		return false;
 	});
 }
+
 

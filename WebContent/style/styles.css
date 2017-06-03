@@ -22,6 +22,8 @@ a,ul,li{margin:0; padding:0;}
 .red			{background-color: red; border:1px solid red;}
 .blue			{background-color: blue; border:1px solid blue;}
 .orange		{background-color: orange; border:1px solid orange;}
+.scrollBox		{height:300px; overflow: auto;}
+
 
 .main_header{}
 	.title a:link, .title a:visited{color:green; text-decoration:none;}
@@ -160,18 +162,17 @@ a,ul,li{margin:0; padding:0;}
 	/* viewStock.jsp */
 	#stock_box1{}
 		#stock_box2{}
-			#stock_table1{width:100%; font-size:small; border-collapse:collapse;}
+			#stock_table1{width:100%; font-size:small; border-collapse:collapse; }
 			#stock_table1 th, #stock_table1 td{height:25px; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid gray;}
 			#stock_table1 td:HOVER{background:lightgray;}
 			#stock_table1 tr:nth-child(1){background:lightgreen;}
-			#stock_table1 tr td:nth-child(1){width:7.5%; text-align:center;}
-			#stock_table1 tr td:nth-child(2){width:30%; text-align:left;}
-			#stock_table1 tr td:nth-child(3){width:17.5%; text-align:left;}
-			#stock_table1 tr td:nth-child(4){width:10%; text-align:center;}
-			#stock_table1 tr td:nth-child(5){width:10%; text-align:center;}
-			#stock_table1 tr td:nth-child(6){width:6.25%; text-align:center;}
-			#stock_table1 tr td:nth-child(7){width:6.25%; text-align:center;}
-			#stock_table1 tr td:nth-child(8){width:12.5%; text-align:center;}
+			#stock_table1 tr td:nth-child(1){width:100px; text-align:center;}
+			#stock_table1 tr td:nth-child(2){width:250px; text-align:left;}
+			#stock_table1 tr td:nth-child(3){width:150px; text-align:left;}
+			#stock_table1 tr td:nth-child(4){width:80px; text-align:center;}
+			#stock_table1 tr td:nth-child(5){width:80px; text-align:center;}
+			#stock_table1 tr td:nth-child(6){width:80px; text-align:center;}
+			#stock_table1 tr td:nth-child(7){width:150px; text-align:center;}
 		#stock_box3{height:200px;}
 			#stock_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
 				#stock_table2{width:280px; margin:10px 10px; font-size:small;}
@@ -317,14 +318,11 @@ a,ul,li{margin:0; padding:0;}
 		#stock_box2{}
 			#stock_table1 tr th:nth-child(3), #stock_table1 tr th:nth-child(4),
 			#stock_table1 tr th:nth-child(5), #stock_table1 tr th:nth-child(7){display:none;}
-			#stock_table1 tr td:nth-child(3), #stock_table1 tr td:nth-child(4),
-			#stock_table1 tr td:nth-child(5), #stock_table1 tr td:nth-child(7){display:none;}
 		#stock_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
 		#stock_box3_2{width:300px; margin:5px 0px; vertical-align:top; float:right;}
 		/* viewOrder.html */
 		#order_box2{}
 			#order_table1 tr th:nth-child(3), #order_table1 tr th:nth-child(5){display:none;}
-			#order_table1 tr td:nth-child(3), #order_table1 tr td:nth-child(5){display:none;}
 		#order_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
 		#order_box3_2{width:300px; margin:5px 0px; vertical-align:top; float:right;}
 			

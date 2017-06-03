@@ -46,8 +46,12 @@ JSP 요소 적용 브랜치 2017.05.11
 			input창 focusin/out 이나 button mouseover/out 이벤트 발생시 console창에 해당요소에 대한 설명 출력
 			viewCartBuy의 카트목록 Session>BookInfos에 연동
 			-삭제, 카트비우기, 계속쇼핑 연결완료, 구매버튼은 아직 결제모듈이 없어 연결 안됨
-			
-			
+
+2017.06.02	frontcontroller 접근하는 url 추가시 변경되는 부분을 별도 configFile로 분리하여 유지보수 편의성 증진
+
+2017.06.03	stock테이블 내부 셀 클릭하여 변경시 변경내용 db update 되도록 연결작업 진행
+			책 DB 업데이트 및 이미지 연결(85종)
+
 			검색바는 나중에 Ajax 공부후 적용예정..
 			
 			jsp에서 servlet으로 request 요청시 요청정보는 의미를 가진 단어보다 코드번호를 사용한 후 servlet에서 변환하여 사용하도록 개발 필요...
@@ -58,4 +62,3 @@ JSP 요소 적용 브랜치 2017.05.11
 					- 데이터를 전달받아 화면 출력이 불가능
 				대책
 					- JSP scriptlet을 사용하여 반복문이나 분기문등으러 처리하여 코드 간소화 및 데이터 연결 인터페이스 마련
-			

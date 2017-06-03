@@ -1,37 +1,54 @@
 package lee.inhong.BMS_JSP.controller;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lee.inhong.BMS_JSP.handler.CommandHandler;
-import lee.inhong.BMS_JSP.handler.ConfirmIdHandler;
-import lee.inhong.BMS_JSP.handler.DeSelectCartAllHandler;
-import lee.inhong.BMS_JSP.handler.DeSelectCartHandler;
-import lee.inhong.BMS_JSP.handler.ViewBuyNowHandler;
-import lee.inhong.BMS_JSP.handler.ViewCartBuyHandler;
-import lee.inhong.BMS_JSP.handler.ViewInfo_updateHandler;
-import lee.inhong.BMS_JSP.handler.ViewLogIn_checkHandler;
-import lee.inhong.BMS_JSP.handler.ViewLogOutHandler;
-import lee.inhong.BMS_JSP.handler.ViewMemberInfoHandler;
-import lee.inhong.BMS_JSP.handler.ViewSalesHandler;
-import lee.inhong.BMS_JSP.handler.ViewSearchHandler;
-import lee.inhong.BMS_JSP.handler.ViewSignIn_agreeHandler;
-import lee.inhong.BMS_JSP.handler.ViewSignIn_resultHandler;
-import lee.inhong.BMS_JSP.handler.ViewSignOut_checkHandler;
+import lee.inhong.BMS_JSP.handler.NullHandler;
 
-@WebServlet("*.do")
 public class BMSFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     public BMSFrontController() {
         super();
     }
+
+    private Map<String, CommandHandler> commandHandlerMap = new HashMap<>();
+    
+	@Override
+	public void init() throws ServletException {
+		String configFile = getInitParameter("configFile");
+		Properties prop = new Properties();
+		String configFilePath = getServletContext().getRealPath(configFile);
+		try(FileReader fis = new FileReader(configFilePath)) {
+			prop.load(fis);
+		} catch(IOException e) {
+			throw new ServletException(e);
+		}
+		Iterator keyIter = prop.keySet().iterator();
+		while(keyIter.hasNext()) {
+			String command = (String) keyIter.next();
+			System.out.println(command);
+			String handlerClassName = prop.getProperty(command);
+			try {
+				Class<?> handlerClass = Class.forName(handlerClassName);
+				CommandHandler handlerInstance = (CommandHandler) handlerClass.newInstance();
+				commandHandlerMap.put(command, handlerInstance);
+			} catch(ClassNotFoundException|InstantiationException|IllegalAccessException e) {
+				throw new ServletException(e);
+			}
+		}
+	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -47,47 +64,25 @@ public class BMSFrontController extends HttpServlet {
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		
-		String viewPage = null;
+		
 		String uri = req.getRequestURI();
 		String contextPath = req.getContextPath();
 		String url = uri.substring(contextPath.length());
 		
-		switch(url) {
-		case "/viewSearch.do":				CommandHandler viewSearchHandler = new ViewSearchHandler();
-											viewSearchHandler.process(req, res);					System.out.println(url);	break;
-		case "/viewLogIn.do":				viewPage = "/view/viewLogIn/viewLogIn.jsp";				System.out.println(url);	break;
-		case "/viewLogIn_check.do":			CommandHandler viewLogIn_checkHandler = new ViewLogIn_checkHandler();
-											viewPage = viewLogIn_checkHandler.process(req, res);	System.out.println(url);	break;
-		case "/viewLogOut.do":				CommandHandler viewLogOutHandler = new ViewLogOutHandler();
-											viewPage = viewLogOutHandler.process(req, res);			System.out.println(url);	break;
-		case "/viewSignIn.do":				viewPage = "/view/viewMember/viewSignIn.jsp";			System.out.println(url);	break;
-		case "/confirmId.do":				CommandHandler confirmIdHandler = new ConfirmIdHandler();
-											viewPage = confirmIdHandler.process(req, res);			System.out.println(url);	break;
-		case "/viewSignIn_agree.do":		CommandHandler viewSignIn_agreeHandler = new ViewSignIn_agreeHandler();
-											viewPage = viewSignIn_agreeHandler.process(req, res);	System.out.println(url);	break;
-		case "/viewSignIn_result.do":		CommandHandler viewSignIn_resultHandler = new ViewSignIn_resultHandler();
-											viewPage = viewSignIn_resultHandler.process(req, res);	System.out.println(url);	break;
-		case "/viewMemberInfo.do":			CommandHandler viewMemberInfoHandler = new ViewMemberInfoHandler();
-											viewPage = viewMemberInfoHandler.process(req, res);		System.out.println(url);	break;
-		case "/viewInfo_update.do":			CommandHandler viewInfo_updateHandler = new ViewInfo_updateHandler();
-											viewPage = viewInfo_updateHandler.process(req, res);	System.out.println(url);	break;
-		case "/viewSignOut.do":				viewPage = "/view/viewMember/viewSignOut.jsp";			System.out.println(url);	break;
-		case "/viewSignOut_check.do":		CommandHandler viewSignOut_checkHandler = new ViewSignOut_checkHandler();
-											viewPage = viewSignOut_checkHandler.process(req, res);	System.out.println(url);	break;
-		case "/viewSales.do":				CommandHandler viewSalesHandler = new ViewSalesHandler();
-											viewPage = viewSalesHandler.process(req, res);			System.out.println(url);	break;
-		case "/viewBuyNow.do":				CommandHandler viewBuyNowHandler = new ViewBuyNowHandler();
-											viewPage = viewBuyNowHandler.process(req, res);			System.out.println(url);	break;
-		case "/viewCartBuy.do":				CommandHandler viewCartBuyHandler = new ViewCartBuyHandler();
-											viewPage = viewCartBuyHandler.process(req, res);		System.out.println(url);	break;
-		case "/deSelectCart.do":			CommandHandler deSelectCartHandler = new DeSelectCartHandler();
-											viewPage =  deSelectCartHandler.process(req, res);		System.out.println(url);	break;
-		case "/deSelectCartAll.do":			CommandHandler deSelectCartAllHandler = new DeSelectCartAllHandler();
-											viewPage = deSelectCartAllHandler.process(req, res);	System.out.println(url);	break;	
-		default:break;
+		CommandHandler handler = commandHandlerMap.get(url);
+		if(handler == null) {
+			handler = new NullHandler();
+		}
+		String viewPage = null;
+		try {
+			viewPage = handler.process(req, res);
+		} catch(Throwable e) {
+			throw new ServletException(e);
 		}
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher(viewPage);
-		dispatcher.forward(req, res);
+		if(viewPage != null) {
+			RequestDispatcher dispatcher = req.getRequestDispatcher(viewPage);
+			dispatcher.forward(req, res);			
+		}
 	}
 }

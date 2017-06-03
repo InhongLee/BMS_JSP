@@ -1,16 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file = "/view/setting.jsp" %>
 
+<html>
+<body>
 	<table class="mainFrame">
 		<tr class="mainRow1"><td><div class="title"><h1><a href="<%=request.getContextPath() %>/index.jsp">Book Management System</a></h1></div></td></tr>
 		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>
@@ -21,99 +13,50 @@
 			<h2 class="title2">재고 관리</h2>
 			<hr>
 			<div id="stock_box2">
-				<table id="stock_table1">
-					<tr>
-						<th>BookId</th>
-						<th>Title</th>
-						<th>Author</th>
-						<th>Cost</th>
-						<th>Price</th>
-						<th>Stock</th>
-						<th>Cart</th>
-						<th>State</th>
-					</tr>
-					<tr id="item1">
-						<td>0001</td>
-						<td>Headfirst Java</td>
-						<td>James Gosling</td>
-						<td>32000</td>
-						<td>25000</td>
-						<td>100</td>
-						<td>2</td>
-						<td>
-							<select>
-								<option>ON_SALE</option>
-								<option>SOLD_OUT</option>
-								<option>PENDING</option>
-							</select>
-						</td>
-					</tr>
-					<tr id="item2">
-						<td>0002</td>
-						<td>정보처리기사 필기</td>
-						<td>홍봉선 외</td>
-						<td>32000</td>
-						<td>25000</td>
-						<td>0</td>
-						<td>0</td>
-						<td>SOLD_OUT</td>
-					</tr>
-					<tr id="item3">
-						<td>0003</td>
-						<td>HTML5+CSS3 웹 표준의 정석</td>
-						<td>고경희</td>
-						<td>25000</td>
-						<td>28000</td>
-						<td>50</td>
-						<td>0</td>
-						<td>PENDING</td>
-					</tr>
-					<tr id="item4">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr id="item5">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
+				<div class="scrollBox">
+					<table id="stock_table1">
+						<tr>
+							<th>ISBN</th>
+							<th>Title</th>
+							<th>Author</th>
+							<th>Cost</th>
+							<th>Price</th>
+							<th>Stock</th>
+							<th>State</th>
+						</tr>
+						<c:forEach var="dto" items="${dtos}">
+							<tr id="item1">
+							<td>${dto.ISBN}</td>
+							<td>${dto.book_title}</td>
+							<td>${dto.book_author}</td>
+							<td>${dto.purchase_price}</td>
+							<td>${dto.sell_price}</td>
+							<td>${dto.stock}</td>
+							<td>
+								<c:choose>
+									<c:when test="${dto.stock_state == 'O'}">SOLD_OUT</c:when>
+									<c:when test="${dto.stock_state == 'P'}">PENDING</c:when>
+									<c:when test="${dto.stock_state == 'S'}">ONSALE</c:when>
+									<c:otherwise>ERROR</c:otherwise>
+								</c:choose>
+							</td>
+						</tr>
+						</c:forEach>
+					</table>
+				</div>		
 				<hr>
 				<div id="stock_box3">
 					<div id="stock_box3_1">
 						<h2 class="title2">총 재고현황</h2>
 						<table id="stock_table2">
-							<tr>
-								<td>제품 종류</td>
-								<td>3</td>
-								<td>EA</td>
-							</tr>
-							<tr>
-								<td>총 수량</td>
-								<td>120</td>
-								<td>EA</td>
-							</tr>
-							<tr>
-								<td>총 비용</td>
-								<td>-3,560,000</td>
-								<td>원</td>
-							</tr>
-							<tr>
-								<td>총 재고금액</td>
-								<td>+4,100,000</td>
-								<td>원</td>
-							</tr>
+							<tr><td>제품 종류</td>
+								<td>${cnt}</td><td>종</td></tr>
+							<tr><td>총 수량</td>
+								<td>${stockInfo.EATotal}</td><td>EA</td></tr>
+							<tr><td>총 구매금액</td>
+								<td>${stockInfo.buyTotal}</td><td>원</td></tr>
+							<tr><td>총 재고금액</td>
+								<td>${stockInfo.sellTotal}</td><td>원</td></tr>
 						</table>
 					</div>
 					<div id="stock_box3_2">
@@ -123,21 +66,23 @@
 						</ul>
 						<div class="tab_container">
 							<div id="tab1" class="tab_content">
-								<form name="stock_reqPerchase" action="" method="post">
+								<form action="" method="post" name="stock_reqPerchase"
+								onsubmit="">
 									<table id="stock_table3">
 										<tr>
 											<td>비용/EA</td>
-											<td>30,000</td>
+											<td id="stock_t3_cost">0</td>
 											<td>원</td>
 										</tr>
 										<tr>
 											<td>요청수량</td>
-											<td><input type="number" placeholder="+10"></td>
+											<td><input type="number" id="reqQty" name="reqQty" maxlength="4"
+											onkeyup="totalCostChk();"></td>
 											<td>EA</td>
 										</tr>
 										<tr>
 											<td>총 비용</td>
-											<td>-300,000</td>
+											<td>0</td>
 											<td>원</td>
 										</tr>
 										<tr>
@@ -153,7 +98,7 @@
 									<table id="stock_table4">
 										<tr>
 											<td>비용/EA</td>
-											<td>30,000</td>
+											<td>0</td>
 											<td>원</td>
 										</tr>
 										<tr>
@@ -163,7 +108,7 @@
 										</tr>
 										<tr>
 											<td>총 환불금액</td>
-											<td>+300,000</td>
+											<td>0</td>
 											<td>원</td>
 										</tr>
 										<tr>
@@ -183,64 +128,10 @@
 		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
 		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>
 	</table>
-	
-		
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(".tab_content").hide();
-		$("ul.tabs li:first").addClass("active").show();
-		$(".tab_content:first").show();
-		
-		$("ul.tabs li").click(function() {
-			$("ul.tabs li").removeClass("active");
-			$(this).addClass("active");
-			$(".tab_content").hide();
-			var activeTab = $(this).find("a").attr("href");
-			$(activeTab).fadeIn();
-			return false;
-		});
-		
-		$("#stock_table1 td").click(function() {
-			var col = $(this).parent().children().index($(this));
-			var row = $(this).parent().parent().children().index($(this).parent());
-			
-			var colName = $("#stock_table1 th").eq(col).html();
-			if(colName == "Title" || colName == "Author" || colName == "Cost" || colName == "Price") {
-				var placeholder = $(this).html();
-				
-				if(placeholder.indexOf("<input") == -1 && placeholder.indexOf("<select") == -1) {
-					if(colName == "Title") {
-						$(this).html("<input type='text' placeholder='"+placeholder+"'>");
-					} else if(colName == "Author") {
-						$(this).html("<input type='text' placeholder='"+placeholder+"'>");
-					} else if(colName == "Cost") {
-						$(this).html("<input type='number' placeholder='"+placeholder+"'>");
-					} else if(colName == "Price") {
-						$(this).html("<input type='number' placeholder='"+placeholder+"'>");
-					}
-					$(this).children().focus();
-				}
-			} else if (colName == "Stock") {
-				var activeTab = $(".active").find("a").attr("href");
-				$(activeTab + " input[type='number']").focus();
-			}
-			return false;
-		});
-		
-		$("#stock_table1 td").on("keyup", function(key) {
-			if(key.keyCode == 13) {
-				key.preventDefault();
-				key.stopPropagation();
-				var cellValue = $(this).children().val();
-				if(cellValue == "") {
-					cellValue = $(this).children().attr("placeholder");
-				}
-				$(this).html(cellValue);
-			}
-			return false;
-		});
-	});
-</script>
-	
+	<c:if test="${updateCnt == 1}">
+		<script type="text/javascript">
+			console(updateSuccess);
+		</script>
+	</c:if>
 </body>
 </html>

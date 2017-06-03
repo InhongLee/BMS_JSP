@@ -16,7 +16,7 @@
 			</li>
 			<li id="stock"><span class="menuName">stock</span>
 				<ul class="sub_menu" id="sub_stock">
-					<li><a href="../viewStock/viewStock.jsp">재고관리</a></li>
+					<li><a href="viewStock.do">재고관리</a></li>
 				</ul>					
 			</li>
 			<li id="order"><span class="menuName">order</span>

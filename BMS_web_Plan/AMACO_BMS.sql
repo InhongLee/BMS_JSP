@@ -75,8 +75,11 @@ INSERT INTO book(ISBN, publisher_id, book_title, book_author, purchase_price, se
 CREATE TABLE stock (
     ISBN CHAR(13) PRIMARY KEY,
     stock NUMBER(4) NOT NULL,
+    stock_state CHAR(1) DEFAULT 'O',
     CONSTRAINT stock_ISBN_fk FOREIGN KEY (ISBN) REFERENCES book(ISBN)
 );
+-- stock_state : 
+-- O = SoldOut     P = Pending    S = OnSale
 
 CREATE TABLE orderID (
     order_id CHAR(10) PRIMARY KEY,
@@ -116,6 +119,22 @@ CREATE TABLE ledger (
     leder_approcal CHAR(1) DEFAULT 'N',
     CONSTRAINT ledger_orderDetail_id_fk FOREIGN KEY (order_id, detail_number) REFERENCES orderDetail(order_id, detail_number)
 );
+DROP TRIGGER trigger_book_stock;
+CREATE OR REPLACE TRIGGER trigger_book_stock
+    AFTER INSERT
+    ON book
+    FOR EACH ROW
+BEGIN
+    dbms_output.put_line('Trigger running');
+    INSERT INTO stock
+    VALUES(:NEW.ISBN, 0, 'O');
+    dbms_output.put_line('Trigger operation successed');
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('ERR CODE'||TO_CHAR(SQLCODE));
+            dbms_output.put_line('ERR MESSAGE'||SQLERRM);
+END;
+/
 --------------------------------------------------------------------------------
 COMMIT;
 ROLLBACK;
@@ -132,3 +151,16 @@ DROP TABLE ledger;
 
 SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME
   FROM SYS.USER_CONSTRAINTS;
+  
+SELECT *
+FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
+                B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum
+        FROM book B, publisher P, stock S
+        WHERE B.publisher_id = P.publisher_id
+        AND B.ISBN = S.ISBN
+        )
+WHERE rNum >= 1 AND rNum <= 5;
+
+SELECT sum(B.purchase_price*S.stock), sum(B.sell_price*S.stock), sum(stock)
+FROM    book B, stock S
+WHERE   B.ISBN = S.ISBN;
