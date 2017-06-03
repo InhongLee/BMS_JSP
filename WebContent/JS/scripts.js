@@ -259,6 +259,11 @@ function totalCostChk() {
 	$(activeTab + " td").eq(7).html("-"+totalCost);
 	return false;
 }
+function stockOpReset() { //검색 초기화
+	$("select[name='searchPublisher']").val("0");
+	$("input[name='searchStockQty']").val("");
+	$("select[name='searchStockState']").val("0");
+}
 /**************************************************************************/
 /*	공유 script	*/
 /**************************************************************************/

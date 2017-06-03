@@ -161,6 +161,7 @@ a,ul,li{margin:0; padding:0;}
 		.board_addBox{margin-top:10px; text-align:center; border:1px solid green;}
 	/* viewStock.jsp */
 	#stock_box1{}
+		#stock_Options{width:100%; height:100%; border-collapse:collapse;}
 		#stock_box2{}
 			#stock_table1{width:100%; font-size:small; border-collapse:collapse; }
 			#stock_table1 th, #stock_table1 td{height:25px; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid gray;}

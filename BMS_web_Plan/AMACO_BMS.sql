@@ -158,6 +158,18 @@ FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
         FROM book B, publisher P, stock S
         WHERE B.publisher_id = P.publisher_id
         AND B.ISBN = S.ISBN
+        AND B.publisher_id = CASE B.publisher_id
+                                WHEN 0 THEN B.publisher_id
+                                ELSE B.publisher_id
+                            END
+        AND S.stock_state = CASE S.stock_state
+                                WHEN '0' THEN S.stock_state
+                                ELSE S.stock_state
+                            END
+        AND S.stock <= CASE S.stock
+                            WHEN 0 THEN S.stock
+                            ELSE S.stock
+                            END
         )
 WHERE rNum >= 1 AND rNum <= 5;
 

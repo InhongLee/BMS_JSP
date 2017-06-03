@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import lee.inhong.BMS_JSP.dto.Customer;
+import lee.inhong.BMS_JSP.dto.Publisher;
 import lee.inhong.BMS_JSP.dto.ViewBook;
 import lee.inhong.BMS_JSP.dto.ViewStock;
 import lee.inhong.BMS_JSP.dto.ViewStockInfo;
@@ -521,6 +522,104 @@ public class BMSDAOImpl implements BMSDAO {
 			}
 		}
 		return updateCnt;
+	}
+
+	@Override
+	public ArrayList<Publisher> getPublisher() {
+		ArrayList<Publisher> dtos = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = datasource.getConnection();
+			String sql = "SELECT * FROM publisher ORDER BY publisher_name ASC";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dtos = new ArrayList<Publisher>();
+				do {
+					Publisher dto = new Publisher();
+					dto.setPublisher_id(rs.getInt("publisher_id"));
+					dto.setPublisher_name(rs.getString("publisher_name"));
+					dtos.add(dto);
+				} while(rs.next());
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dtos;
+	}
+
+	@Override
+	public ArrayList<ViewStock> getOpSearchStocks(int publisher_id, String stock_state, int stock) {
+		ArrayList<ViewStock> dtos = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = datasource.getConnection();
+			String sql = 	"SELECT * "+
+							"FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name, "+
+											"B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum "+
+									"FROM book B, publisher P, stock S "+
+									"WHERE B.publisher_id = P.publisher_id "+
+									"AND B.ISBN = S.ISBN "+
+									"AND B.publisher_id = CASE ? "+
+		                                "WHEN 0 THEN B.publisher_id "+
+		                                "ELSE ? "+
+		                            "END "+
+		                            "AND S.stock_state = CASE ? "+
+		                                "WHEN '0' THEN S.stock_state "+
+		                                "ELSE ? "+
+		                            "END "+
+		                            "AND S.stock <= CASE ? "+
+		                            "WHEN 0 THEN S.stock "+
+		                            "ELSE ? "+
+		                            "END "+
+									") ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, publisher_id);
+			pstmt.setInt(2, publisher_id);
+			pstmt.setString(3, stock_state);
+			pstmt.setString(4, stock_state);
+			pstmt.setInt(5, stock);
+			pstmt.setInt(6, stock);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dtos = new ArrayList<ViewStock>();
+				do {
+					ViewStock dto = new ViewStock();
+					dto.setISBN(rs.getString("ISBN"));
+					dto.setBook_title(rs.getString("book_title"));
+					dto.setBook_author(rs.getString("book_author"));
+					dto.setPublisher_name(rs.getString("publisher_name"));
+					dto.setPurchase_price(rs.getInt("purchase_price"));
+					dto.setSell_price(rs.getInt("sell_price"));
+					dto.setStock(rs.getInt("stock"));
+					dto.setStock_state(rs.getString("stock_state"));
+					dtos.add(dto);
+				} while(rs.next());
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dtos;
 	}
 
 }

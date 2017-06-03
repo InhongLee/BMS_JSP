@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import lee.inhong.BMS_JSP.dao.BMSDAO;
 import lee.inhong.BMS_JSP.dao.BMSDAOImpl;
+import lee.inhong.BMS_JSP.dto.Publisher;
 import lee.inhong.BMS_JSP.dto.ViewStock;
 import lee.inhong.BMS_JSP.dto.ViewStockInfo;
 import lee.inhong.BMS_JSP.handler.CommandHandler;
@@ -15,7 +16,7 @@ public class ViewStockHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
-		System.out.println("SERVICE> ViewStockHandler");
+		System.out.println("■■■SERVICE■■■ ViewStockHandler");
 		
 		int pageSize	= 100;
 		int pageBlock	= 3;
@@ -47,8 +48,12 @@ public class ViewStockHandler implements CommandHandler {
 		number = cnt - (currentPage - 1) * pageSize;
 		if(cnt > 0) {
 			System.out.println("DB|getBooks(start,end) : "+start+","+end);
-			ArrayList<ViewStock> dtos = dao.getStocks(start, end);
-			System.out.println("DB|getBooks() result : "+dtos);
+			@SuppressWarnings("unchecked")
+			ArrayList<ViewStock> dtos = (ArrayList<ViewStock>) req.getAttribute("dtos");
+			if(dtos == null) {
+				dtos = dao.getStocks(start, end);
+				System.out.println("DB|getBooks() result : "+dtos.size());
+			}
 			req.setAttribute("dtos", dtos);
 		}
 		
@@ -73,6 +78,11 @@ public class ViewStockHandler implements CommandHandler {
 		
 		ViewStockInfo dto = dao.getStockInfo();
 		req.setAttribute("stockInfo", dto);
+		
+		//출판사 목록
+		ArrayList<Publisher> publishers = dao.getPublisher();
+		System.out.println("DB|getPublisher() result : "+publishers.size());
+		req.setAttribute("publishers", publishers);
 		
 		return "/view/viewStock/viewStock.jsp";
 	}

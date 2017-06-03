@@ -4,13 +4,42 @@
 <html>
 <body>
 	<table class="mainFrame">
-		<tr class="mainRow1"><td><div class="title"><h1><a href="<%=request.getContextPath() %>/index.jsp">Book Management System</a></h1></div></td></tr>
+		<tr class="mainRow1"><td><jsp:include page="/view/viewMain/viewTitle.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>
 		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp" flush="false"/></td></tr>
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="stock_box1">
-			<h2 class="title2">재고 관리</h2>
+			<form action="stockOpSearch.do" method="post" name="stockOpSearchForm">
+				<table id="stock_Options">
+					<tr>
+						<th>
+							<h2 class="title2">재고 관리</h2>						
+						</th>
+						<th>
+							<select class="input fontSizeM" name="searchPublisher">
+								<option value="0">출판사 선택</option>
+								<c:forEach var="publisher" items="${publishers}">
+									<option value="${publisher.publisher_id}">${publisher.publisher_name}</option>
+								</c:forEach>
+							</select>
+						</th>
+						<th>
+							<select class="input fontSizeM" name="searchStockState">
+								<option value="0">재고상태 선택</option>
+								<option value="S">ON_SALE</option>
+								<option value="P">PENDING</option>
+								<option value="O">SOLD_OUT</option>
+							</select>
+						</th>
+						<th>
+							<input class="input fontSizeM" type="number" name="searchStockQty" min="0" placeHolder="재고량 기준 입력">
+						</th>
+						<th><input class="inputButton fontSizeM" type="submit" value="검색"></th>
+						<th><input class="inputButton fontSizeM orange" type="button" value="검색초기화" onclick="stockOpReset();"></th>
+					</tr>
+				</table>
+			</form>
 			<hr>
 			<div id="stock_box2">
 				<div class="scrollBox">
@@ -130,7 +159,7 @@
 	</table>
 	<c:if test="${updateCnt == 1}">
 		<script type="text/javascript">
-			console(updateSuccess);
+			console("updateSuccess");
 		</script>
 	</c:if>
 </body>
