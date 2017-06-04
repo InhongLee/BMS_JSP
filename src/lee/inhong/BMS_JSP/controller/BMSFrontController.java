@@ -35,7 +35,7 @@ public class BMSFrontController extends HttpServlet {
 		} catch(IOException e) {
 			throw new ServletException(e);
 		}
-		Iterator keyIter = prop.keySet().iterator();
+		Iterator<?> keyIter = prop.keySet().iterator();
 		while(keyIter.hasNext()) {
 			String command = (String) keyIter.next();
 			System.out.println(command);
@@ -63,7 +63,6 @@ public class BMSFrontController extends HttpServlet {
 	public void actionDo(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		
 		
 		String uri = req.getRequestURI();
 		String contextPath = req.getContextPath();

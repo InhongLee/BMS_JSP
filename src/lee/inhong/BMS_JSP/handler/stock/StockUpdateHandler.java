@@ -11,15 +11,16 @@ public class StockUpdateHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
-		System.out.println("SERVICE> StockUpdateHandler");
+		System.out.println("■■■SERVICE■■■ StockUpdateHandler");
 		
 		int updateCnt = 0;
 		
+		String eId = (String) req.getSession().getAttribute("customer_id");
 		String ISBN = req.getParameter("ISBN");
 		int columnNo = Integer.parseInt(req.getParameter("columnNo"));
 		String updateStr = req.getParameter("updateStr");
 		
-		System.out.println("ISBN,columNo,updateStr : "+ISBN+","+columnNo+","+updateStr);
+		System.out.println("eId,ISBN,columNo,updateStr : "+eId+","+ISBN+","+columnNo+","+updateStr);
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		
 		updateCnt = dao.updateStock(ISBN, columnNo, updateStr);

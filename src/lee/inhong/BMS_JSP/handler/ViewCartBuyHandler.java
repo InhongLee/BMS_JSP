@@ -24,11 +24,13 @@ public class ViewCartBuyHandler implements CommandHandler {
 				cart.add(ISBN);
 				req.getSession().setAttribute("cart", cart);
 			} else {
+				@SuppressWarnings("unchecked")
 				ArrayList<String> cart = (ArrayList<String>) req.getSession().getAttribute("cart");
 				if(!cart.contains(ISBN)) cart.add(ISBN);
 				req.getSession().setAttribute("cart", cart);
 			}
 		}
+		@SuppressWarnings("unchecked")
 		ArrayList<String> ISBNs = (ArrayList<String>) req.getSession().getAttribute("cart");
 		ArrayList<ViewBook> bookInfos = new ArrayList<ViewBook>();
 		if(ISBNs != null) {

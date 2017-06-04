@@ -70,7 +70,7 @@
 				</span>
 				<hr style="clear:both;">
 				<div id="board_box4">
-					<textarea placeholder="당신의 리뷰를 적어주세요."></textarea>
+					<textarea>당신의 리뷰를 적어주세요.</textarea>
 				</div>
 				<div id="board_box5">
 					<span id="board_title">별점</span>

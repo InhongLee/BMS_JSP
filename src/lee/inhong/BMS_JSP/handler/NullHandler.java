@@ -12,7 +12,6 @@ public class NullHandler implements CommandHandler {
 		try {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

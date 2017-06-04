@@ -65,7 +65,7 @@
 								<c:choose>
 									<c:when test="${dto.stock_state == 'O'}">SOLD_OUT</c:when>
 									<c:when test="${dto.stock_state == 'P'}">PENDING</c:when>
-									<c:when test="${dto.stock_state == 'S'}">ONSALE</c:when>
+									<c:when test="${dto.stock_state == 'S'}">ON_SALE</c:when>
 									<c:otherwise>ERROR</c:otherwise>
 								</c:choose>
 							</td>
