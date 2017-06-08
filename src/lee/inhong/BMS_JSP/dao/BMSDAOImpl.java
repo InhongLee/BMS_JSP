@@ -15,9 +15,11 @@ import lee.inhong.BMS_JSP.dto.Board;
 import lee.inhong.BMS_JSP.dto.Book;
 import lee.inhong.BMS_JSP.dto.Customer;
 import lee.inhong.BMS_JSP.dto.Publisher;
+import lee.inhong.BMS_JSP.dto.Review;
 import lee.inhong.BMS_JSP.dto.ViewBook;
 import lee.inhong.BMS_JSP.dto.ViewMyOrder;
 import lee.inhong.BMS_JSP.dto.ViewOrder;
+import lee.inhong.BMS_JSP.dto.ViewReview;
 import lee.inhong.BMS_JSP.dto.ViewStock;
 import lee.inhong.BMS_JSP.dto.ViewStockInfo;
 
@@ -1296,7 +1298,6 @@ public class BMSDAOImpl implements BMSDAO{
 			}
 		}
 	}
-
 	
 	@Override
 	public int pwdCheck(int num, String passwd) {
@@ -1327,7 +1328,6 @@ public class BMSDAOImpl implements BMSDAO{
 		return cnt;
 	}
 
-
 	@Override
 	public int update(Board dto) {
 		int cnt = 0;
@@ -1354,7 +1354,6 @@ public class BMSDAOImpl implements BMSDAO{
 		}
 		return cnt;
 	}
-
 
 	@Override
 	public int insert(Board dto) {
@@ -1475,6 +1474,80 @@ public class BMSDAOImpl implements BMSDAO{
 		} finally {
 			try {
 				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+
+	@Override
+	public ArrayList<ViewReview> getReviews(String ISBN) {
+		ArrayList<ViewReview> dtos = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = datasource.getConnection();
+			String sql = "SELECT R.num, R.ISBN, B.book_title, R.customer_id,"+
+					"R.content, R.starpoint, R.reg_date "+ 
+					"FROM bms_review R, book B  "+
+					"WHERE R.ISBN = B.ISBN "+
+					"AND R.ISBN = ? "+
+					"ORDER BY reg_date DESC";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ISBN);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dtos = new ArrayList<ViewReview>();
+				do {
+					ViewReview dto = new ViewReview();
+					dto.setNum(rs.getInt("num"));
+					dto.setISBN(rs.getString("ISBN"));
+					dto.setBook_title(rs.getString("book_title"));
+					dto.setCustomer_id(rs.getString("customer_id"));
+					dto.setContent(rs.getString("content"));
+					dto.setStarpoint(rs.getInt("starpoint"));
+					dto.setReg_date(rs.getTimestamp("reg_date"));
+					dtos.add(dto);
+				} while(rs.next());
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dtos;
+	}
+
+	@Override
+	public int addReview(Review dto) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = datasource.getConnection();
+			String sql = "INSERT INTO bms_review(num,ISBN,customer_id, "+
+						"content,starpoint) "+
+						"VALUES(review_seq.NEXTVAL,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getISBN());
+			pstmt.setString(2, dto.getCustomer_id());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setInt(4, dto.getStarpoint());
+			cnt = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
 				if(pstmt != null) pstmt.close();
 				if(conn != null) conn.close();
 			} catch(SQLException e2) {

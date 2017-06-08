@@ -169,6 +169,8 @@ $(document).ready(function() {
 		}
 		return false;
 	});
+	
+	
 });
 
 function viewLogIn_check() { //로그인 정보(id,pw)입력 후 로그인 버튼 클릭 > 입력정보 검증

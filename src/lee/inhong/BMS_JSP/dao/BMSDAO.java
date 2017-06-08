@@ -8,9 +8,11 @@ import lee.inhong.BMS_JSP.dto.Board;
 import lee.inhong.BMS_JSP.dto.Book;
 import lee.inhong.BMS_JSP.dto.Customer;
 import lee.inhong.BMS_JSP.dto.Publisher;
+import lee.inhong.BMS_JSP.dto.Review;
 import lee.inhong.BMS_JSP.dto.ViewBook;
 import lee.inhong.BMS_JSP.dto.ViewMyOrder;
 import lee.inhong.BMS_JSP.dto.ViewOrder;
+import lee.inhong.BMS_JSP.dto.ViewReview;
 import lee.inhong.BMS_JSP.dto.ViewStock;
 import lee.inhong.BMS_JSP.dto.ViewStockInfo;
 
@@ -61,4 +63,7 @@ public interface BMSDAO extends BMSCode{
 	public int update(Board dto); //글수정
 	public int insert(Board dto); //게시글 및 답변글 작성
 	public int delete(int num); //글삭제
+	/*****************************************************************/
+	public ArrayList<ViewReview> getReviews(String ISBN); //제품리뷰 리스트 호출
+	public int addReview(Review dto); //리뷰등록
 }

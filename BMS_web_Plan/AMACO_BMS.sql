@@ -130,10 +130,36 @@ CREATE TABLE bms_board (
 	 ip         VARCHAR2(15),
      CONSTRAINT mvc_board_num_pk PRIMARY KEY(num)--ip
 );
+ALTER TABLE bms_board ADD ISBN CHAR(13);
+
 INSERT INTO bms_board(num,writer,passwd,subject,content,readCnt,ref,ref_step,ref_level,reg_date,ip)
 VALUES(BOARD_SEQ.NEXTVAL,'이인홍1','carrot','테스트제목1','테스트내용입니다1.',0,BOARD_SEQ.CURRVAL,0,0,SYSDATE,'192.168.1.4');
 
 CREATE SEQUENCE board_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 99999;
+    
+DROP TABLE bms_review;
+CREATE TABLE bms_review (
+     num            NUMBER(5)       PRIMARY KEY, --글번호
+	 ISBN           CHAR(13)        NOT NULL,   --제품번호
+     customer_id    VARCHAR2(20)    NOT NULL,   --작성자
+	 content        VARCHAR2(500),              --글내용
+     starpoint      NUMBER(1)       DEFAULT 3,
+	 reg_date       TIMESTAMP       DEFAULT SYSDATE, --작성일
+     CONSTRAINT bms_review_ISBN_fk FOREIGN KEY(ISBN) REFERENCES book(ISBN)
+);
+INSERT INTO bms_review
+VALUES(review_seq.NEXTVAL,'9791159492372','in6121','amaco78','배송빨라요',5,SYSDATE);
+
+SELECT R.num, R.ISBN, B.book_title, R.customer_id, R.passwd, R.content, R.starpoint, R.reg_date 
+FROM bms_review R, book B 
+WHERE R.ISBN = B.ISBN
+AND R.ISBN = '9791159492372'
+ORDER BY reg_date DESC;
+
+CREATE SEQUENCE review_seq
     START WITH 1
     INCREMENT BY 1
     MAXVALUE 99999;

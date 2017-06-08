@@ -158,7 +158,7 @@ a,ul,li{margin:0; padding:0;}
 		.board_cell3{width:40%; margin:0px; padding:10px 0px; display:inline-block;}
 		.board_cell4{width:10%; margin:0px; padding:10px 0px; display:inline-block;}
 		.board_cell5{width:15%; margin:0px; padding:10px 0px; display:inline-block;}
-		.board_addBox{margin-top:10px; text-align:center; border:1px solid green;}
+		.board_addBox{margin-top:5px; font-size:xx-small; text-align:center; border:1px solid green;}
 	/* viewStock.jsp */
 	#stock_box1{margin:0; padding:0;}
 		#stock_Options{width:100%; height:100%; border-collapse:collapse;}
