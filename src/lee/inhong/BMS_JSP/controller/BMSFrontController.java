@@ -38,7 +38,6 @@ public class BMSFrontController extends HttpServlet {
 		Iterator<?> keyIter = prop.keySet().iterator();
 		while(keyIter.hasNext()) {
 			String command = (String) keyIter.next();
-			System.out.println(command);
 			String handlerClassName = prop.getProperty(command);
 			try {
 				Class<?> handlerClass = Class.forName(handlerClassName);

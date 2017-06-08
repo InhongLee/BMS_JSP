@@ -1,16 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link href="<%=request.getContextPath() %>/style/styles.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/JS/scripts.js"></script>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file = "/view/setting.jsp" %>
 
+<html>
+<body>
+	<c:if test="${confirmCnt == 0}">
+		<script type="text/javascript">
+			errorAlert(orderIdNotExist);
+		</script>
+	</c:if>
+	<c:if test="${confirmCnt == -1}">
+		<script type="text/javascript">
+			errorAlert(orderStocklack);
+		</script>
+	</c:if>
 	<table class="mainFrame">
 		<tr class="mainRow1"><td><jsp:include page="/view/viewMain/viewTitle.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow2"><td><jsp:include page="/view/viewMain/viewNavi.jsp" flush="false"/></td></tr>
@@ -18,191 +20,163 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="order_box1">
-			<h2 class="title2">주문 관리</h2>
+			<form action="orderOpSearch.do" method="post" name="orderOpSearchForm">
+				<table id ="order_Options">
+					<tr><th width="150px"><h2 class="title2">주문 관리</h2></th>
+						<th width="100px"><input class="input" type="date" name="order_StartDate"></th>
+						<th width="10px">~</th>
+						<th width="100px"><input class="input" type="date" name="order_EndDate"></th>
+						<th width="200px">
+							<select class="input fontSizeM" name="selectOrderType">
+								<option value="0">주문종류 선택</option>
+								<option value="PU">Purchase</option>
+								<option value="SE">Sales</option>
+							</select>
+						</th>
+						<th width="200px">
+							<select class="input fontSizeM" name="selectOrderState">
+								<option value="0">주문상태 선택</option>
+								<optgroup label="PURCHASE">
+									<option value=1110>REQ_PURCHASE</option>
+									<option value=1120>APP_PURCHASE</option>
+									<option value=1130>REJ_PURCHASE</option>
+									<option value=1210>REQ_RETURN</option>
+									<option value=1220>APP_RETURN</option>
+									<option value=1230>REJ_RETURN</option>
+								</optgroup>
+								<optgroup label="SALES">
+									<option value=2110>REQ_SALES</option>
+									<option value=2120>APP_SALES</option>
+									<option value=2130>REJ_SALES</option>
+									<option value=2210>REQ_REFUND</option>
+									<option value=2220>APP_REFUND</option>
+									<option value=2230>REJ_REFUND</option>
+								</optgroup>
+							</select>
+						</th>
+						<th><input class="inputButton fontSizeM" type="submit" value="검색"></th>
+						<th><input class="inputButton fontSizeM orange" type="button" value="검색초기화" onclick="orderOpReset();"></th>
+				</table>
+				
+			</form>
 			<hr>
 			<div id="order_box2">
-				<table id="order_table1">
-					<tr>
-						<th>OrderId</th>
-						<th>BookTitle</th>
-						<th>CustomName</th>
-						<th>State</th>
-						<th>Qty</th>
-						<th>Confirm</th>
-					</tr>
-					<tr id="item1">
-						<td>0001</td>
-						<td>Headfirst Java</td>
-						<td>필N굳</td>
-						<td>Req_Perchase</td>
-						<td>100</td>
-						<td>PENDING</td>
-					</tr>
-					<tr id="item2">
-						<td>0002</td>
-						<td>정보처리기사 필기</td>
-						<td>이인홍</td>
-						<td>Req_Sales</td>
-						<td>1</td>
-						<td>CONFIRMED</td>
-					</tr>
-					<tr id="item3">
-						<td>0003</td>
-						<td>Javascript N jQuery : Missing Menual</td>
-						<td>이인홍</td>
-						<td>Req_Refund</td>
-						<td>1</td>
-						<td>REJECTED</td>
-					</tr>
-					<tr id="item4">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr id="item5">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
+				<div class="scrollBox">
+					<table id="order_table1">
+						<tr>
+							<th>order_id</th>
+							<th>detail_number</th>
+							<th>book_title</th>
+							<th>order_type</th>
+							<th>purchase_price</th>
+							<th>sell_price</th>
+							<th>stock</th>
+							<th>order_quantity</th>
+							<th>order_state</th>
+							
+						</tr>
+						<c:forEach var="dto" items="${dtos}">
+							<tr id="item1">
+								<td>${dto.order_id}</td>
+								<td>${dto.detail_number}</td>
+								<td>${dto.book_title}</td>
+								<td>
+									<c:choose>
+										<c:when test="${fn:substring(dto.order_id,0,2) == 'PU'}">
+											PURCHASE
+										</c:when>									
+										<c:when test="${fn:substring(dto.order_id,0,2) == 'SE'}">
+											SALES
+										</c:when>
+										<c:otherwise>ERROR</c:otherwise>
+									</c:choose>
+								</td>
+								<td>${dto.purchase_price}</td>
+								<td>${dto.sell_price}</td>
+								<td>${dto.stock}</td>
+								<td>${dto.order_quantity}</td>
+								<td id="${dto.order_state}">${dto.order_stateName}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 				<hr>
 				<div id="order_box3">
 					<div id="order_box3_1">
 						<h2 class="title2">총 매출현황</h2>
 						<table id="order_table2">
 							<tr>
-								<td>총 매출액</td>
-								<td>+4,100,000</td>
+								<td>매출총액/월</td>
+								<td>+ ${totalSales}</td>
 								<td>원</td>
 							</tr>
 							<tr>
-								<td>총 비용</td>
-								<td>-3,560,000</td>
+								<td>비용총액/월</td>
+								<td>- ${totalCost}</td>
 								<td>원</td>
 							</tr>
 							<tr>
-								<td>매출 이익</td>
-								<td>+540,000</td>
+								<td>매출이익/월</td>
+								<td>${salesProfit}</td>
 								<td>원</td>
 							</tr>
 							<tr>
 								<td>세금</td>
-								<td>-54,000</td>
+								<td>- ${tax}</td>
 								<td>원</td>
 							</tr>
 							<tr>
-								<td>순 이익</td>
-								<td>+486,000</td>
+								<td>순이익/월</td>
+								<td>${netProfit}</td>
 								<td>원</td>
 							</tr>
 						</table>
 					</div>
 					<div id="order_box3_2">
 						<ul class="tabs">
-							<li><a href="#tab1">구매승인</a></li>
-							<li><a href="#tab2">판매승인</a></li>
-							<li><a href="#tab3">환불승인</a></li>
+							<li><a href="#tab1">구매</a></li>
+							<li><a href="#tab2">판매</a></li>
+							<li><a href="#tab3">환불</a></li>
+							<li><a href="#tab4">반품</a></li>
 						</ul>
 						<div class="tab_container">
-							<div id="tab1" class="tab_content">
-								<form name="order_reqPerchase" action="" method="post">
+							<c:forEach var="i" begin="1" end="4" step="1">
+								<div id="tab${i}" class="tab_content">
+								<form action="confirmOrder.do" method="post" name="order_req${i}"
+								onsubmit="return confirmCheck('order_req${i}');">
 									<table id="order_table3">
 										<tr>
 											<td>주문번호</td>
-											<td>0001</td>
-											<td></td>
+											<td id="order_orderId">
+											</td><td></td>
 										</tr>
 										<tr>
 											<td>비용/EA</td>
-											<td>30,000</td>
+											<td id="order_price"></td>
 											<td>원</td>
 										</tr>
 										<tr>
 											<td>요청수량</td>
-											<td>+10</td>
+											<td id="order_orderQty"></td>
 											<td>EA</td>
 										</tr>
 										<tr>
 											<td>총 비용</td>
-											<td>-300,000</td>
+											<td id="order_orderSum"></td>
 											<td>원</td>
 										</tr>
 										<tr>
 											<td></td>
-											<td><input type="button" value="CONFIRM"></td>
-											<td><input type="button" value="REJECT"></td>
+											<td><input type="submit" value="CONFIRM"></td>
+											<td><input type="button" value="REJECT"
+											onclick="rejectOrder('order_req${i}');"></td>
 										</tr>
 									</table>
+									<input type="hidden" name="order_id" value="">
+									<input type="hidden" name="order_state" value="">
 								</form>
 							</div>
-							<div id="tab2" class="tab_content">
-								<form name="order_reqSales" action="" method="post">
-									<table id="order_table4">
-										<tr>
-											<td>주문번호</td>
-											<td>0002</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>단가/EA</td>
-											<td>30,000</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td>요청수량</td>
-											<td>-10</td>
-											<td>EA</td>
-										</tr>
-										<tr>
-											<td>총 판매금액</td>
-											<td>+300,000</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td><input type="button" value="CONFIRM"></td>
-											<td><input type="button" value="REJECT"></td>
-										</tr>
-									</table>
-								</form>
-							</div>
-							<div id="tab3" class="tab_content">
-								<form name="order_reqRefund" action="" method="post">
-									<table id="order_table5">
-										<tr>
-											<td>주문번호</td>
-											<td>0003</td>
-											<td></td>
-										</tr>
-										<tr>
-											<td>단가/EA</td>
-											<td>30,000</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td>요청수량</td>
-											<td>+10</td>
-											<td>EA</td>
-										</tr>
-										<tr>
-											<td>총 환불금액</td>
-											<td>-300,000</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td><input type="button" value="CONFIRM"></td>
-											<td><input type="button" value="REJECT"></td>
-										</tr>
-									</table>
-								</form>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -212,57 +186,5 @@
 		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
 		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>
 	</table>
-	
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(".tab_content").hide();
-		$("ul.tabs li:first").addClass("active").show();
-		$(".tab_content:first").show();
-		
-		$("ul.tabs li").click(function() {
-			$("ul.tabs li").removeClass("active");
-			$(this).addClass("active");
-			$(".tab_content").hide();
-			var activeTab = $(this).find("a").attr("href");
-			$(activeTab).fadeIn();
-			return false;
-		});
-		
-		$("#order_table1 td").click(function() {
-			var col = $(this).parent().children().index($(this));
-			var row = $(this).parent().parent().children().index($(this).parent());
-			
-			var colName = $("#order_table1 th").eq(col).html();
-			var reqState = $(this).parent().children().eq(3).html();
-			
-			if (colName == "Confirm") {
-				var activeTab;
-				$("ul.tabs li").removeClass("active");
-				if(reqState == "Req_Perchase") {
-					$("ul.tabs li:eq(0)").addClass("active");
-					$(".tab_content").hide();
-					activeTab = $("ul.tabs li:eq(0)").find("a").attr("href");
-					$(activeTab).fadeIn();
-					$(activeTab + " input[type='button']").focus();
-				} else if(reqState == "Req_Sales") {
-					$("ul.tabs li:eq(1)").addClass("active");
-					$(".tab_content").hide();
-					activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
-					$(activeTab).fadeIn();
-					$(activeTab + " input[type='button']").focus();
-				} else if(reqState == "Req_Refund") {
-					$("ul.tabs li:eq(2)").addClass("active");
-					$(".tab_content").hide();
-					activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
-					$(activeTab).fadeIn();
-					$(activeTab + " input[type='button']").focus();
-				}
-				$(activeTab + " input[type='submit']").focus();
-			}
-			return false;
-		});
-	});
-</script>
 </body>
 </html>

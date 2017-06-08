@@ -22,7 +22,12 @@ import javax.servlet.http.HttpSession;
  * urlPatterns : 필터를 적용할 url
  * customer_id : session에 저장된 로그인계정의 id
  */
-@WebFilter(filterName="LoginCheckFilter", urlPatterns={"/viewStock.do"})
+@WebFilter(filterName="LoginCheckFilter",
+		   urlPatterns={"/viewStock.do",
+				   		"/viewMemberInfo.do",
+				   		"/stockOpSearch.do",
+				   		"/buyOrder.do",
+				   		"/viewOrder.do"})
 public class LoginCheckFilter implements Filter {
 
 	@Override
@@ -32,6 +37,7 @@ public class LoginCheckFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
+		System.out.println("---FILTER--- LoginCheckFilter");
 		HttpServletRequest httpRequest = (HttpServletRequest) req;
 		HttpSession session = httpRequest.getSession(false);
 		

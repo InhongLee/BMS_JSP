@@ -46,7 +46,7 @@ CREATE TABLE employee (
     department_id NUMBER(4)NOT NULL,
     CONSTRAINT employee_department_id_fk FOREIGN KEY(department_id) REFERENCES department(department_id)
 );
-INSERT INTO employee(employee_id,employee_name,department_id) VALUES(0001,'이인홍',1200);
+INSERT INTO employee(employee_id,employee_name,department_id) VALUES(1001,'이인홍',1200);
 
 CREATE TABLE book (
     ISBN CHAR(13) PRIMARY KEY,
@@ -81,22 +81,14 @@ CREATE TABLE stock (
 -- stock_state : 
 -- O = SoldOut     P = Pending    S = OnSale
 
-CREATE TABLE orderID (
-    order_id CHAR(10) PRIMARY KEY,
-    order_code CHAR(2) NOT NULL,
-    order_date DATE DEFAULT SYSDATE,
-    serial_number NUMBER(2)NOT NULL
-);
-
 CREATE TABLE orders (
     order_id CHAR(10) PRIMARY KEY,
-    publisher_id NUMBER(4) NOT NULL,
-    customer_id VARCHAR2(20) NOT NULL,
+    publisher_id NUMBER(4),
+    customer_id VARCHAR2(20),
     employee_id NUMBER(4) NOT NULL,
     CONSTRAINT orders_publisher_id_fk FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
     CONSTRAINT orders_customer_id_fk FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    CONSTRAINT orders_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-    CONSTRAINT orders_order_id_fk FOREIGN KEY(order_id) REFERENCES orderID(order_id)
+    CONSTRAINT orders_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
 CREATE TABLE orderDetail (
@@ -119,6 +111,27 @@ CREATE TABLE ledger (
     leder_approcal CHAR(1) DEFAULT 'N',
     CONSTRAINT ledger_orderDetail_id_fk FOREIGN KEY (order_id, detail_number) REFERENCES orderDetail(order_id, detail_number)
 );
+
+--------------------------------------------------------------------------------
+-- 책 추가시 STOCK 테이블에 해당 행 추가
+--------------------------------------------------------------------------------
+DROP TRIGGER trigger_makestock;
+SET SERVEROUTPUT ON
+CREATE OR REPLACE TRIGGER trigger_makestock
+    AFTER INSERT
+    ON book
+    FOR EACH ROW
+BEGIN
+    dbms_output.put_line('Trigger running');
+    INSERT INTO stock
+    VALUES(:NEW.ISBN, 0, 'O');
+    dbms_output.put_line('Trigger operation successed');
+    EXCEPTION
+        WHEN OTHERS THEN
+            dbms_output.put_line('ERR CODE'||TO_CHAR(SQLCODE));
+            dbms_output.put_line('ERR MESSAGE'||SQLERRM);
+END;
+/
 --------------------------------------------------------------------------------
 COMMIT;
 ROLLBACK;
@@ -137,9 +150,77 @@ SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME
   FROM SYS.USER_CONSTRAINTS;
   
 SELECT *
-FROM	(SELECT B.ISBN,B.publisher_id,B.book_title,B.book_author,
-                B.purchase_price,B.sell_price,P.publisher_name,rownum rNum
-        FROM book B, publisher P
+FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
+                B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum
+        FROM book B, publisher P, stock S
         WHERE B.publisher_id = P.publisher_id
+        AND B.ISBN = S.ISBN
+        AND B.publisher_id = CASE B.publisher_id
+                                WHEN 0 THEN B.publisher_id
+                                ELSE B.publisher_id
+                            END
+        AND S.stock_state = CASE S.stock_state
+                                WHEN '0' THEN S.stock_state
+                                ELSE S.stock_state
+                            END
+        AND S.stock <= CASE S.stock
+                            WHEN 0 THEN S.stock
+                            ELSE S.stock
+                            END
         )
 WHERE rNum >= 1 AND rNum <= 5;
+
+SELECT sum(B.purchase_price*S.stock), sum(B.sell_price*S.stock), sum(stock)
+FROM    book B, stock S
+WHERE   B.ISBN = S.ISBN;
+
+SELECT *
+FROM book B, publisher P, stock S
+WHERE B.PUBLISHER_ID = P.PUBLISHER_ID
+AND B.ISBN = S.ISBN
+AND S.STOCK_STATE = 'S';
+--------------------------------------------------------------------------------
+-- orderid 시퀀스 적용 및 날짜 변경시 시퀀스 초기화 프로시져
+--------------------------------------------------------------------------------
+DROP SEQUENCE orderid_serialNo_seq;
+CREATE SEQUENCE orderid_serialNo_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 99
+    CYCLE;
+
+DROP PROCEDURE orderid_serialNo_seq_RESET;
+CREATE OR REPLACE PROCEDURE orderid_serialNo_seq_RESET
+      (SEQ_MAXVAL IN NUMBER)
+IS
+      SEQ_NOW NUMBER(2) := 0;
+      SEQ_RESET NUMBER(2) := 0;
+BEGIN
+      SEQ_NOW := orderid_serialNo_seq.NEXTVAL;
+      IF(SEQ_NOW != 0) THEN
+      SEQ_RESET := SEQ_MAXVAL - SEQ_NOW;
+      END IF;
+      FOR I IN 1..SEQ_RESET LOOP
+            SEQ_NOW := orderid_serialNo_seq.NEXTVAL;
+      END LOOP;
+END;
+/
+
+SELECT orderid_serialNo_seq.NEXTVAL
+FROM DUAL;
+SELECT TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.CURRVAL,2,0)
+FROM DUAL;
+EXECUTE orderid_serialNo_seq_RESET(99);
+
+--------------------------------------------------------------------------------
+-- order_id = order_code || order_date(yymmdd) || serial_nember
+--------------------------------------------------------------------------------
+-- 구매
+INSERT INTO orders(ORDER_ID,PUBLISHER_ID,CUSTOMER_ID,EMPLOYEE_ID)
+VALUES  ('PU'||TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.CURRVAL,2,0),
+        1001,'in6121',1001);
+--------------------------------------------------------------------------------
+-- orderlist
+--------------------------------------------------------------------------------
+SELECT *
+FROM 

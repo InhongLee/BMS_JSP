@@ -21,12 +21,17 @@
 			</li>
 			<li id="order"><span class="menuName">order</span>
 				<ul class="sub_menu" id="sub_order">
-					<li><a href="../viewOrder/viewOrder.jsp">주문관리</a></li>
+					<li><a href="viewOrder.do">주문관리</a></li>
 				</ul>				
 			</li>
 			<li id="member"><span class="menuName">member</span>
 				<ul class="sub_menu" id="sub_member">
 					<li><a href="viewMemberInfo.do">마이페이지</a></li>
+				</ul>				
+			</li>
+			<li id="board"><span class="menuName">board</span>
+				<ul class="sub_menu" id="sub_board">
+					<li><a href="viewBoard.do">자유게시판</a></li>
 				</ul>				
 			</li>
 		</ul>

@@ -25,13 +25,19 @@
   	<url-pattern>*.do</url-pattern>
   </servlet-mapping>
   
-  <!-- <filter>
-  	<filter-name>LoginCheckFilter</filter-name>
-  	<filter-class>lee.inhong.BMS_JSP.filter.LoginCheckFilter</filter-class>
-  </filter>
-  <filter-mapping>
-  	<filter-name>LoginCheckFilter</filter-name>
-  	<url-pattern>/viewStock.do</url-pattern>
-  </filter-mapping> -->
-  
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/view/error/error404.jsp</location>
+  </error-page>
+
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/view/error/error500.jsp</location>
+  </error-page>
+
+  <error-page>
+  	<exception-type>java.lang.NullPionterException</exception-type>
+  	<location>/view/error/errorNull.jsp</location>
+  </error-page>
+
 </web-app>

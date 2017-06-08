@@ -46,7 +46,7 @@ CREATE TABLE employee (
     department_id NUMBER(4)NOT NULL,
     CONSTRAINT employee_department_id_fk FOREIGN KEY(department_id) REFERENCES department(department_id)
 );
-INSERT INTO employee(employee_id,employee_name,department_id) VALUES(0001,'이인홍',1200);
+INSERT INTO employee(employee_id,employee_name,department_id) VALUES(1001,'이인홍',1200);
 
 CREATE TABLE book (
     ISBN CHAR(13) PRIMARY KEY,
@@ -75,36 +75,30 @@ INSERT INTO book(ISBN, publisher_id, book_title, book_author, purchase_price, se
 CREATE TABLE stock (
     ISBN CHAR(13) PRIMARY KEY,
     stock NUMBER(4) NOT NULL,
-    stock_state CHAR(1) DEFAULT 'O',
+    stock_state NUMBER(4) DEFAULT 3110,
     CONSTRAINT stock_ISBN_fk FOREIGN KEY (ISBN) REFERENCES book(ISBN)
 );
 -- stock_state : 
 -- O = SoldOut     P = Pending    S = OnSale
 
-CREATE TABLE orderID (
-    order_id CHAR(10) PRIMARY KEY,
-    order_code CHAR(2) NOT NULL,
-    order_date DATE DEFAULT SYSDATE,
-    serial_number NUMBER(2)NOT NULL
-);
-
 CREATE TABLE orders (
     order_id CHAR(10) PRIMARY KEY,
     publisher_id NUMBER(4) NOT NULL,
-    customer_id VARCHAR2(20) NOT NULL,
-    employee_id NUMBER(4) NOT NULL,
+    customer_id VARCHAR2(20),
+    employee_id NUMBER(4),
     CONSTRAINT orders_publisher_id_fk FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
     CONSTRAINT orders_customer_id_fk FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    CONSTRAINT orders_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-    CONSTRAINT orders_order_id_fk FOREIGN KEY(order_id) REFERENCES orderID(order_id)
+    CONSTRAINT orders_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 
 CREATE TABLE orderDetail (
     order_id CHAR(10) NOT NULL,
     detail_number NUMBER(2) NOT NULL,
     ISBN CHAR(13) NOT NULL,
+    purchase_price NUMBER(6) NOT NULL,
+    sell_price NUMBER(6) NOT NULL,
     order_quantity NUMBER(4) DEFAULT 0,
-    order_approval CHAR(1) DEFAULT 'N',
+    order_state NUMBER(4) NOT NULL,
     CONSTRAINT orderDetail_order_id_fk FOREIGN KEY (order_id)
         REFERENCES orders(order_id),
     CONSTRAINT orderDetail_ISBN_fk FOREIGN KEY (ISBN) REFERENCES stock(ISBN),
@@ -115,19 +109,48 @@ CREATE TABLE ledger (
     leder_id CHAR(10) PRIMARY KEY,
     order_id CHAR(10) NOT NULL,
     detail_number NUMBER(2) NOT NULL,
-    debit_credit CHAR(1) DEFAULT 'N',
-    leder_approcal CHAR(1) DEFAULT 'N',
+    debit_credit CHAR(1) NOT NULL,
+    leder_state NUMBER(4) NOT NULL,
     CONSTRAINT ledger_orderDetail_id_fk FOREIGN KEY (order_id, detail_number) REFERENCES orderDetail(order_id, detail_number)
 );
-DROP TRIGGER trigger_book_stock;
-CREATE OR REPLACE TRIGGER trigger_book_stock
+--------------------------------------------------------------------------------
+-- 게시판
+--------------------------------------------------------------------------------
+CREATE TABLE bms_board (
+     num NUMBER(5), --글번호
+	 writer     VARCHAR2(20)    NOT NULL, --작성자
+	 passwd     VARCHAR2(10)    NOT NULL, --비밀번호
+	 subject    VARCHAR2(50)    NOT NULL, --글제목
+	 content    VARCHAR2(500), --글내용
+	 readCnt    NUMBER(5)       DEFAULT 0, --조회수
+	 ref        NUMBER(5)       DEFAULT 0, --그룹화 아이디
+	 ref_step   NUMBER(5)       DEFAULT 0, --그룹 스탭
+	 ref_level  NUMBER(5)       DEFAULT 0, --그룹 레벨
+	 reg_date   TIMESTAMP       DEFAULT SYSDATE, --작성일
+	 ip         VARCHAR2(15),
+     CONSTRAINT mvc_board_num_pk PRIMARY KEY(num)--ip
+);
+INSERT INTO bms_board(num,writer,passwd,subject,content,readCnt,ref,ref_step,ref_level,reg_date,ip)
+VALUES(BOARD_SEQ.NEXTVAL,'이인홍1','carrot','테스트제목1','테스트내용입니다1.',0,BOARD_SEQ.CURRVAL,0,0,SYSDATE,'192.168.1.4');
+
+CREATE SEQUENCE board_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 99999;
+--------------------------------------------------------------------------------
+-- 책 추가시 STOCK 테이블에 해당 행 추가
+--------------------------------------------------------------------------------
+DROP TRIGGER trigger_makestock;
+ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
+SET SERVEROUTPUT ON
+CREATE OR REPLACE TRIGGER trigger_makestock
     AFTER INSERT
     ON book
     FOR EACH ROW
 BEGIN
     dbms_output.put_line('Trigger running');
     INSERT INTO stock
-    VALUES(:NEW.ISBN, 0, 'O');
+    VALUES(:NEW.ISBN, 0, 3110);
     dbms_output.put_line('Trigger operation successed');
     EXCEPTION
         WHEN OTHERS THEN
@@ -135,6 +158,7 @@ BEGIN
             dbms_output.put_line('ERR MESSAGE'||SQLERRM);
 END;
 /
+ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:ALL'; 
 --------------------------------------------------------------------------------
 COMMIT;
 ROLLBACK;
@@ -144,7 +168,6 @@ DROP TABLE department;
 DROP TABLE employee;
 DROP TABLE book;
 DROP TABLE stock;
-DROP TABLE orderID;
 DROP TABLE orders;
 DROP TABLE orderDetail;
 DROP TABLE ledger;
@@ -176,3 +199,106 @@ WHERE rNum >= 1 AND rNum <= 5;
 SELECT sum(B.purchase_price*S.stock), sum(B.sell_price*S.stock), sum(stock)
 FROM    book B, stock S
 WHERE   B.ISBN = S.ISBN;
+
+SELECT *
+FROM book B, publisher P, stock S
+WHERE B.PUBLISHER_ID = P.PUBLISHER_ID
+AND B.ISBN = S.ISBN
+AND S.STOCK_STATE = 'S';
+--------------------------------------------------------------------------------
+-- orderid 시퀀스 적용 및 날짜 변경시 시퀀스 초기화 프로시져
+--------------------------------------------------------------------------------
+DROP SEQUENCE orderid_serialNo_seq;
+CREATE SEQUENCE orderid_serialNo_seq
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 99
+    CYCLE;
+
+DROP PROCEDURE orderid_serialNo_seq_RESET;
+CREATE OR REPLACE PROCEDURE orderid_serialNo_seq_RESET
+      (SEQ_MAXVAL IN NUMBER)
+IS
+      SEQ_NOW NUMBER(2) := 0;
+      SEQ_RESET NUMBER(2) := 0;
+BEGIN
+      SEQ_NOW := orderid_serialNo_seq.NEXTVAL;
+      IF(SEQ_NOW != 0) THEN
+      SEQ_RESET := SEQ_MAXVAL - SEQ_NOW;
+      END IF;
+      FOR I IN 1..SEQ_RESET LOOP
+            SEQ_NOW := orderid_serialNo_seq.NEXTVAL;
+      END LOOP;
+END;
+/
+
+SELECT orderid_serialNo_seq.NEXTVAL
+FROM DUAL;
+SELECT TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.CURRVAL,2,0)
+FROM DUAL;
+EXECUTE orderid_serialNo_seq_RESET(99);
+
+--------------------------------------------------------------------------------
+-- order_id = order_code || order_date(yymmdd) || serial_nember
+--------------------------------------------------------------------------------
+-- 구매
+INSERT INTO orders(ORDER_ID,PUBLISHER_ID,CUSTOMER_ID,EMPLOYEE_ID)
+VALUES  ('SE'||TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.CURRVAL,2,0),
+        null,'in6121',1001);
+--------------------------------------------------------------------------------
+-- orderlist
+--------------------------------------------------------------------------------
+SELECT *
+FROM    (SELECT O.order_id,OD.detail_number,B.book_title,
+                S.stock,OD.order_quantity,OD.order_approval,rownum rNum
+        FROM orders O, orderDetail OD, stock S, book B 
+        WHERE   O.order_id = OD.order_id
+        AND     OD.ISBN = S.ISBN
+        AND     S.ISBN = B.ISBN
+        )
+WHERE rNum >= 1 AND rNUM <= 100;
+-- 총 비용/월
+SELECT NVL(sum(B.PURCHASE_PRICE),0)
+FROM book B, orderdetail O
+WHERE B.ISBN = O.ISBN
+AND SUBSTR(O.order_id,1,2) = 'PU'
+AND TO_DATE(SUBSTR(O.order_id,3,6), 'YYMMDD') >= TRUNC(SYSDATE, 'MONTH')
+AND TO_DATE(SUBSTR(O.order_id,3,6), 'YYMMDD') <= LAST_DAY(SYSDATE)
+AND O.ORDER_APPROVAL = 'Y';
+-- 총 매출액/월
+SELECT NVL(sum(B.SELL_PRICE),0)
+FROM book B, orderdetail O
+WHERE B.ISBN = O.ISBN
+AND SUBSTR(O.order_id,1,2) = 'SE'
+AND TO_DATE(SUBSTR(O.order_id,3,6), 'YYMMDD') >= TRUNC(SYSDATE, 'MONTH')
+AND TO_DATE(SUBSTR(O.order_id,3,6), 'YYMMDD') <= LAST_DAY(SYSDATE);
+
+--------------------------------------------------------------------------------
+-- 오더 검색 sql
+--------------------------------------------------------------------------------
+SELECT  *
+FROM    (SELECT O.order_id,OD.detail_number,B.book_title,
+        OD.purchase_price,OD.sell_price,S.stock,
+        OD.order_quantity,OD.order_approval,rownum rNum		
+        FROM orders O, orderDetail OD, stock S, book B
+        WHERE   O.order_id = OD.order_id
+        AND     OD.ISBN = S.ISBN
+        AND     S.ISBN = B.ISBN
+        AND		SUBSTR(OD.order_id,3,6) >= TO_CHAR(NVL(NULL,SYSDATE-365),'YYMMDD')
+        AND		SUBSTR(OD.order_id,3,6) <= TO_CHAR(NVL(NULL,SYSDATE),'YYMMDD')
+        AND 	SUBSTR(OD.order_id,1,2) = CASE NVL(NULL,'0')
+                WHEN '0' THEN SUBSTR(OD.order_id,1,2) ELSE 'PU' END
+		AND		OD.order_approval = CASE NVL(NULL,'0')
+				WHEN '0' THEN OD.order_approval ELSE 'Y' END
+		);
+        
+
+SELECT B.ISBN,B.BOOK_TITLE, B.SELL_PRICE book_price, OD.SELL_PRICE, OD.ORDER_QUANTITY,
+        (OD.SELL_PRICE*OD.ORDER_QUANTITY) TOTAL_PRICE, O.customer_id	
+FROM    orders O, orderDetail OD, stock S, book B
+WHERE   O.order_id = OD.order_id
+AND     OD.ISBN = S.ISBN
+AND     S.ISBN = B.ISBN
+AND     SUBSTR(OD.order_id,1,2) = 'PU'
+AND     OD.order_approval = 'Y'
+AND     O.CUSTOMER_ID = 'in6121';

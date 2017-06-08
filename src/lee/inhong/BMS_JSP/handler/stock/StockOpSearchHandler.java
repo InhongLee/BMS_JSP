@@ -16,7 +16,10 @@ public class StockOpSearchHandler implements CommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("■■■SERVICE■■■ StockOpSearchHandler");
 		int publisher_id = Integer.parseInt(req.getParameter("searchPublisher"));
-		String stock_state = req.getParameter("searchStockState");
+		int stock_state = 0;
+		if(req.getParameter("searchStockState") != null) {
+			stock_state = Integer.parseInt(req.getParameter("searchStockState"));
+		}
 		
 		int stock = 0;
 		String strStock = req.getParameter("searchStockQty");
@@ -26,8 +29,13 @@ public class StockOpSearchHandler implements CommandHandler {
 		
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		ArrayList<ViewStock> dtos = dao.getOpSearchStocks(publisher_id, stock_state, stock);
-		System.out.println("DB|getOpSearchStocks() result : "+dtos.size());
-		req.setAttribute("dtos", dtos);
+		if(dtos != null) {
+			System.out.println("DB|getOpSearchStocks() result : "+dtos.size());
+			req.setAttribute("dtos", dtos);
+		} else {
+			System.out.println("DB|getOpSearchStocks() result : "+0);
+		}
+		
 		
 		return "viewStock.do";
 	}

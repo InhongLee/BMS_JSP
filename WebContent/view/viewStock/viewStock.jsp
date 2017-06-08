@@ -27,9 +27,10 @@
 						<th>
 							<select class="input fontSizeM" name="searchStockState">
 								<option value="0">재고상태 선택</option>
-								<option value="S">ON_SALE</option>
-								<option value="P">PENDING</option>
-								<option value="O">SOLD_OUT</option>
+								<option value=3110>PENDING</option>
+								<option value=3120>ON_SALE</option>
+								<option value=3130>SOLD_OUT</option>
+								<option value=3140>OUT_OF_PRINT</option>
 							</select>
 						</th>
 						<th>
@@ -37,8 +38,11 @@
 						</th>
 						<th><input class="inputButton fontSizeM" type="submit" value="검색"></th>
 						<th><input class="inputButton fontSizeM orange" type="button" value="검색초기화" onclick="stockOpReset();"></th>
+						<th><input class="inputButton fontSizeM blue" type="button" value="책추가" onclick="addBook();"></th>
+						
 					</tr>
 				</table>
+				<input type="hidden" name="publishers" value="${publishers}">
 			</form>
 			<hr>
 			<div id="stock_box2">
@@ -63,9 +67,10 @@
 							<td>${dto.stock}</td>
 							<td>
 								<c:choose>
-									<c:when test="${dto.stock_state == 'O'}">SOLD_OUT</c:when>
-									<c:when test="${dto.stock_state == 'P'}">PENDING</c:when>
-									<c:when test="${dto.stock_state == 'S'}">ON_SALE</c:when>
+									<c:when test="${dto.stock_state == 3110}">PENDING</c:when>
+									<c:when test="${dto.stock_state == 3120}">ON_SALE</c:when>
+									<c:when test="${dto.stock_state == 3130}">SOLD_OUT</c:when>
+									<c:when test="${dto.stock_state == 3140}">OUT_OF_PRINT</c:when>
 									<c:otherwise>ERROR</c:otherwise>
 								</c:choose>
 							</td>
@@ -94,60 +99,41 @@
 							<li><a href="#tab2">반품요청</a></li>
 						</ul>
 						<div class="tab_container">
-							<div id="tab1" class="tab_content">
-								<form action="" method="post" name="stock_reqPerchase"
-								onsubmit="">
-									<table id="stock_table3">
-										<tr>
-											<td>비용/EA</td>
-											<td id="stock_t3_cost">0</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td>요청수량</td>
-											<td><input type="number" id="reqQty" name="reqQty" maxlength="4"
-											onkeyup="totalCostChk();"></td>
-											<td>EA</td>
-										</tr>
-										<tr>
-											<td>총 비용</td>
-											<td>0</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td><input type="submit" value="SUBMIT"></td>
-											<td><input type="reset" value="RESET"></td>
-										</tr>
-									</table>
-								</form>
-							</div>
-							<div id="tab2" class="tab_content">
-								<form name="stock_reqRefund" action="" method="post">
-									<table id="stock_table4">
-										<tr>
-											<td>비용/EA</td>
-											<td>0</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td>요청수량</td>
-											<td><input type="number" placeholder="-10"></td>
-											<td>EA</td>
-										</tr>
-										<tr>
-											<td>총 환불금액</td>
-											<td>0</td>
-											<td>원</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td><input type="submit" value="SUBMIT"></td>
-											<td><input type="reset" value="RESET"></td>
-										</tr>
-									</table>
-								</form>
-							</div>
+							<c:forEach var="i" begin="1" end="2" step="1">
+								<div id="tab${i}" class="tab_content">
+									<form action="reqOrder.do" method="post" name="stock_req${i}"
+									onsubmit="return requestOrderCheck('stock_req${i}');">
+										<table id="stock_table3">
+											<tr>
+												<td>비용/EA</td>
+												<td id="stock_cost"></td>
+												<td>원</td>
+											</tr>
+											<tr>
+												<td>요청수량</td>
+												<td><input type="number" id="reqQty" name="order_quantity" maxlength="4"
+												onkeyup="totalCostChk('stock_req${i}');"></td>
+												<td>EA</td>
+											</tr>
+											<tr>
+												<td>총 비용</td>
+												<td></td>
+												<td>원</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><input type="submit" value="SUBMIT"></td>
+												<td><input type="reset" value="RESET"></td>
+											</tr>
+										</table>
+										<div id="stock_reqPurchaseInfo">
+											<input type="hidden" name="employee_id" value="${sessionScope.employee_id}">
+											<input type="hidden" name="ISBN" value="">
+											<input type="hidden" name="tabNo" value="${i}">
+										</div>
+									</form>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

@@ -14,8 +14,8 @@ $(document).ready(function() {
 	$("#order").mouseout(function()						{$("#sub_order").hide();									});
 	$("#member").mouseover(function()					{$("#sub_member").show();									});
 	$("#member").mouseout(function()					{$("#sub_member").hide();									});
-	$("#account").mouseover(function()					{$("#sub_account").show();									});
-	$("#account").mouseout(function()					{$("#sub_account").hide();									});
+	$("#board").mouseover(function()					{$("#sub_board").show();									});
+	$("#board").mouseout(function()					{$("#sub_board").hide();									});
 
 	$(".inputButton").bind(								{
 		"mouseenter":function() 						{$(this).css("color","yellow");
@@ -69,17 +69,20 @@ $(document).ready(function() {
 					var defaultVar = $(this).html();
 					$(this).html("<select>"+
 							"<option readonly>SELECT State</option>"+
-							"<option value='ON_SALE'>ON_SALE</option>"+
-							"<option value='PENDING'>PENDING</option>"+
-							"<option value='SOLD_OUT'>SOLD_OUT</option>"+
+							"<option value = 'PENDING'>PENDING</option>"+
+							"<option value = 'ON_SALE'>ON_SALE</option>"+
+							"<option value = 'SOLD_OUT'>SOLD_OUT</option>"+
+							"<option value = 'OUT_OF_PRINT'>OUT_OF_PRINT</option>"+
 							"</select>");
 				}
 				$(this).children().focus();
 			}
 		} else if (colName == "Stock") {
+			var $ISBN = $(this).parent().children().eq(0).html();
 			var activeTab = $(".active").find("a").attr("href");
 			$(activeTab + " td").eq(1).html($(this).parent().children().eq(3).html());
 			$(activeTab + " input[type='number']").focus();
+			$(activeTab + " input[name='ISBN']").val($ISBN);
 		} 
 		return false;
 	});
@@ -88,24 +91,82 @@ $(document).ready(function() {
 		if(key.keyCode == 13) {
 			key.preventDefault();
 			key.stopPropagation();
-			var ISBN = $(this).parent().children().eq(0).html();
-			var col = $(this).parent().children().index($(this));
-			var cellValue = $(this).children().val();
-			if(cellValue == "") {
-				cellValue = $(this).children().attr("placeholder");
+			var $ISBN = $(this).parent().children().eq(0).html();
+			var $col = $(this).parent().children().index($(this));
+			var $cellValue = $(this).children().val();
+			if($cellValue == "") {
+				$cellValue = $(this).children().attr("placeholder");
 			}
-			window.location="stockUpdate.do?ISBN="+ISBN+"&columnNo="+col+"&updateStr="+cellValue;
+			window.location="stockUpdate.do?ISBN="+$ISBN+"&columnNo="+$col+"&updateStr="+$cellValue;
 			/*$(this).html(cellValue);*/
 		}
 		return false;
 	});
 	
 	$("#stock_table1 td").change(function() {
-		var ISBN = $(this).parent().children().eq(0).html();
-		var col = $(this).parent().children().index($(this));
-		var cellValue = $(this).children().val();
-		window.location="stockUpdate.do?ISBN="+ISBN+"&columnNo="+col+"&updateStr="+cellValue;
+		var $ISBN = $(this).parent().children().eq(0).html();
+		var $col = $(this).parent().children().index($(this));
+		var $cellValue = $(this).children().val();
+		window.location="stockUpdate.do?ISBN="+$ISBN+"&columnNo="+$col+"&updateStr="+$cellValue;
 		/*$(this).html(cellValue);*/
+		return false;
+	});
+	
+	$("#order_table1 td").click(function() {
+		var col = $(this).parent().children().index($(this));
+		var row = $(this).parent().parent().children().index($(this).parent());
+		
+		var colName = $("#order_table1 th").eq(col).html();
+		var reqState = $(this).parent().children().eq(8).html();
+		if (colName == "order_state") {
+			var activeTab;
+			var $order_id = $(this).parent().children().eq(0).html();
+			var $purchase_price = $(this).parent().children().eq(4).html();
+			var $sell_price = $(this).parent().children().eq(5).html();
+			var $order_quantity = $(this).parent().children().eq(7).html();
+			var $order_state = $(this).parent().children().eq(8).attr("id");
+			
+			$("ul.tabs li").removeClass("active");
+			
+			if(reqState.indexOf("REQ_PURCHASE") != -1) {
+				$("ul.tabs li:eq(0)").addClass("active");
+				$(".tab_content").hide();
+				activeTab = $("ul.tabs li:eq(0)").find("a").attr("href");
+			} else if(reqState.indexOf("REQ_SALES") != -1) {
+				$("ul.tabs li:eq(1)").addClass("active");
+				$(".tab_content").hide();
+				activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
+			} else if(reqState.indexOf("REQ_REFUND") != -1) {
+				$("ul.tabs li:eq(2)").addClass("active");
+				$(".tab_content").hide();
+				activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
+			} else if(reqState.indexOf("REQ_RETURN") != -1) {
+				$("ul.tabs li:eq(3)").addClass("active");
+				$(".tab_content").hide();
+				activeTab = $("ul.tabs li:eq(3)").find("a").attr("href");
+			}
+			
+			$(activeTab + " #order_orderId").html($order_id);
+			var $price = 0;
+			if($(activeTab + " form").attr("name") == "order_req1") {
+				$price = $purchase_price;
+			} else if ($(activeTab + " form").attr("name") == "order_req2") {
+				$price = $sell_price;
+			} else if ($(activeTab + " form").attr("name") == "order_req3") {
+				$price = $sell_price;
+			} else if ($(activeTab + " form").attr("name") == "order_req4") {
+				$price = $purchase_price;
+			}
+			$(activeTab + " #order_price").html($price);
+			$(activeTab + " #order_orderQty").html($order_quantity);
+			var orderSum = $order_quantity * $sell_price;
+			$(activeTab + " #order_orderSum").html(orderSum);
+			$(activeTab).fadeIn();
+			$(activeTab + " input[name='order_id']").val($order_id);
+			$(activeTab + " input[name='order_state']").val($order_state);
+			$(activeTab + " input[type='submit']").focus();
+
+		}
 		return false;
 	});
 });
@@ -248,21 +309,151 @@ function viewInfo_check() { //회원정보 수정(id,pw,이름,주민번호,연�
 	else if	(!checkTLD) 								{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
 
 }
+
 /**************************************************************************/
-/*	viewStock.jsp1	*/
+/*	viewStock.jsp	*/
 /**************************************************************************/
-function totalCostChk() {
-	var reqQty = $("#stock_table3 #reqQty").val();
-	var cost = parseInt($("#stock_t3_cost").html());
-	var totalCost = reqQty * cost;
+function totalCostChk(formname) {
+	var $reqQty = $("form[name='"+formname+"'] #reqQty").val();
+	var $cost = parseInt($("form[name='"+formname+"'] #stock_cost").html());
+	var $totalCost = $reqQty * $cost;
 	var activeTab = $(".active").find("a").attr("href");
-	$(activeTab + " td").eq(7).html("-"+totalCost);
+	$(activeTab + " td").eq(7).html("-"+$totalCost);
+	
 	return false;
 }
+
 function stockOpReset() { //검색 초기화
 	$("select[name='searchPublisher']").val("0");
 	$("input[name='searchStockQty']").val("");
 	$("select[name='searchStockState']").val("0");
+}
+
+function addBook() {
+	var url = "addBook.do";
+	window.open(url, "addBook", "toolbar=no,location=no,status=no,resizable=no,menubar=no,width=500,height=500");
+}
+
+function addBookCheck() {
+	if(!document.addBookProForm.ISBN.value) {
+		$(".consoleInfo").html(msg_isbn);
+		document.addBookProForm.ISBN.focus();
+		return false;
+	} else if(document.addBookProForm.searchPublisher.value == 0) {
+		$(".consoleInfo").html(msg_publisher_id);
+		document.addBookProForm.searchPublisher.focus();
+		return false;
+	} else if(!document.addBookProForm.book_title.value) {
+		$(".consoleInfo").html(msg_book_title);
+		document.addBookProForm.book_title.focus();
+		return false;
+	} else if(!document.addBookProForm.book_author.value) {
+		$(".consoleInfo").html(msg_book_author);
+		document.addBookProForm.book_author.focus();
+		return false;
+	} else if(!document.addBookProForm.purchase_price.value) {
+		$(".consoleInfo").html(msg_purchase_price);
+		document.addBookProForm.purchase_price.focus();
+		return false;
+	} else if(!document.addBookProForm.sell_price.value) {
+		$(".consoleInfo").html(msg_sell_price);
+		document.addBookProForm.sell_price.focus();
+		return false;
+	} else if(document.addBookProForm.hiddenId.value == 0) {
+		$(".consoleInfo").html(msg_dupCheck);
+		document.addBookProForm.dupcheck.focus();
+		return false;
+	}
+}
+
+function dupCheck() { //회원가입 페이지에서 입력한 id가 이미 있는 아이디인지 확인
+	if(!document.addBookProForm.ISBN.value)			{$(".consoleInfo").html(msg_isbn);	document.addBookProForm.ISBN.focus();	return false;}
+	var ISBN = document.addBookProForm.ISBN.value;
+	var url = "confirmISBN.do?ISBN=" + ISBN;
+	window.open(url, "confirm", "menubar=no, width=300, height=200");
+}
+
+function setISBN(isbn) {
+	opener.document.addBookProForm.ISBN.value = isbn;
+	opener.document.addBookProForm.hiddenId.value = 1;
+	self.close();
+}
+
+function resetHiddenId() {
+	document.addBookProForm.hiddenId.value = 0;
+}
+/**************************************************************************/
+/*	viewOrder.jsp	*/
+/**************************************************************************/
+function confirmCheck(formname) {
+	var $order_state = $("form[name='"+formname+"'] input[name='order_state']").val();
+	alert($order_state);
+	if($order_state != 1110 && $order_state != 1210 && $order_state != 2110 && $order_state != 2210) {
+		alert(orderConfirmError);
+		return false;
+	}
+}
+
+function rejectOrder(formname) { // 승인거부
+	var $order_state = $("form[name='"+formname+"'] input[name='order_state']").val();
+	if($order_state != 1110 && $order_state != 1210 && $order_state != 2110 && $order_state != 2210) {
+		alert(orderRejectError);
+		return false;
+	} else {
+		var $order_id = $("form[name='"+formname+"'] input[name='order_id']").val();
+		$("form[name='"+formname+"'] input[name='order_id']").val("");
+		window.location="rejectOrder.do?order_id="+$order_id+"&order_state="+$order_state;		
+	}
+}
+function orderOpReset() {
+	$("input[name='order_StartDate']").val("");
+	$("input[name='order_StartDate']").val("");
+	$("select[name='selectOrderState']").val("0");
+	$("select[name='selectOrderApproval']").val("0");
+}
+/**************************************************************************/
+/*	board	*/
+/**************************************************************************/
+function passwdCheck() {
+	if(!document.passwdform.passwd.value) {
+		alert(msg_passwd);
+		document.passwdform.passwd.focus();
+		return false;}
+}
+function modifyCheck() {
+	if(!document.modifyform.subject.value) {
+		alert(msg_subject);
+		document.modifyform.subject.focus();
+		return false;
+	} else if(!document.modifyform.passwd.value) {
+		alert(msg_passwd);
+		document.modifyform.passwd.focus();
+		return false;
+	}
+}
+function writeCheck() {
+	if(!document.writeform.writer.value) {
+		alert(msg_writer);
+		document.writeform.writer.focus();
+		return false;
+	} else if(!document.writeform.passwd.value) {
+		alert(msg_passwd);
+		document.writeform.passwd.focus();
+		return false;
+	} else if(!document.writeform.subject.value) {
+		alert(msg_subject);
+		document.writeform.subject.focus();
+		return false;
+	}
+}
+function writeFocus() {
+	document.writeform.writer.focus();
+}
+function modifyFocus() {
+	document.modifyform.subject.focus();
+}
+function passwdFocus() {
+	document.passwdform.passwd.focus();
 }
 /**************************************************************************/
 /*	공유 script	*/

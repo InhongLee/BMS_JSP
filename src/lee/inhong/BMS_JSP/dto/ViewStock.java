@@ -5,11 +5,12 @@ public class ViewStock {
 	private String 	ISBN;
 	private String 	book_title;
 	private String	book_author;
+	private int		publisher_id;
 	private String	publisher_name;
 	private int		purchase_price;
 	private int		sell_price;
 	private int		stock;
-	private String	stock_state;
+	private int		stock_state;
 	
 	public String getISBN() {
 		return ISBN;
@@ -28,6 +29,12 @@ public class ViewStock {
 	}
 	public void setBook_author(String book_author) {
 		this.book_author = book_author;
+	}
+	public int getPublisher_id() {
+		return publisher_id;
+	}
+	public void setPublisher_id(int publisher_id) {
+		this.publisher_id = publisher_id;
 	}
 	public String getPublisher_name() {
 		return publisher_name;
@@ -53,10 +60,10 @@ public class ViewStock {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	public String getStock_state() {
+	public int getStock_state() {
 		return stock_state;
 	}
-	public void setStock_state(String stock_state) {
+	public void setStock_state(int stock_state) {
 		this.stock_state = stock_state;
 	}
 }

@@ -11,7 +11,7 @@ a,ul,li{margin:0; padding:0;}
 .mainRow5{height:450px;}
 .mainRow6{height:25px; background-color:green;}
 .mainRow7{height:60px; background-color:green;}
-.mainFrame tr>td{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.mainFrame tr td{border-spacing:0; padding:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
 .input			{width:100%; height:100%; margin:0; padding:0;}
 .inputButton	{width:100%; height:100%; margin:0; padding:0; text-align:center; color:white; background-color:green; border:1px solid green;}
@@ -22,7 +22,7 @@ a,ul,li{margin:0; padding:0;}
 .red			{background-color: red; border:1px solid red;}
 .blue			{background-color: blue; border:1px solid blue;}
 .orange		{background-color: orange; border:1px solid orange;}
-.scrollBox		{width:100%; height:300px; overflow: auto;}
+.scrollBox		{width:100%; height:150px; overflow: auto;}
 
 
 .main_header{}
@@ -160,7 +160,7 @@ a,ul,li{margin:0; padding:0;}
 		.board_cell5{width:15%; margin:0px; padding:10px 0px; display:inline-block;}
 		.board_addBox{margin-top:10px; text-align:center; border:1px solid green;}
 	/* viewStock.jsp */
-	#stock_box1{}
+	#stock_box1{margin:0; padding:0;}
 		#stock_Options{width:100%; height:100%; border-collapse:collapse;}
 		#stock_box2{}
 			#stock_table1{width:1000px; font-size:small; border-collapse:collapse; }
@@ -174,7 +174,7 @@ a,ul,li{margin:0; padding:0;}
 			#stock_table1 tr td:nth-child(5){width:80px; text-align:center;}
 			#stock_table1 tr td:nth-child(6){width:80px; text-align:center;}
 			#stock_table1 tr td:nth-child(7){width:150px; text-align:center;}
-		#stock_box3{height:200px;}
+		#stock_box3{height:160px;}
 			#stock_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
 				#stock_table2{width:280px; margin:10px 10px; font-size:small;}
 				#stock_table2 td{height:25px;}
@@ -215,17 +215,20 @@ a,ul,li{margin:0; padding:0;}
 		#stock_table1 td input, #stock_table1 td select{width:100%; height:100%; box-sizing:border-box;}
 	/* viewOrder.jsp */
 	#order_box1{}
+		#order_Options{width:100%; height:100%; border-collapse:collapse;}
 		#order_box2{}
-			#order_table1{width:100%; font-size:small; border-collapse:collapse;}
+			#order_table1{width:1000px; font-size:small; border-collapse:collapse;}
 			#order_table1 th, #order_table1 td{height:25px; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid gray;}
 			#order_table1 td:HOVER{background:lightgray;}
 			#order_table1 tr:nth-child(1){background:lightgreen;}
-			#order_table1 tr td:nth-child(1){width:10%; text-align:center;}
-			#order_table1 tr td:nth-child(2){width:30%; text-align:left;}
-			#order_table1 tr td:nth-child(3){width:20%; text-align:left;}
-			#order_table1 tr td:nth-child(4){width:15%; text-align:center;}
-			#order_table1 tr td:nth-child(5){width:10%; text-align:center;}
-			#order_table1 tr td:nth-child(6){width:15%; text-align:center;}
+			#order_table1 tr td:nth-child(1){width:100px; text-align:center;}
+			#order_table1 tr td:nth-child(2){width:50px; text-align:center;}
+			#order_table1 tr td:nth-child(3){width:280px; text-align:left;}
+			#order_table1 tr td:nth-child(4){width:150px; text-align:center;}
+			#order_table1 tr td:nth-child(5){width:80px; text-align:center;}
+			#order_table1 tr td:nth-child(6){width:50px; text-align:center;}
+			#order_table1 tr td:nth-child(7){width:50px; text-align:center;}
+			#order_table1 tr td:nth-child(8){width:100px; text-align:center;}
 		#order_box3{height:200px;}
 			#order_box3_1{width:300px; vertical-align:top; float:left; border:1px solid gray;}
 				#order_table2{width:280px; margin:10px 10px; font-size:small;}
@@ -268,7 +271,16 @@ a,ul,li{margin:0; padding:0;}
 		html ul.tabs li.active, html ul.tabs li.active a:hover{background:white; border-bottom:1px solid white;}
 		h2.title2{margin:0px; padding:0px 10px; font-weight:normal;}
 		#order_table1 td input, #order_table1 td select{width:100%; height:100%; box-sizing:border-box;}
-
+	
+	/* viewBoard.jsp */
+	.boardTable{width: 1000px; border-collapse: collapse; border:1px solid black;}
+	.boardTable td,.boardTable th{height:30px; margin=:0; padding:0; border:1px solid black;}
+	.boardTable th{background-color: lightgreen;}
+	.boardTable a:link, .boardTable a:visited{color:green; text-decoration: none;}
+	.boardTable a:hover, .boardTable a:focus{text-shadow:0px 2px 2px black; color:yellow;}
+	.boardTable textarea{width: 100%}
+	.boardTable input[type='submit'],.boardTable input[type='reset'],.boardTable input[type='button']{margin: 10px;}
+	
 .main_footer{}
 	#site_info{color:white; font-size:small;}
 	.bms_logo{float:left; margin:5px 10px 5px 5px;}

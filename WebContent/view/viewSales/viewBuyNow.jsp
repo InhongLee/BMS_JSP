@@ -13,52 +13,55 @@
 		<div id="viewBuyNow">
 			<div id="buyNow_box1">
 				<div id="buyNow_box2">
-					<img class="img_book" src="${project}images/${requestScope.bookInfo.ISBN}.jpg"
+					<img class="img_book" src="${project}images/${bookInfo.ISBN}.jpg"
 					alt="책이미지  200x240" width="200px" height="240px">
 				</div>
 				<div id="buyNow_box3">
-					<div id="buyNow_box4">
-						<span id="buyNow_span1">${requestScope.bookInfo.book_title}</span>
-						<hr>
-						<table id="buyNow_table1">
-							<tr><td>정가</td>	<td>${requestScope.bookInfo.sell_price}원</td>
-							</tr>
-							<tr><td>판매가</td><td>${requestScope.bookInfo.sell_price}원</td>
-							</tr>
-							<tr><td>포인트</td><td>${requestScope.point}점</td>
-							</tr>
-							<tr><td>저자</td><td>${requestScope.bookInfo.book_author}</td>
-							</tr>
-							<tr><td>출판사</td><td>${requestScope.bookInfo.publisher_name}</td>
-							</tr>
-							<tr><td>ISBN</td><td>${requestScope.bookInfo.ISBN}</td>
-							</tr>
-							<tr>
-								<td>판매지수</td>
-								<td>104</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td><label for="buyNum">주문수량</label></td>
-								<td><input name="buyNum" id="buyNum" type="number" placeholder="1"></td>
-							</tr>
-						</table>
-					</div>
-					<div id="buyNow_box5">
-						<div id="buyNow_btn1">
-							<input class="inputButton fontSizeM" type="button" value="카트담기"
-							onclick="window.location='viewCartBuy.do?ISBN='+${requestScope.bookInfo.ISBN}"></div>
-						<div id="buyNow_btn2">
-							<input class="inputButton fontSizeM blue" type="button" value="바로구매"
-							onclick="window.location='viewSales.do'"></div>
-						<div id="buyNow_btn3">
-							<input class="inputButton fontSizeM orange" type="button" value="리뷰쓰기"
-							onclick="window.location='viewBoard.do'">
+					<form action="buyOrder.do" method="post" name="buynow_Form">
+						<div id="buyNow_box4">
+							<span id="buyNow_span1">${bookInfo.book_title}</span>
+							<hr>
+							<table id="buyNow_table1">
+								<tr><td>정가</td>	<td>${bookInfo.sell_price}원</td>
+								</tr>
+								<tr><td>판매가</td><td>${bookInfo.sell_price}원</td>
+								</tr>
+								<tr><td>포인트</td><td>${point}점</td>
+								</tr>
+								<tr><td>저자</td><td>${bookInfo.book_author}</td>
+								</tr>
+								<tr><td>출판사</td><td>${bookInfo.publisher_name}</td>
+								</tr>
+								<tr><td>ISBN</td><td>${bookInfo.ISBN}</td>
+								</tr>
+								<tr>
+									<td>판매지수</td>
+									<td>104</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><label for="buyNum">주문수량</label></td>
+									<td><input name="order_quentity" id="buyNum" type="number" min="1" value="1"></td>
+								</tr>
+							</table>
+							<input type="hidden" name="ISBN" value="${bookInfo.ISBN}">
 						</div>
-					</div>
+						<div id="buyNow_box5">
+							<div id="buyNow_btn1">
+								<input class="inputButton fontSizeM" type="button" value="카트담기"
+								onclick="window.location='viewCartBuy.do?ISBN='+${bookInfo.ISBN}"></div>
+							<div id="buyNow_btn2">
+								<input class="inputButton fontSizeM blue" type="submit" value="바로구매">
+							</div>
+							<div id="buyNow_btn3">
+								<input class="inputButton fontSizeM orange" type="button" value="리뷰쓰기"
+								onclick="window.location='viewReview.do?ISBN=${bookInfo.ISBN}'">
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

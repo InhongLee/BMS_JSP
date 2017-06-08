@@ -111,24 +111,34 @@
 					<div class="cartBuy_cell5">합계</div>
 					<div class="cartBuy_cell6">주문</div>
 				</div>
-				<div class="cartBuy_addBox">
-					<div class="cartBuy_cell1"><a href="./view/viewSales/viewBuyNow.jsp">Headfirst Java</a></div>
-					<div class="cartBuy_cell2">35,000원</div>
-					<div class="cartBuy_cell3">32,000원</div>
-					<div class="cartBuy_cell4">2권</div>
-					<div class="cartBuy_cell5">64,000원</div>
-					<div class="cartBuy_cell6"><a href="#"><input type="button" value="환불요청" class="myInfo_btn1"></a></div>
-				</div>
-				<div class="cartBuy_addBox">
-					<div class="cartBuy_cell1"><a href="./view/viewSales/viewBuyNow.jsp">Headfirst Java</a></div>
-					<div class="cartBuy_cell2">35,000원</div>
-					<div class="cartBuy_cell3">32,000원</div>
-					<div class="cartBuy_cell4">2권</div>
-					<div class="cartBuy_cell5">64,000원</div>
-					<div class="cartBuy_cell6"><a href="#"><input type="button" value="환불요청" class="myInfo_btn1"></a></div>
-				</div>
+				<c:forEach var="order" items="${myOrders}">
+					<div class="cartBuy_addBox">
+						<div class="cartBuy_cell1"><a href="viewBuyNow.do?ISBN=${order.ISBN}">${order.book_title}</a></div>
+						<div class="cartBuy_cell2">${order.book_price}원</div>
+						<div class="cartBuy_cell3">${order.sell_price}원</div>
+						<div class="cartBuy_cell4">${order.order_quantity}권</div>
+						<div class="cartBuy_cell5">${order.total_price}원</div>
+						<div class="cartBuy_cell6">
+						<c:if test="${order.order_state == 2110}">
+							구매 요청 접수중
+						</c:if>
+						<c:if test="${order.order_state == 2120}">
+							<input type="button" value="환불요청" class="myInfo_btn1"
+						onclick="window.location='reqRefund.do?order_id=${order.order_id}';">
+						</c:if>
+						<c:if test="${order.order_state == 2130}">
+							구매실패
+						</c:if>
+						<c:if test="${order.order_state == 2210}">
+							환불승인 대기중
+						</c:if>
+						<c:if test="${order.order_state == 2220}">
+							환불완료
+						</c:if>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-			
 		</div>
 		</td></tr>
 		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
