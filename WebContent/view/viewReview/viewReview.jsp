@@ -79,6 +79,7 @@ $(document).ready(function() {
 			if(starNum >= i) {$("#board_star"+i).html("★");}
 			else {$("#board_star"+i).html("☆");}
 		}
+		$("form[name=reviewform] input[name=starpoint]").val(starNum);
 		return false;
 	});	
 });

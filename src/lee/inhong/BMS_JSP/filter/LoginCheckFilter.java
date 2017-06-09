@@ -27,7 +27,8 @@ import javax.servlet.http.HttpSession;
 				   		"/viewMemberInfo.do",
 				   		"/stockOpSearch.do",
 				   		"/buyOrder.do",
-				   		"/viewOrder.do"})
+				   		"/viewOrder.do",
+				   		"/reviewPro.do"})
 public class LoginCheckFilter implements Filter {
 
 	@Override

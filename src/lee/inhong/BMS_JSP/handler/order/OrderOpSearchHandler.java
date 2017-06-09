@@ -16,6 +16,8 @@ public class OrderOpSearchHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("■■■SERVICE■■■ OrderOpSearchHandler");
+		
+		String searchTitleAuthor = req.getParameter("searchTitleAuthor");
 		Date order_StartDate = null;
 		Date order_EndDate = null;
 		if(req.getParameter("order_StartDate") != "") {
@@ -29,12 +31,13 @@ public class OrderOpSearchHandler implements CommandHandler {
 		if(req.getParameter("selectOrderState") != null) {
 			selectOrderState = Integer.parseInt(req.getParameter("selectOrderState"));
 		};
+		System.out.println("[searchTitleAuthor]: "+searchTitleAuthor);
 		System.out.println("[order_StartDate,order_EndDate]: "+order_StartDate+" ~ "+order_EndDate);
 		System.out.println("[selectOrderType,selectOrderState]: "+selectOrderType+","+selectOrderState);
 		
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		
-		ArrayList<ViewOrder> dtos = dao.getOpSearchOrder(order_StartDate,order_EndDate,selectOrderType,selectOrderState);
+		ArrayList<ViewOrder> dtos = dao.getOpSearchOrder(searchTitleAuthor,order_StartDate,order_EndDate,selectOrderType,selectOrderState);
 		if(dtos != null) {
 			System.out.println("DB|getOpSearchOrder() result : "+dtos.size());
 			req.setAttribute("dtos", dtos);

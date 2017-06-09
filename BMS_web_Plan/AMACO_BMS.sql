@@ -151,9 +151,9 @@ CREATE TABLE bms_review (
      CONSTRAINT bms_review_ISBN_fk FOREIGN KEY(ISBN) REFERENCES book(ISBN)
 );
 INSERT INTO bms_review
-VALUES(review_seq.NEXTVAL,'9791159492372','in6121','amaco78','¹è¼Û»¡¶ó¿ä',5,SYSDATE);
+VALUES(review_seq.NEXTVAL,'9791159492372','in6121','¹è¼Û»¡¶ó¿ä',5,SYSDATE);
 
-SELECT R.num, R.ISBN, B.book_title, R.customer_id, R.passwd, R.content, R.starpoint, R.reg_date 
+SELECT R.num, R.ISBN, B.book_title, R.customer_id, R.content, R.starpoint, R.reg_date 
 FROM bms_review R, book B 
 WHERE R.ISBN = B.ISBN
 AND R.ISBN = '9791159492372'
@@ -208,17 +208,24 @@ FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
         WHERE B.publisher_id = P.publisher_id
         AND B.ISBN = S.ISBN
         AND B.publisher_id = CASE B.publisher_id
-                                WHEN 0 THEN B.publisher_id
-                                ELSE B.publisher_id
+                            WHEN 0 THEN B.publisher_id
+                            ELSE B.publisher_id
                             END
         AND S.stock_state = CASE S.stock_state
-                                WHEN '0' THEN S.stock_state
-                                ELSE S.stock_state
+                            WHEN '0' THEN S.stock_state
+                            ELSE S.stock_state
                             END
         AND S.stock <= CASE S.stock
                             WHEN 0 THEN S.stock
                             ELSE S.stock
                             END
+        UNION
+        SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
+                B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum
+        FROM book B, publisher P, stock S
+        WHERE B.publisher_id = P.publisher_id
+        AND B.ISBN = S.ISBN
+        AND B.book_title like '%A%'
         )
 WHERE rNum >= 1 AND rNum <= 5;
 

@@ -553,39 +553,56 @@ public class BMSDAOImpl implements BMSDAO{
 	}
 
 	@Override
-	public ArrayList<ViewStock> getOpSearchStocks(int publisher_id, int stock_state, int stock) {
+	public ArrayList<ViewStock> getOpSearchStocks(String searchTitleAuthor, int publisher_id, int stock_state, int stock) {
 		ArrayList<ViewStock> dtos = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = datasource.getConnection();
-			String sql = 	"SELECT * "+
-							"FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name, "+
-											"B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum "+
-									"FROM book B, publisher P, stock S "+
-									"WHERE B.publisher_id = P.publisher_id "+
-									"AND B.ISBN = S.ISBN "+
-									"AND B.publisher_id = CASE ? "+
-		                                "WHEN 0 THEN B.publisher_id "+
-		                                "ELSE ? "+
-		                            "END "+
-		                            "AND S.stock_state = CASE ? "+
-		                                "WHEN 0 THEN S.stock_state "+
-		                                "ELSE ? "+
-		                            "END "+
-		                            "AND S.stock <= CASE ? "+
-		                            "WHEN 0 THEN S.stock "+
-		                            "ELSE ? "+
-		                            "END "+
-									") ";
+			String sql = 	
+					"SELECT * "+
+					"FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name, "+
+					"                B.purchase_price,B.sell_price,S.stock,S.stock_state "+
+					"        FROM book B, publisher P, stock S "+
+					"        WHERE B.publisher_id = P.publisher_id "+
+					"        AND B.ISBN = S.ISBN "+
+					"        AND B.book_title like '%'||NVL(?,B.book_title)||'%' "+
+					"        UNION "+
+					"         SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name, "+
+					"                B.purchase_price,B.sell_price,S.stock,S.stock_state "+
+					"        FROM book B, publisher P, stock S "+
+					"        WHERE B.publisher_id = P.publisher_id "+
+					"        AND B.ISBN = S.ISBN "+
+					"        AND B.book_author like '%'||NVL(?,B.book_author)||'%' "+
+					"        INTERSECT "+
+					"        SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name, "+
+					"                B.purchase_price,B.sell_price,S.stock,S.stock_state "+
+					"        FROM book B, publisher P, stock S "+
+					"        WHERE B.publisher_id = P.publisher_id "+
+					"        AND B.ISBN = S.ISBN "+
+					"        AND B.publisher_id = CASE ? "+
+					"                            WHEN 0 THEN B.publisher_id "+
+					"                            ELSE ? "+
+					"                            END "+
+					"        AND S.stock_state = CASE ? "+
+					"                            WHEN 0 THEN S.stock_state "+
+					"                            ELSE ? "+
+					"                            END "+
+					"        AND S.stock <= CASE ? "+
+					"                            WHEN 0 THEN S.stock "+
+					"                            ELSE ? "+
+					"                            END "+
+					"        )";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, publisher_id);
-			pstmt.setInt(2, publisher_id);
-			pstmt.setInt(3, stock_state);
-			pstmt.setInt(4, stock_state);
-			pstmt.setInt(5, stock);
-			pstmt.setInt(6, stock);
+			pstmt.setString(1, searchTitleAuthor);
+			pstmt.setString(2, searchTitleAuthor);
+			pstmt.setInt(3, publisher_id);
+			pstmt.setInt(4, publisher_id);
+			pstmt.setInt(5, stock_state);
+			pstmt.setInt(6, stock_state);
+			pstmt.setInt(7, stock);
+			pstmt.setInt(8, stock);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				dtos = new ArrayList<ViewStock>();
@@ -984,7 +1001,7 @@ public class BMSDAOImpl implements BMSDAO{
 	}
 
 	@Override
-	public ArrayList<ViewOrder> getOpSearchOrder(Date order_StartDate, Date order_EndDate, String selectOrderType,
+	public ArrayList<ViewOrder> getOpSearchOrder(String searchTitleAuthor, Date order_StartDate, Date order_EndDate, String selectOrderType,
 			int selectOrderState) {
 		ArrayList<ViewOrder> dtos = null;
 		Connection conn = null;
@@ -993,28 +1010,39 @@ public class BMSDAOImpl implements BMSDAO{
 		try {
 			conn = datasource.getConnection();
 			String sql = 	
-							"SELECT  * "+
-							"FROM    (SELECT O.order_id,OD.detail_number,B.book_title, "+
-							        "OD.purchase_price,OD.sell_price,S.stock, "+
-							        "OD.order_quantity,OD.order_state,rownum rNum	 "+	
-							        "FROM orders O, orderDetail OD, stock S, book B "+
-							        "WHERE   O.order_id = OD.order_id "+
-							        "AND     OD.ISBN = S.ISBN "+
-							        "AND     S.ISBN = B.ISBN "+
-							        "AND		SUBSTR(OD.order_id,3,6) >= TO_CHAR(NVL(?,SYSDATE-365),'YYMMDD') "+
-							        "AND		SUBSTR(OD.order_id,3,6) <= TO_CHAR(NVL(?,SYSDATE),'YYMMDD') "+
-							        "AND 	SUBSTR(OD.order_id,1,2) = CASE NVL(?,'0') "+
-							        "        WHEN '0' THEN SUBSTR(O.order_id,1,2) ELSE ? END "+
-									"AND		OD.order_state = CASE NVL(?,0) "+
-									"		WHEN 0 THEN OD.order_state ELSE ? END "+
-									") ";
+					"SELECT  * "+
+					"FROM    ( "+
+					       "SELECT O.order_id,OD.detail_number,B.book_title, "+
+					       "OD.purchase_price,OD.sell_price,S.stock, "+
+					       "OD.order_quantity,OD.order_state "+
+					       "FROM orders O, orderDetail OD, stock S, book B "+
+					       "WHERE   O.order_id = OD.order_id "+
+					       "AND     OD.ISBN = S.ISBN "+
+					       "AND     S.ISBN = B.ISBN "+
+					       "AND B.book_title like '%'||NVL(?,B.book_title)||'%' "+
+					       "INTERSECT "+
+					       "SELECT O.order_id,OD.detail_number,B.book_title, "+
+					      " OD.purchase_price,OD.sell_price,S.stock, "+
+					      " OD.order_quantity,OD.order_state		 "+
+					      " FROM orders O, orderDetail OD, stock S, book B "+
+					      " WHERE   O.order_id = OD.order_id "+
+					      " AND     OD.ISBN = S.ISBN "+
+					      " AND     S.ISBN = B.ISBN "+
+					      " AND		SUBSTR(OD.order_id,3,6) >= TO_CHAR(NVL(?,SYSDATE-365),'YYMMDD') "+
+					      " AND		SUBSTR(OD.order_id,3,6) <= TO_CHAR(NVL(?,SYSDATE),'YYMMDD') "+
+					      " AND 	SUBSTR(OD.order_id,1,2) = CASE NVL(?,'0') "+
+					      "         WHEN '0' THEN SUBSTR(OD.order_id,1,2) ELSE ? END "+
+							"AND		OD.order_state = CASE NVL(?,0) "+
+							"		WHEN 0 THEN OD.order_state ELSE ? END "+
+							")";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setDate(1, order_StartDate);
-			pstmt.setDate(2, order_EndDate);
-			pstmt.setString(3, selectOrderType);
+			pstmt.setString(1, searchTitleAuthor);
+			pstmt.setDate(2, order_StartDate);
+			pstmt.setDate(3, order_EndDate);
 			pstmt.setString(4, selectOrderType);
-			pstmt.setInt(5, selectOrderState);
+			pstmt.setString(5, selectOrderType);
 			pstmt.setInt(6, selectOrderState);
+			pstmt.setInt(7, selectOrderState);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				dtos = new ArrayList<ViewOrder>();
@@ -1548,6 +1576,31 @@ public class BMSDAOImpl implements BMSDAO{
 			e.printStackTrace();
 		} finally {
 			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+
+	@Override
+	public int resetOrderSerial() {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = datasource.getConnection();
+			String sql ="EXECUTE orderid_serialNo_seq_RESET(99)";
+			pstmt = conn.prepareStatement(sql);
+			cnt = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
 				if(pstmt != null) pstmt.close();
 				if(conn != null) conn.close();
 			} catch(SQLException e2) {

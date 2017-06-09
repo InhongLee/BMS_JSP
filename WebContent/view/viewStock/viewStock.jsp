@@ -17,6 +17,9 @@
 							<h2 class="title2">재고 관리</h2>						
 						</th>
 						<th>
+							<input class="input fontSizeM" type="text" name="searchTitleAuthor" placeHolder="책제목,저자 검색">
+						</th>
+						<th>
 							<select class="input fontSizeM" name="searchPublisher">
 								<option value="0">출판사 선택</option>
 								<c:forEach var="publisher" items="${publishers}">

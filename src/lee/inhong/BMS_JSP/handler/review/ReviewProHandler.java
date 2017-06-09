@@ -21,6 +21,10 @@ public class ReviewProHandler implements CommandHandler {
 		}
 		String content = req.getParameter("content");
 		String customer_id = (String) req.getSession().getAttribute("customer_id");
+		System.out.println("get[ISBN] :"+ISBN);
+		System.out.println("get[starpoint] :"+starpoint);
+		System.out.println("get[content.length] :"+content.length());
+		System.out.println("get[customer_id] :"+customer_id);
 		
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		Review dto = new Review();

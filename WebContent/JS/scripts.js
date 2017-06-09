@@ -389,7 +389,6 @@ function resetHiddenId() {
 /**************************************************************************/
 function confirmCheck(formname) {
 	var $order_state = $("form[name='"+formname+"'] input[name='order_state']").val();
-	alert($order_state);
 	if($order_state != 1110 && $order_state != 1210 && $order_state != 2110 && $order_state != 2210) {
 		alert(orderConfirmError);
 		return false;

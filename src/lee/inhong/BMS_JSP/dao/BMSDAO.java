@@ -39,9 +39,10 @@ public interface BMSDAO extends BMSCode{
 	public ViewStockInfo getStockInfo(); //재고현황 검색 (총수량, 총비용, 총재고금액)
 	public int updateStock(String ISBN, int columnNo, String updateStr); //재고정보 업데이트(재고번호,업데이트칼럼,업데이트내용)
 	public ArrayList<Publisher> getPublisher();// 출판사 정보 검색
-	public ArrayList<ViewStock> getOpSearchStocks(int publisher_id, int stock_state, int stock); //검색조건 부여 재고 검색
+	public ArrayList<ViewStock> getOpSearchStocks(String searchTitleAuthor, int publisher_id, int stock_state, int stock); //검색조건 부여 재고 검색
 	public String addOrder(String order_code,int publisher_id, String customer_id, int employee_id); //오더추가
 	public int addOrderDetail(String order_id, String ISBN, int pCost, int sPrice, int order_quentity, int order_state); //오더새부사항등록
+	public int resetOrderSerial();//order_id의 하위 시리얼넘버 초기화(날짜변경시)
 	public int addBook(Book dto); //책 등록
 	/****************************************************************/
 	public int getCount_order(); //등록된 오더의 숫자 확인
@@ -52,7 +53,7 @@ public interface BMSDAO extends BMSCode{
 	public int reportTotalReturns(); //이달의 반품총액
 	public int confirmOrder(String order_id, int order_state); //주문 승인
 	public int rejectOrder(String order_id, int order_state); //주문 거부
-	public ArrayList<ViewOrder> getOpSearchOrder(Date order_StartDate, Date order_EndDate, String selectOrderType,
+	public ArrayList<ViewOrder> getOpSearchOrder(String searchTitleAuthor, Date order_StartDate, Date order_EndDate, String selectOrderType,
 			int selectOrderState); //주문현황 검색(검색시작일,검색종료일,주문종류,주문상태)
 	/*****************************************************************/
 	public int getCount_board(); //등록된 글의 숫자 확인

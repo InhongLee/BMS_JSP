@@ -22,18 +22,21 @@
 		<div id="order_box1">
 			<form action="orderOpSearch.do" method="post" name="orderOpSearchForm">
 				<table id ="order_Options">
-					<tr><th width="150px"><h2 class="title2">주문 관리</h2></th>
-						<th width="100px"><input class="input" type="date" name="order_StartDate"></th>
-						<th width="10px">~</th>
-						<th width="100px"><input class="input" type="date" name="order_EndDate"></th>
-						<th width="200px">
+					<tr><th><h2 class="title2">주문 관리</h2></th>
+						<th>
+							<input class="input fontSizeM" type="text" name="searchTitleAuthor" placeHolder="책제목 검색">
+						</th>
+						<th><input class="input" type="date" name="order_StartDate"></th>
+						<th>~</th>
+						<th><input class="input" type="date" name="order_EndDate"></th>
+						<th>
 							<select class="input fontSizeM" name="selectOrderType">
 								<option value="0">주문종류 선택</option>
 								<option value="PU">Purchase</option>
 								<option value="SE">Sales</option>
 							</select>
 						</th>
-						<th width="200px">
+						<th>
 							<select class="input fontSizeM" name="selectOrderState">
 								<option value="0">주문상태 선택</option>
 								<optgroup label="PURCHASE">

@@ -39,8 +39,10 @@ $(document).ready(function() {
 			$("#goodsList").append("<option value='<%=book_title%>'><%=book_author + '|' + publisher_name%></option>");
 		<%}%>
 	});	  --%>
+	
+	
 	 // 검색창에 검색어 입력 후 엔터 누르면
-	<%-- $('input[type=search]').on('search', function () {
+	$('input[type=search]').on('search', function () {
 		// 검색어를 변수에 대입
 		var searchstring = $("input[type=search]");
 		searchstring.focus();
@@ -48,14 +50,7 @@ $(document).ready(function() {
 		// 검색창 초기화 후 검색된 책 페이지로 이동
 		$("input[type=search]").val("");
 		$("#result").html("&nbsp;");
-		<%for(int i=0; i<bookList.size(); i++) {
-			String ISBN				= bookList.get(i).getISBN();
-			String book_title 		= bookList.get(i).getBook_title();%>
-			if(searchstring.val() == '<%=book_title%>') {
-				window.location.href='viewBuyNow.do?ISBN=<%=ISBN%>';
-			}
-		<%}%>
-	}); --%>
+	});
 });
 </script>
 </body>

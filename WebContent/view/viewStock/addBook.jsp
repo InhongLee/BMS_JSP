@@ -45,6 +45,12 @@ onsubmit="return addBookCheck();">
 				min="0" step="100"></td>
 		</tr>
 		<tr>
+			<th>image (200x240)</th>
+			<td colspan="3">
+				<input class="input" type="file" name="book_image">
+			</td>
+		</tr>
+		<tr>
 			<th class="consoleInfo" height="30" colspan="4" style="color: black;"></th>
 		</tr>
 		<tr>
