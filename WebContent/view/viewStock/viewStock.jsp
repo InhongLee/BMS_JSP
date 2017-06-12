@@ -10,7 +10,7 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="stock_box1">
-			<form action="stockOpSearch.do" method="post" name="stockOpSearchForm">
+			<form action="stockOpSearch.do" method="post" name="stockOpSearchForm" onsubmit="return fnStockOpSearch();">
 				<table id="stock_Options">
 					<tr>
 						<th>
@@ -21,7 +21,7 @@
 						</th>
 						<th>
 							<select class="input fontSizeM" name="searchPublisher">
-								<option value="0">출판사 선택</option>
+								<option value=0 selected>출판사 선택</option>
 								<c:forEach var="publisher" items="${publishers}">
 									<option value="${publisher.publisher_id}">${publisher.publisher_name}</option>
 								</c:forEach>
@@ -29,7 +29,7 @@
 						</th>
 						<th>
 							<select class="input fontSizeM" name="searchStockState">
-								<option value="0">재고상태 선택</option>
+								<option value=0 selected>재고상태 선택</option>
 								<option value=3110>PENDING</option>
 								<option value=3120>ON_SALE</option>
 								<option value=3130>SOLD_OUT</option>
@@ -37,7 +37,7 @@
 							</select>
 						</th>
 						<th>
-							<input class="input fontSizeM" type="number" name="searchStockQty" min="0" placeHolder="재고량 기준 입력">
+							<input class="input fontSizeM" type="number" name="searchStockQty" min="0" value="0"; placeHolder="재고량 기준 입력">
 						</th>
 						<th><input class="inputButton fontSizeM" type="submit" value="검색"></th>
 						<th><input class="inputButton fontSizeM orange" type="button" value="검색초기화" onclick="stockOpReset();"></th>
@@ -49,7 +49,7 @@
 			</form>
 			<hr>
 			<div id="stock_box2">
-				<div class="scrollBox">
+				<div class="scrollBox" id="listStock">
 					<table id="stock_table1">
 						<tr>
 							<th>ISBN</th>
@@ -104,8 +104,7 @@
 						<div class="tab_container">
 							<c:forEach var="i" begin="1" end="2" step="1">
 								<div id="tab${i}" class="tab_content">
-									<form action="reqOrder.do" method="post" name="stock_req${i}"
-									onsubmit="return requestOrderCheck('stock_req${i}');">
+									<form action="" method="post" id="stockReqForm" name="stock_req${i}">
 										<table id="stock_table3">
 											<tr>
 												<td>비용/EA</td>

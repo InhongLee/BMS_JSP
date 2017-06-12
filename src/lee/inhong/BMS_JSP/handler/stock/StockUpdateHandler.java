@@ -1,5 +1,6 @@
 package lee.inhong.BMS_JSP.handler.stock;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +13,7 @@ public class StockUpdateHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("■■■SERVICE■■■ StockUpdateHandler");
-		
+		System.out.println(req.getParameter("test"));
 		int updateCnt = 0;
 		
 		String eId = (String) req.getSession().getAttribute("customer_id");

@@ -280,6 +280,65 @@ public class BMSDAOImpl implements BMSDAO{
 	}
 
 	@Override
+	public ArrayList<ViewBook> getIssueBook() {
+		return null;
+	}
+	
+	@Override
+	public ArrayList<ViewBook> getBestSeller() {
+		ArrayList<ViewBook> dtos = new ArrayList<ViewBook>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ViewBook dto = null;
+		try {
+			conn = datasource.getConnection();
+			String sql =	
+					"SELECT  * "+
+					"FROM    (SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author, "+
+					"                B.purchase_price, B.sell_price, P.publisher_name, "+
+					"                SUM(O.ORDER_QUANTITY), rownum rNum "+
+					"        FROM    book B INNER JOIN publisher P "+
+					"        ON      (B.publisher_id = P.publisher_id) INNER JOIN stock S "+
+					"        ON      (B.ISBN = S.ISBN AND S.STOCK_STATE IN (3120,3130)) INNER JOIN orderDetail O "+
+					"        ON      (S.ISBN = O.ISBN AND O.ORDER_STATE IN (2120,2210,2230)) "+
+					"        GROUP BY B.ISBN, B.publisher_id, B.book_title, B.book_author, "+
+					"        B.purchase_price, B.sell_price, P.publisher_name, rownum "+
+					"        ORDER BY SUM(O.ORDER_QUANTITY) DESC "+
+					"        ) "+
+					"WHERE rNum >=1 AND rNum <= 10 ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				dto = new ViewBook();
+				dto.setISBN(rs.getString("ISBN"));
+				dto.setPublisher_id(rs.getInt("publisher_id"));
+				dto.setBook_title(rs.getString("book_title"));
+				dto.setBook_author(rs.getString("book_author"));
+				dto.setPurchase_price(rs.getInt("purchase_price"));
+				dto.setSell_price(rs.getInt("sell_price"));
+				dto.setPublisher_name(rs.getString("publisher_name"));
+				dtos.add(dto);
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) 		rs.close();
+				if(pstmt != null)	pstmt.close();
+				if(conn != null)	conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return dtos;
+	}
+	
+	@Override
 	public ViewBook selectBookInfo(String strISBN) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1609,4 +1668,11 @@ public class BMSDAOImpl implements BMSDAO{
 		}
 		return cnt;
 	}
+
+	
+	
+
+	
+	
+
 }

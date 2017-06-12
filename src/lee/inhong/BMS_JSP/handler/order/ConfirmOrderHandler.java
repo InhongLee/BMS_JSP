@@ -26,7 +26,6 @@ public class ConfirmOrderHandler implements CommandHandler {
 		default: break;
 		}
 		
-		
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		System.out.println("DB|confirmOrder(order_id,order_state) : "+order_id+","+order_state);
 		int cnt = dao.confirmOrder(order_id,order_state);

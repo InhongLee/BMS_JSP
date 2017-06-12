@@ -203,7 +203,21 @@ SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME
   
 SELECT *
 FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
-                B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum
+                B.purchase_price,B.sell_price,S.stock,S.stock_state
+        FROM book B, publisher P, stock S
+        WHERE B.publisher_id = P.publisher_id
+        AND B.ISBN = S.ISBN
+        AND B.book_title like '%'||NVL(null,B.book_title)||'%'
+        UNION
+         SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
+                B.purchase_price,B.sell_price,S.stock,S.stock_state
+        FROM book B, publisher P, stock S
+        WHERE B.publisher_id = P.publisher_id
+        AND B.ISBN = S.ISBN
+        AND B.book_author like '%'||NVL(null,B.book_title)||'%'
+        INTERSECT
+        SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
+                B.purchase_price,B.sell_price,S.stock,S.stock_state
         FROM book B, publisher P, stock S
         WHERE B.publisher_id = P.publisher_id
         AND B.ISBN = S.ISBN
@@ -212,22 +226,12 @@ FROM	(SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
                             ELSE B.publisher_id
                             END
         AND S.stock_state = CASE S.stock_state
-                            WHEN '0' THEN S.stock_state
+                            WHEN 0 THEN S.stock_state
                             ELSE S.stock_state
                             END
-        AND S.stock <= CASE S.stock
-                            WHEN 0 THEN S.stock
-                            ELSE S.stock
-                            END
-        UNION
-        SELECT B.ISBN,B.book_title,B.book_author,P.publisher_name,
-                B.purchase_price,B.sell_price,S.stock,S.stock_state,rownum rNum
-        FROM book B, publisher P, stock S
-        WHERE B.publisher_id = P.publisher_id
-        AND B.ISBN = S.ISBN
-        AND B.book_title like '%A%'
         )
-WHERE rNum >= 1 AND rNum <= 5;
+order by 1;
+        
 
 SELECT sum(B.purchase_price*S.stock), sum(B.sell_price*S.stock), sum(stock)
 FROM    book B, stock S
@@ -310,9 +314,19 @@ AND TO_DATE(SUBSTR(O.order_id,3,6), 'YYMMDD') <= LAST_DAY(SYSDATE);
 -- 오더 검색 sql
 --------------------------------------------------------------------------------
 SELECT  *
-FROM    (SELECT O.order_id,OD.detail_number,B.book_title,
+FROM    (
+        SELECT O.order_id,OD.detail_number,B.book_title,
         OD.purchase_price,OD.sell_price,S.stock,
-        OD.order_quantity,OD.order_approval,rownum rNum		
+        OD.order_quantity,OD.order_state
+        FROM orders O, orderDetail OD, stock S, book B
+        WHERE   O.order_id = OD.order_id
+        AND     OD.ISBN = S.ISBN
+        AND     S.ISBN = B.ISBN
+        AND B.book_title like '%'||NVL('Java',B.book_title)||'%'
+        INTERSECT
+        SELECT O.order_id,OD.detail_number,B.book_title,
+        OD.purchase_price,OD.sell_price,S.stock,
+        OD.order_quantity,OD.order_state		
         FROM orders O, orderDetail OD, stock S, book B
         WHERE   O.order_id = OD.order_id
         AND     OD.ISBN = S.ISBN
@@ -321,8 +335,8 @@ FROM    (SELECT O.order_id,OD.detail_number,B.book_title,
         AND		SUBSTR(OD.order_id,3,6) <= TO_CHAR(NVL(NULL,SYSDATE),'YYMMDD')
         AND 	SUBSTR(OD.order_id,1,2) = CASE NVL(NULL,'0')
                 WHEN '0' THEN SUBSTR(OD.order_id,1,2) ELSE 'PU' END
-		AND		OD.order_approval = CASE NVL(NULL,'0')
-				WHEN '0' THEN OD.order_approval ELSE 'Y' END
+		AND		OD.order_state = CASE NVL(NULL,0)
+				WHEN 0 THEN OD.order_state ELSE 0 END
 		);
         
 
@@ -335,3 +349,29 @@ AND     S.ISBN = B.ISBN
 AND     SUBSTR(OD.order_id,1,2) = 'PU'
 AND     OD.order_approval = 'Y'
 AND     O.CUSTOMER_ID = 'in6121';
+
+--------------------------------------------------------------------------------
+-- 화제의 책 검색
+--------------------------------------------------------------------------------
+SELECT  *
+FROM    (SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author,
+                B.purchase_price, B.sell_price, P.publisher_name,
+                SUM(O.ORDER_QUANTITY), rownum rNum
+        FROM    book B INNER JOIN publisher P
+        ON      (B.publisher_id = P.publisher_id) INNER JOIN stock S
+        ON      (B.ISBN = S.ISBN AND S.STOCK_STATE IN (3120,3130)) INNER JOIN orderDetail O
+        ON      (S.ISBN = O.ISBN AND O.ORDER_STATE IN (2120,2210,2230))
+        GROUP BY B.ISBN, B.publisher_id, B.book_title, B.book_author,
+        B.purchase_price, B.sell_price, P.publisher_name, rownum
+        ORDER BY SUM(O.ORDER_QUANTITY) DESC
+        )
+WHERE rNum >=1 AND rNum <= 10;
+
+SELECT *
+FROM    (SELECT num, writer, passwd, subject, content, readCnt,
+                ref, ref_step, ref_level, reg_date, ip, rownum rNum
+                FROM    (SELECT * FROM mvc_board
+                        ORDER BY ref DESC, ref_step ASC
+                        )
+        )
+WHERE rNum >= 5 AND rNum <= 15;

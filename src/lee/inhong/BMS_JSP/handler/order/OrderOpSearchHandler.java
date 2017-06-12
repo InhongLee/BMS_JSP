@@ -40,13 +40,34 @@ public class OrderOpSearchHandler implements CommandHandler {
 		ArrayList<ViewOrder> dtos = dao.getOpSearchOrder(searchTitleAuthor,order_StartDate,order_EndDate,selectOrderType,selectOrderState);
 		if(dtos != null) {
 			System.out.println("DB|getOpSearchOrder() result : "+dtos.size());
+			for(int i = 0; i < dtos.size(); i++) {
+				ViewOrder tempViewOrder = dtos.get(i);
+				String order_stateName = null;
+				switch(tempViewOrder.getOrder_state()) {
+					case REQ_PURCHASE: order_stateName = "REQ_PURCHASE"; break;
+					case APP_PURCHASE: order_stateName = "APP_PURCHASE"; break;
+					case REJ_PURCHASE: order_stateName = "REJ_PURCHASE"; break;
+					case REQ_RETURN: order_stateName = "REQ_RETURN"; break;
+					case APP_RETURN: order_stateName = "APP_RETURN"; break;
+					case REJ_RETURN: order_stateName = "REJ_RETURN"; break;
+					case REQ_SALES: order_stateName = "REQ_SALES"; break;
+					case APP_SALES: order_stateName = "APP_SALES"; break;
+					case REJ_SALES: order_stateName = "REJ_SALES"; break;
+					case REQ_REFUND: order_stateName = "REQ_REFUND"; break;
+					case APP_REFUND: order_stateName = "APP_REFUND"; break;
+					case REJ_REFUND: order_stateName = "REJ_REFUND"; break;
+					default: break;
+				}
+				
+				tempViewOrder.setOrder_stateName(order_stateName);
+			}
 			req.setAttribute("dtos", dtos);
 		} else {
 			System.out.println("DB|getOpSearchOrder() result : "+0);
 		}
 		
 		
-		return "viewOrder.do";
+		return "/view/viewOrder/listOrder.jsp";
 	}
 
 }

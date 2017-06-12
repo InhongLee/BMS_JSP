@@ -9,35 +9,29 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
-  	<servlet-name>BMSFrontController</servlet-name>
-  	<servlet-class>lee.inhong.BMS_JSP.controller.BMSFrontController</servlet-class>
-  	<init-param>
-  		<param-name>configFile</param-name>
-  		<param-value>/WEB-INF/BMSFrontController.properties</param-value>
-  	</init-param>
-  	<load-on-startup>1</load-on-startup>
+    <servlet-name>BMSFrontController</servlet-name>
+    <servlet-class>lee.inhong.BMS_JSP.controller.BMSFrontController</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/BMSFrontController.properties</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
-  
   <servlet-mapping>
-  	<servlet-name>BMSFrontController</servlet-name>
-  	<url-pattern>*.do</url-pattern>
+    <servlet-name>BMSFrontController</servlet-name>
+    <url-pattern>*.do</url-pattern>
   </servlet-mapping>
-  
   <error-page>
-  	<error-code>404</error-code>
-  	<location>/view/error/error404.jsp</location>
+    <error-code>404</error-code>
+    <location>/view/error/error404.jsp</location>
   </error-page>
-
   <error-page>
-  	<error-code>500</error-code>
-  	<location>/view/error/error500.jsp</location>
+    <error-code>500</error-code>
+    <location>/view/error/error500.jsp</location>
   </error-page>
-
   <error-page>
-  	<exception-type>java.lang.NullPionterException</exception-type>
-  	<location>/view/error/errorNull.jsp</location>
+    <exception-type>java.lang.NullPionterException</exception-type>
+    <location>/view/error/errorNull.jsp</location>
   </error-page>
-
 </web-app>

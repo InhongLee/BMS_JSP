@@ -14,7 +14,8 @@ public class AddBookHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) {
-
+		System.out.println("■■■SERVICE■■■ AddBookHandler");
+		
 		//출판사 목록
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		ArrayList<Publisher> publishers = dao.getPublisher();

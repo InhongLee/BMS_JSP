@@ -26,6 +26,8 @@ public interface BMSDAO extends BMSCode{
 	public int deleteCustomer(String strId, String strPw);
 	
 	public ArrayList<ViewBook> selectBookList(); //전체 책목록 검색
+	public ArrayList<ViewBook> getIssueBook(); //화제의 책목록
+	public ArrayList<ViewBook> getBestSeller(); //베스트셀러 책목록
 	public ViewBook selectBookInfo(String strISBN); //선택된 책 정보 검색
 	
 	

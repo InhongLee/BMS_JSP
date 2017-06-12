@@ -8,11 +8,10 @@ public interface BMSCode {
 	 * 1110	REQ_PURCHASE	구매요청	2110	REQ_SALES		판매요청	3110	PENDING		미결		4110	REQ_LEDGER		전표결제요청
 	 * 1120	APP_PURCHASE	구매승인	2120	APP_SALES		판매승인	3120	ON_SALE		판매중	4120	APP_LEDGER		전표결제
 	 * 1130	REJ_PURCHASE	구매거부	2130	REJ_SALES		판매거부	3130	SOLD_OUT	매진		4130	REJ_LEDGER		전표거부
-	 * 1140	FIN_PURCHASE	구매완료	2140	FIN_SALES		판매완료	3140	OUT_OF_PRINT절판		4140	FIN_LEDGER		전표처리완료
+	 * 																3140	OUT_OF_PRINT절판
 	 * 1210	REQ_RETURN		반송요청	2210	REQ_REFUND		환불요청
 	 * 1220	APP_RETURN		반송승인	2220	APP_REFUND		환불승인
 	 * 1230	REJ_RETURN		반송거부	2230	REJ_REFUND		환불거부
-	 * 1240	FIN_RETURN		반송완료	2240	FIN_REFUND		환불완료
 	 * =====================================================================================
 	 */
 	

@@ -17,12 +17,16 @@ public class ViewSalesHandler implements CommandHandler {
 		System.out.println("■■■SERVICE■■■ ViewSalesHandler");
 		
 		ArrayList<ViewBook> dtos = new ArrayList<ViewBook>();
-		
+		ArrayList<ViewBook> bestSeller = new ArrayList<ViewBook>();
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		dtos = dao.selectBookList();
 		System.out.println("DB|selectBookList() result : "+dtos.size());
 		
+		bestSeller = dao.getBestSeller();
+		System.out.println("DB|getBestSeller() result : "+bestSeller.size());
+		
 		req.setAttribute("bookList", dtos);
+		req.setAttribute("bestSeller", bestSeller);
 		return "/view/viewSales/viewSales.jsp";
 	}
 

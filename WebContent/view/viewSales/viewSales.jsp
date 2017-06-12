@@ -38,11 +38,13 @@
 			<hr>
 			<div class="open-event" style="width:100%;">
 				<ul class="book-list">
-					<c:forEach var="dto" items="${bookList}">
+					<c:set var="i" value="0"/>
+					<c:forEach var="dto" items="${bestSeller}">
+						<c:set var="i" value="${i+1}"></c:set>
 						<li>
 							<img class="img_book" src="${project}images/${dto.ISBN}.jpg" alt="책이미지 200x240"
 							onclick="window.location='viewBuyNow.do?ISBN=${dto.ISBN}'">
-							<div class="bookTitle">${dto.book_title}</div>
+							<div class="bookTitle">No.${i}. ${dto.book_title}</div>
 							<div class="bookComment">간략한 묘사</div>
 							<div class="bookPrice">${dto.sell_price}원</div>
 							<div class="bookAuthor">${dto.book_author} | ${dto.publisher_name}</div>

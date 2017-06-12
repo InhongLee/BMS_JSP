@@ -86,32 +86,58 @@ $(document).ready(function() {
 		} 
 		return false;
 	});
-	
-	$("#stock_table1 td").on("keyup", function(key) {
+/**************************************************************************************/	
+	$("#stock_table1 td").unbind("keyup");
+	$("#stock_table1 td").bind("keyup", (function(key) {
+		key.stopPropagation(); 
 		if(key.keyCode == 13) {
-			key.preventDefault();
-			key.stopPropagation();
 			var $ISBN = $(this).parent().children().eq(0).html();
 			var $col = $(this).parent().children().index($(this));
 			var $cellValue = $(this).children().val();
 			if($cellValue == "") {
 				$cellValue = $(this).children().attr("placeholder");
 			}
-			window.location="stockUpdate.do?ISBN="+$ISBN+"&columnNo="+$col+"&updateStr="+$cellValue;
-			/*$(this).html(cellValue);*/
-		}
-		return false;
-	});
-	
+			$(this).html($cellValue);
+			var data = {
+					ISBN: $ISBN,
+					columnNo: $col,
+					updateStr: $cellValue,
+					test: 'ok'
+			}
+			$.post('stockUpdate.do', data);
+			return false;
+		}			
+		
+	}));		
+
 	$("#stock_table1 td").change(function() {
-		var $ISBN = $(this).parent().children().eq(0).html();
-		var $col = $(this).parent().children().index($(this));
-		var $cellValue = $(this).children().val();
-		window.location="stockUpdate.do?ISBN="+$ISBN+"&columnNo="+$col+"&updateStr="+$cellValue;
-		/*$(this).html(cellValue);*/
+		if($(this).children().get(0).tagName == "SELECT") {
+			event.preventDefault();
+			var $ISBN = $(this).parent().children().eq(0).html();
+			var $col = $(this).parent().children().index($(this));
+			var $cellValue = $(this).children().val();
+			$(this).html($cellValue);
+			var data = {
+					ISBN: $ISBN,
+					columnNo: $col,
+					updateStr: $cellValue,
+					test: 'ok'
+			}
+			$.post('stockUpdate.do', data);
+			return false;
+		}
+	});
+
+	$('#stockReqForm').unbind('submit');
+	$('#stockReqForm').bind('submit', function() {
+		var formData = $(this).serialize();
+		$.post('reqOrder.do', formData);
+		$('#reqQty').val('');
 		return false;
 	});
 	
+
+/****************************************************************************************/
 	$("#order_table1 td").click(function() {
 		var col = $(this).parent().children().index($(this));
 		var row = $(this).parent().parent().children().index($(this).parent());
@@ -326,8 +352,9 @@ function totalCostChk(formname) {
 }
 
 function stockOpReset() { //검색 초기화
+	$("input[name='searchTitleAuthor']").val("");
 	$("select[name='searchPublisher']").val("0");
-	$("input[name='searchStockQty']").val("");
+	$("input[name='searchStockQty']").val("0");
 	$("select[name='searchStockState']").val("0");
 }
 
@@ -336,6 +363,31 @@ function addBook() {
 	window.open(url, "addBook", "toolbar=no,location=no,status=no,resizable=no,menubar=no,width=500,height=500");
 }
 
+function addPicture() {
+	if(document.addBookProForm.hiddenId.value == 0) {
+		document.addBookProForm.dupcheck.focus();
+		return false;
+	}
+	var ISBN = document.addBookProForm.ISBN.value;
+	var url = "addPicture.do?ISBN="+ISBN;
+	window.open(url, "addPicture", "toolbar=no,location=no,status=no,resizable=no,menubar=no,width=500,height=500");
+}
+
+function addPictureFormCheck() {
+	if(!document.addPictureForm.file.value) {
+		alert(msg_addPicture);
+		document.addPictureForm.file.focus();
+		return false;
+	}
+	var fileName = document.addPictureForm.file.value;
+	var check = fileName.indexOf(".");
+	var check2 = fileName.slice(check);
+	if(check2 != '.jpg') {
+		alert(msg_jpgError);
+		document.addPictureForm.file.focus();
+		return false;
+	}
+}
 function addBookCheck() {
 	if(!document.addBookProForm.ISBN.value) {
 		$(".consoleInfo").html(msg_isbn);
@@ -384,6 +436,20 @@ function setISBN(isbn) {
 function resetHiddenId() {
 	document.addBookProForm.hiddenId.value = 0;
 }
+
+
+
+function fnStockOpSearch() {
+	var searchText = document.stockOpSearchForm.searchTitleAuthor.value;
+	var searchPub = document.stockOpSearchForm.searchPublisher.value;
+	var searchStat = document.stockOpSearchForm.searchStockState.value;
+	var searchQty = document.stockOpSearchForm.searchStockQty.value;
+	$('#listStock').load('stockOpSearch.do?searchTitleAuthor='+searchText
+							+'&searchPublisher='+searchPub
+							+'&searchStockState='+searchStat
+							+'&searchStockQty='+searchQty);
+	return false;
+}
 /**************************************************************************/
 /*	viewOrder.jsp	*/
 /**************************************************************************/
@@ -412,6 +478,28 @@ function orderOpReset() {
 	$("select[name='selectOrderState']").val("0");
 	$("select[name='selectOrderApproval']").val("0");
 }
+
+function fnOrderOpSearch() {
+	var searchTitleAuthor = document.orderOpSearchForm.searchTitleAuthor.value;
+	var order_StartDate = document.orderOpSearchForm.order_StartDate.value;
+	var order_EndDate = document.orderOpSearchForm.order_EndDate.value;
+	var selectOrderType = document.orderOpSearchForm.selectOrderType.value;
+	var selectOrderState = document.orderOpSearchForm.selectOrderState.value;
+	$('#listOrder').load('orderOpSearch.do?searchTitleAuthor='+searchTitleAuthor
+							+'&order_StartDate='+order_StartDate
+							+'&order_EndDate='+order_EndDate
+							+'&selectOrderType='+selectOrderType
+							+'&selectOrderState='+selectOrderState);
+	return false;
+}
+
+/*$('#orderReqForm').unbind('submit');
+$('#orderReqForm').bind('submit', function() {
+	var formData = $(this).serialize();
+	$.post('confirmOrder.do', formData);
+	fnOrderOpSearch();
+	return false;
+});*/
 /**************************************************************************/
 /*	board	*/
 /**************************************************************************/
@@ -652,5 +740,6 @@ function fn_issue(buttonID,containerID){
 		return false;
 	});
 }
+
 
 

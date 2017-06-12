@@ -45,16 +45,11 @@ onsubmit="return addBookCheck();">
 				min="0" step="100"></td>
 		</tr>
 		<tr>
-			<th>image (200x240)</th>
-			<td colspan="3">
-				<input class="input" type="file" name="book_image">
-			</td>
-		</tr>
-		<tr>
 			<th class="consoleInfo" height="30" colspan="4" style="color: black;"></th>
 		</tr>
 		<tr>
 			<th colspan="4">
+				<input type="button" value="사진업로드" onclick="addPicture();">
 				<input type="submit" value="등록">
 				<input type="reset" value="재작성">
 				<input type="button" value="돌아가기"

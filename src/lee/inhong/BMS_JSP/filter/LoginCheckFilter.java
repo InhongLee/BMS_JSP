@@ -1,7 +1,5 @@
 package lee.inhong.BMS_JSP.filter;
-
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,7 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 /**
  * @author amaco78
  * @version 1.0
@@ -30,11 +27,9 @@ import javax.servlet.http.HttpSession;
 				   		"/viewOrder.do",
 				   		"/reviewPro.do"})
 public class LoginCheckFilter implements Filter {
-
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 	}
-
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -55,7 +50,6 @@ public class LoginCheckFilter implements Filter {
 			dispatcher.forward(req, res);
 		}
 	}
-
 	@Override
 	public void destroy() {
 	}

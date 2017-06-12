@@ -30,7 +30,7 @@ a,ul,li{margin:0; padding:0;}
 	#title_btn1{width:80px; padding:5px; display:inline-block; text-align:center; background:green;}
 	#title_btn2{width:80px; padding:5px; display:inline-block; text-align:center; background:green;}
 	.navi{text-align:center;}
-		.navi ul li{display:inline-block; width:150px; color:white;}
+		.navi ul>li{display:inline-block; width:150px; color:white;}
 		.navi a:link, .navi a:visited{width:150px; color:white; text-decoration:none;}
 		.navi a:hover, .navi a:focus{text-shadow:0px 2px 2px black; color:yellow;}
 		.navi a:active{color:red;}

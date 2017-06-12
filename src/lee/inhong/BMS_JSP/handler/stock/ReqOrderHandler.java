@@ -41,7 +41,7 @@ public class ReqOrderHandler implements CommandHandler {
 		int addCnt = dao.addOrderDetail(order_id, ISBN, dto.getPurchase_price(), dto.getSell_price(), order_quantity, order_state);
 		System.out.println("DB|addOrderDetail() result : "+addCnt);
 		
-		return "viewStock.do";
+		return "/viewStock.do";
 	}
 
 }

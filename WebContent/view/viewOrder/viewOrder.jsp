@@ -20,7 +20,8 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp" flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 		<div id="order_box1">
-			<form action="orderOpSearch.do" method="post" name="orderOpSearchForm">
+			<form action="ordreOpSearch.do" method="post" name="orderOpSearchForm"
+			onsubmit="return fnOrderOpSearch();">
 				<table id ="order_Options">
 					<tr><th><h2 class="title2">주문 관리</h2></th>
 						<th>
@@ -65,43 +66,45 @@
 			<hr>
 			<div id="order_box2">
 				<div class="scrollBox">
-					<table id="order_table1">
-						<tr>
-							<th>order_id</th>
-							<th>detail_number</th>
-							<th>book_title</th>
-							<th>order_type</th>
-							<th>purchase_price</th>
-							<th>sell_price</th>
-							<th>stock</th>
-							<th>order_quantity</th>
-							<th>order_state</th>
-							
-						</tr>
-						<c:forEach var="dto" items="${dtos}">
-							<tr id="item1">
-								<td>${dto.order_id}</td>
-								<td>${dto.detail_number}</td>
-								<td>${dto.book_title}</td>
-								<td>
-									<c:choose>
-										<c:when test="${fn:substring(dto.order_id,0,2) == 'PU'}">
-											PURCHASE
-										</c:when>									
-										<c:when test="${fn:substring(dto.order_id,0,2) == 'SE'}">
-											SALES
-										</c:when>
-										<c:otherwise>ERROR</c:otherwise>
-									</c:choose>
-								</td>
-								<td>${dto.purchase_price}</td>
-								<td>${dto.sell_price}</td>
-								<td>${dto.stock}</td>
-								<td>${dto.order_quantity}</td>
-								<td id="${dto.order_state}">${dto.order_stateName}</td>
+					<div id="listOrder">
+						<table id="order_table1">
+							<tr>
+								<th>order_id</th>
+								<th>detail_number</th>
+								<th>book_title</th>
+								<th>order_type</th>
+								<th>purchase_price</th>
+								<th>sell_price</th>
+								<th>stock</th>
+								<th>order_quantity</th>
+								<th>order_state</th>
+								
 							</tr>
-						</c:forEach>
-					</table>
+							<c:forEach var="dto" items="${dtos}">
+								<tr id="item1">
+									<td>${dto.order_id}</td>
+									<td>${dto.detail_number}</td>
+									<td>${dto.book_title}</td>
+									<td>
+										<c:choose>
+											<c:when test="${fn:substring(dto.order_id,0,2) == 'PU'}">
+												PURCHASE
+											</c:when>									
+											<c:when test="${fn:substring(dto.order_id,0,2) == 'SE'}">
+												SALES
+											</c:when>
+											<c:otherwise>ERROR</c:otherwise>
+										</c:choose>
+									</td>
+									<td>${dto.purchase_price}</td>
+									<td>${dto.sell_price}</td>
+									<td>${dto.stock}</td>
+									<td>${dto.order_quantity}</td>
+									<td id="${dto.order_state}">${dto.order_stateName}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
 				</div>
 				<hr>
 				<div id="order_box3">
@@ -145,7 +148,7 @@
 						<div class="tab_container">
 							<c:forEach var="i" begin="1" end="4" step="1">
 								<div id="tab${i}" class="tab_content">
-								<form action="confirmOrder.do" method="post" name="order_req${i}"
+								<form action="confirmOrder.do" method="post" id="orderReqForm" name="order_req${i}"
 								onsubmit="return confirmCheck('order_req${i}');">
 									<table id="order_table3">
 										<tr>

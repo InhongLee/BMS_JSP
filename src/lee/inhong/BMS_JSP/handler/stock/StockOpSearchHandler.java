@@ -17,15 +17,19 @@ public class StockOpSearchHandler implements CommandHandler {
 		System.out.println("■■■SERVICE■■■ StockOpSearchHandler");
 		
 		String searchTitleAuthor = req.getParameter("searchTitleAuthor");
-		int publisher_id = Integer.parseInt(req.getParameter("searchPublisher"));
+		int publisher_id = 0;
 		int stock_state = 0;
+		int stock = 0;
+		
+		if(req.getParameter("searchPublisher") != null) {
+			publisher_id = Integer.parseInt(req.getParameter("searchPublisher"));
+		}
 		if(req.getParameter("searchStockState") != null) {
 			stock_state = Integer.parseInt(req.getParameter("searchStockState"));
 		}
-		
-		int stock = 0;
-		String strStock = req.getParameter("searchStockQty");
-		if(!strStock.equals("")) stock = Integer.parseInt(strStock);
+		if(req.getParameter("searchStockQty") != null) {
+			stock =  Integer.parseInt(req.getParameter("searchStockQty"));			
+		}
 		
 		System.out.println("[searchTitleAuthor,publisher_id, stock_state, stock]: "+searchTitleAuthor+","+publisher_id+","+stock_state+","+stock);
 		
@@ -39,7 +43,7 @@ public class StockOpSearchHandler implements CommandHandler {
 		}
 		
 		
-		return "viewStock.do";
+		return "/view/viewStock/listStock.jsp";
 	}
 
 }
