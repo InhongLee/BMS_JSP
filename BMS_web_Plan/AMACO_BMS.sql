@@ -130,7 +130,9 @@ CREATE TABLE bms_board (
 	 ip         VARCHAR2(15),
      CONSTRAINT mvc_board_num_pk PRIMARY KEY(num)--ip
 );
-ALTER TABLE bms_board ADD ISBN CHAR(13);
+ALTER TABLE bms_board ADD announce CHAR(1) DEFAULT 'N';
+ALTER TABLE bms_board DROP COLUMN ISBN;
+ALTER TABLE bms_board MODIFY subject VARCHAR(255);
 
 INSERT INTO bms_board(num,writer,passwd,subject,content,readCnt,ref,ref_step,ref_level,reg_date,ip)
 VALUES(BOARD_SEQ.NEXTVAL,'이인홍1','carrot','테스트제목1','테스트내용입니다1.',0,BOARD_SEQ.CURRVAL,0,0,SYSDATE,'192.168.1.4');
@@ -351,7 +353,7 @@ AND     OD.order_approval = 'Y'
 AND     O.CUSTOMER_ID = 'in6121';
 
 --------------------------------------------------------------------------------
--- 화제의 책 검색
+-- 베스트셀러 검색
 --------------------------------------------------------------------------------
 SELECT  *
 FROM    (SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author,
@@ -375,3 +377,14 @@ FROM    (SELECT num, writer, passwd, subject, content, readCnt,
                         )
         )
 WHERE rNum >= 5 AND rNum <= 15;
+--------------------------------------------------------------------------------
+-- 주간 판매 트랜드 분석
+--------------------------------------------------------------------------------
+SELECT      TO_CHAR(TO_DATE(SUBSTR(order_id,3,6),'YYMMDD'),'W'),
+            SUM(order_quantity),
+            SUM(sell_price*order_quantity/10000)
+FROM        ORDERDETAIL
+WHERE       order_state IN (2120,2210,2230)
+AND         TO_CHAR(TO_DATE(SUBSTR(order_id,3,6),'YYMMDD'),'MM') = TO_CHAR(SYSDATE,'MM')
+GROUP BY    TO_CHAR(TO_DATE(SUBSTR(order_id,3,6),'YYMMDD'),'W')
+ORDER BY    1;

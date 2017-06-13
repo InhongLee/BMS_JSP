@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import lee.inhong.BMS_JSP.dao.BMSDAO;
 import lee.inhong.BMS_JSP.dao.BMSDAOImpl;
 import lee.inhong.BMS_JSP.dto.ViewOrder;
+import lee.inhong.BMS_JSP.dto.ViewOrderTrend;
 import lee.inhong.BMS_JSP.handler.CommandHandler;
 
 public class ViewOrderHandler implements CommandHandler {
@@ -96,6 +97,11 @@ public class ViewOrderHandler implements CommandHandler {
 			int confirmCnt = (int) req.getAttribute("confirmCnt");
 			req.setAttribute("confirmCnt", confirmCnt);
 		}
+		
+		ArrayList<ViewOrderTrend> trend = dao.getTrend();
+		System.out.println("DB|getTrend() result : "+trend);
+	
+		req.setAttribute("trend", trend);
 		
 		return "/view/viewOrder/viewOrder.jsp";
 	}

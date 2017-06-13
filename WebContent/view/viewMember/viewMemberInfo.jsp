@@ -93,10 +93,6 @@
 							</select>
 						</td>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-					</tr>
 					</table>
 				</form>
 			</div>
@@ -104,40 +100,42 @@
 				<span id="cartBuy_title" class="title">구매 내역</span>
 				<hr>
 				<div id="myInfo_box4">
-					<div class="cartBuy_cell1">상품명</div>
-					<div class="cartBuy_cell2">정가</div>
-					<div class="cartBuy_cell3">판매가</div>
-					<div class="cartBuy_cell4">수량</div>
-					<div class="cartBuy_cell5">합계</div>
-					<div class="cartBuy_cell6">주문</div>
+					<div class="buyHistory_cell1">상품명</div>
+					<div class="buyHistory_cell2">정가</div>
+					<div class="buyHistory_cell3">판매가</div>
+					<div class="buyHistory_cell4">수량</div>
+					<div class="buyHistory_cell5">합계</div>
+					<div class="buyHistory_cell6">주문</div>
 				</div>
-				<c:forEach var="order" items="${myOrders}">
-					<div class="cartBuy_addBox">
-						<div class="cartBuy_cell1"><a href="viewBuyNow.do?ISBN=${order.ISBN}">${order.book_title}</a></div>
-						<div class="cartBuy_cell2">${order.book_price}원</div>
-						<div class="cartBuy_cell3">${order.sell_price}원</div>
-						<div class="cartBuy_cell4">${order.order_quantity}권</div>
-						<div class="cartBuy_cell5">${order.total_price}원</div>
-						<div class="cartBuy_cell6">
-						<c:if test="${order.order_state == 2110}">
-							구매 요청 접수중
-						</c:if>
-						<c:if test="${order.order_state == 2120}">
-							<input type="button" value="환불요청" class="myInfo_btn1"
-						onclick="window.location='reqRefund.do?order_id=${order.order_id}';">
-						</c:if>
-						<c:if test="${order.order_state == 2130}">
-							구매실패
-						</c:if>
-						<c:if test="${order.order_state == 2210}">
-							환불승인 대기중
-						</c:if>
-						<c:if test="${order.order_state == 2220}">
-							환불완료
-						</c:if>
+				<div class="scrollBox">
+					<c:forEach var="order" items="${myOrders}">
+						<div class="buyHistory_addBox">
+							<div class="buyHistory_cell1"><a href="viewBuyNow.do?ISBN=${order.ISBN}">${order.book_title}</a></div>
+							<div class="buyHistory_cell2">${order.book_price}원</div>
+							<div class="buyHistory_cell3">${order.sell_price}원</div>
+							<div class="buyHistory_cell4">${order.order_quantity}권</div>
+							<div class="buyHistory_cell5">${order.total_price}원</div>
+							<div class="buyHistory_cell6">
+							<c:if test="${order.order_state == 2110}">
+								구매 요청 접수중
+							</c:if>
+							<c:if test="${order.order_state == 2120}">
+								<input type="button" value="환불요청" class="myInfo_btn1"
+							onclick="window.location='reqRefund.do?order_id=${order.order_id}';">
+							</c:if>
+							<c:if test="${order.order_state == 2130}">
+								구매실패
+							</c:if>
+							<c:if test="${order.order_state == 2210}">
+								환불승인 대기중
+							</c:if>
+							<c:if test="${order.order_state == 2220}">
+								환불완료
+							</c:if>
+							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 		</td></tr>

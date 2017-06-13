@@ -19,6 +19,7 @@ import lee.inhong.BMS_JSP.dto.Review;
 import lee.inhong.BMS_JSP.dto.ViewBook;
 import lee.inhong.BMS_JSP.dto.ViewMyOrder;
 import lee.inhong.BMS_JSP.dto.ViewOrder;
+import lee.inhong.BMS_JSP.dto.ViewOrderTrend;
 import lee.inhong.BMS_JSP.dto.ViewReview;
 import lee.inhong.BMS_JSP.dto.ViewStock;
 import lee.inhong.BMS_JSP.dto.ViewStockInfo;
@@ -1727,6 +1728,49 @@ public class BMSDAOImpl implements BMSDAO{
 			}
 		}
 		//5.큰 바구니(dtos)를 반환한다.
+		return dtos;
+	}
+
+	@Override
+	public ArrayList<ViewOrderTrend> getTrend() {
+		ArrayList<ViewOrderTrend> dtos = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = datasource.getConnection();
+			String sql = 
+					"SELECT      TO_CHAR(TO_DATE(SUBSTR(order_id,3,6),'YYMMDD'),'W'), "+
+					"            SUM(order_quantity), "+
+					"            SUM(sell_price*order_quantity/10000) "+
+					"FROM        ORDERDETAIL "+
+					"WHERE       order_state IN (2120,2210,2230) "+
+					"AND         TO_CHAR(TO_DATE(SUBSTR(order_id,3,6),'YYMMDD'),'MM') = TO_CHAR(SYSDATE,'MM') "+
+					"GROUP BY    TO_CHAR(TO_DATE(SUBSTR(order_id,3,6),'YYMMDD'),'W') "+
+					"ORDER BY    1";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dtos = new ArrayList<ViewOrderTrend>();
+				do {
+					ViewOrderTrend dto = new ViewOrderTrend();
+					dto.setWeek(rs.getString(1));
+					dto.setWeekQty(rs.getInt(2));
+					dto.setWeekSales(rs.getInt(3));
+					dtos.add(dto);
+				} while(rs.next());
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
 		return dtos;
 	}
 

@@ -12,6 +12,7 @@ import lee.inhong.BMS_JSP.dto.Review;
 import lee.inhong.BMS_JSP.dto.ViewBook;
 import lee.inhong.BMS_JSP.dto.ViewMyOrder;
 import lee.inhong.BMS_JSP.dto.ViewOrder;
+import lee.inhong.BMS_JSP.dto.ViewOrderTrend;
 import lee.inhong.BMS_JSP.dto.ViewReview;
 import lee.inhong.BMS_JSP.dto.ViewStock;
 import lee.inhong.BMS_JSP.dto.ViewStockInfo;
@@ -57,6 +58,7 @@ public interface BMSDAO extends BMSCode{
 	public int rejectOrder(String order_id, int order_state); //주문 거부
 	public ArrayList<ViewOrder> getOpSearchOrder(String searchTitleAuthor, Date order_StartDate, Date order_EndDate, String selectOrderType,
 			int selectOrderState); //주문현황 검색(검색시작일,검색종료일,주문종류,주문상태)
+	public ArrayList<ViewOrderTrend> getTrend(); //주별판매량,판매금액 추이 확인
 	/*****************************************************************/
 	public int getCount_board(); //등록된 글의 숫자 확인
 	public ArrayList<Board> getArticles(int start, int end); //리스트 호출

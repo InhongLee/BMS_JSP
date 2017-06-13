@@ -138,6 +138,20 @@
 							</tr>
 						</table>
 					</div>
+					
+					<!-- Graph HTML -->
+					<div id="graph-wrapper">
+						<div class="graph-info">
+							<span class="title">판매추이[WEEK]</span>
+					        <button class="buyQty">구매량</button>
+					        <button class="salesPrice">구매금액(10K)</button>
+					    </div>
+						<div class="graph-container">
+							<div id="graph-lines"></div>
+					    </div>
+					</div>
+					<!-- end Graph HTML -->
+					
 					<div id="order_box3_2">
 						<ul class="tabs">
 							<li><a href="#tab1">구매</a></li>
@@ -192,5 +206,75 @@
 		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
 		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>
 	</table>
+
+<script type="text/javascript">
+var graphData = [{
+    data: [ 
+    	<c:forEach var="trendQty" items="${trend}">
+    		[${trendQty.week},${trendQty.weekQty}],
+    	</c:forEach>
+    ],
+    color: '#71c73e'
+}, {
+    data: [
+    	<c:forEach var="trendSales" items="${trend}">
+    		[${trendSales.week},${trendSales.weekSales}],
+    	</c:forEach>
+    ],
+    color: '#77b7c5',
+    points: { radius: 3, fillColor: '#77b7c5' }
+}
+];
+$.plot($('#graph-lines'), graphData, {
+    series: {
+        points: {
+            show: true,
+            radius: 3
+        },
+        lines: {
+            show: true
+        },
+        shadowSize: 0
+    },
+    grid: {
+        color: '#646464',
+        borderColor: 'transparent',
+        borderWidth: 20,
+        hoverable: true
+    },
+    xaxis: {
+        tickColor: 'transparent',
+        tickDecimals: 0
+    },
+    yaxis: {
+        tickSize: 500
+    }
+});
+
+function showTooltip(x, y, contents) {
+    $('<div id="tooltip">' + contents + '</div>').css({
+        top: y - 16,
+        left: x + 20
+    }).appendTo('body').fadeIn();
+}
+ 
+var previousPoint = null;
+ 
+$('#graph-lines').bind('plothover', function (event, pos, item) {
+    if (item) {
+        if (previousPoint != item.dataIndex) {
+            previousPoint = item.dataIndex;
+            $('#tooltip').remove();
+            var x = item.datapoint[0],
+                y = item.datapoint[1];
+                showTooltip(item.pageX, item.pageY, y + ' [' + x + '주]');
+        }
+    } else {
+        $('#tooltip').remove();
+        previousPoint = null;
+    }
+});
+</script>
+
 </body>
 </html>
