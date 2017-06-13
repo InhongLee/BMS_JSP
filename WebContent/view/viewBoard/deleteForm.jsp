@@ -11,13 +11,13 @@
 		<tr class="mainRow5"><td>
 			<h2><center>글 삭제</center></h2>
 			<form action="deletePro.do" method="post" name="passwdform" onsubmit="return passwdCheck();">
-				<table class="boardTable" align="center">
+				<table class="boardTable" align="center" style="width:300px;">
 					<tr>
 						<th colspan="2">비밀번호를 다시 입력하세요.</th>
 					</tr>
 					<tr>
 						<th>비밀번호</th>
-						<td><input type="password" name="passwd" maxlength="10"></td>
+						<td><input class="input" type="password" name="passwd" maxlength="10"></td>
 					</tr>
 					<tr>
 						<th colspan="2">

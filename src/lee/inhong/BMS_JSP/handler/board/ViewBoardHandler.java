@@ -37,6 +37,18 @@ public class ViewBoardHandler implements CommandHandler {
 		cnt = dao.getCount_board();
 		System.out.println("DB|getCount_board() result : "+cnt);
 		
+		if(cnt > 0) {
+			ArrayList<Board> announce = dao.getAnnounce();
+			if(announce != null) {
+				System.out.println("DB|getAnnounce() result : "+announce.size());
+				pageSize -= announce.size();
+				req.setAttribute("announce", announce);
+			} else {
+				System.out.println("DB|getAnnounce() result : "+0);
+			}
+		}
+		
+		
 		pageNum = req.getParameter("pageNum");
 		if(pageNum == null) {
 			pageNum = "1"; //첫페이지를 1페이지로 설정
@@ -58,6 +70,8 @@ public class ViewBoardHandler implements CommandHandler {
 			ArrayList<Board> dtos = dao.getArticles(start, end);
 			System.out.println("DB|getArticles() result : "+dtos.size());
 			req.setAttribute("dtos", dtos);
+			
+			
 		}
 		
 		startPage = (currentPage / pageBlock) * pageBlock + 1; //(5/3)*3+1 = 1*3+1 = 4

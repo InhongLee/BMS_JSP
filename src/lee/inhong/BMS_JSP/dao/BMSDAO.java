@@ -60,6 +60,7 @@ public interface BMSDAO extends BMSCode{
 	/*****************************************************************/
 	public int getCount_board(); //등록된 글의 숫자 확인
 	public ArrayList<Board> getArticles(int start, int end); //리스트 호출
+	public ArrayList<Board> getAnnounce(); //공지사항 호출
 	public Board getArticle(int num); //상세페이지 호출(리스트,수정)
 	public void addReadCnt(int num); //조회수 추가
 	public int pwdCheck(int num, String passwd); //비밀번호 체크

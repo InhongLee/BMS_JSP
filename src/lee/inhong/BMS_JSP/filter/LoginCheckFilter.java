@@ -25,7 +25,8 @@ import javax.servlet.http.HttpSession;
 				   		"/stockOpSearch.do",
 				   		"/buyOrder.do",
 				   		"/viewOrder.do",
-				   		"/reviewPro.do"})
+				   		"/reviewPro.do",
+				   		"/viewCartBuy.do"})
 public class LoginCheckFilter implements Filter {
 	@Override
 	public void init(FilterConfig config) throws ServletException {

@@ -25,7 +25,7 @@
 							<td>${dto.writer}</td></tr>
 						<tr><th>글제목</th>
 							<td><input class="input" type="text" name="subject"
-							value="${dto.subject}" maxlength="50" style="width:270px;"></td>
+							value="${dto.subject}" maxlength="255"></td>
 						<tr><th>글내용</th>
 							<td><textArea class="input" rows="10" cols="40" name="content"
 							maxlength="500">${dto.content}</textArea></td></tr>

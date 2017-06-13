@@ -39,8 +39,10 @@
 						onclick="window.location='modifyForm.do?num=${dto.num}&pageNum=${pageNum}'">
 						<input type="button" value="글삭제"
 						onclick="window.location='deleteForm.do?num=${dto.num}&pageNum=${pageNum}'">
-						<input type="button" value="답글쓰기"
-						onclick="window.location='writeForm.do?num=${dto.num}&ref=${dto.ref}&ref_step=${dto.ref_step}&ref_level=${dto.ref_level}'">
+						<c:if test="${dto.announce == 'N'}">
+							<input type="button" value="답글쓰기"
+							onclick="window.location='writeForm.do?num=${dto.num}&ref=${dto.ref}&ref_step=${dto.ref_step}&ref_level=${dto.ref_level}'">
+						</c:if>
 						<input type="button" value="목록보기"
 						onclick="window.location='viewBoard.do?pageNum=${pageNum}'">
 					</th>

@@ -28,6 +28,25 @@
 					</tr>
 					<!-- 게시글이 있으면 -->
 					<c:if test="${cnt > 0}">
+						<c:forEach var="announce" items="${announce}">
+							<c:if test="${announce.announce == 'Y'}">
+								<tr style="background-color: lightgray; font-weight: bold;">
+									<td align="center">공지사항</td>
+									<td>
+										&nbsp;
+										<a href="contentForm.do?num=${announce.num}&pageNum=${pageNum}&number=${number+1}">
+										${announce.subject}</a>
+									</td>
+									<td align="center">${announce.writer}</td>
+									<td align="center">
+										<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm"
+										value="${announce.reg_date}"/>
+									</td>
+									<td align="center">${announce.readCnt}</td>
+									<td align="center">${announce.ip}</td>
+								</tr>	
+							</c:if>
+						</c:forEach>
 						<c:forEach var="dto" items="${dtos}">
 							<tr>
 								<td align="center">
@@ -35,6 +54,7 @@
 									<c:set var="number" value="${number - 1}"/>
 								</td>
 								<td>
+									&nbsp;
 									<c:if test="${dto.ref_level > 1}">
 										<c:set var="wid" value="${(dto.ref_level - 1) * 10}"/>
 										<img src="${project}images/level.gif" border="0" width="${wid}" height="15">

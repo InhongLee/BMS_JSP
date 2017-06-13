@@ -52,8 +52,8 @@
 					</c:forEach>
 				</ul>
 				<span id="btn_bestseller">
-					<a href="#" class="prev"><img src="<%=request.getContextPath() %>/images/icon_arrow_left.png" alt="Prev"></a>
-					<a href="#" class="next"><img src="<%=request.getContextPath() %>/images/icon_arrow_right.png" alt="Next"></a>
+					<a href="#" class="prev"><img src="${project}images/icon_arrow_left.png" alt="Prev"></a>
+					<a href="#" class="next"><img src="${project}images/icon_arrow_right.png" alt="Next"></a>
 				</span>
 			</div>
 			<script type="text/javascript">fn_issue('btn_bestseller','bestseller')</script>

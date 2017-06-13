@@ -1275,7 +1275,7 @@ public class BMSDAOImpl implements BMSDAO{
 			conn = datasource.getConnection();
 			String sql = "SELECT * "
 						+"FROM 	(SELECT num, writer, passwd, subject, content, readCnt, "
-									+"ref, ref_step, ref_level, reg_date, ip, rownum rNum "
+									+"ref, ref_step, ref_level, reg_date, ip, announce, rownum rNum "
 								+"FROM 	( "
 										+"SELECT * FROM bms_board "
 										+"ORDER BY ref DESC, ref_step ASC " //1.최신글부터 SELECT
@@ -1305,6 +1305,7 @@ public class BMSDAOImpl implements BMSDAO{
 					dto.setRef_level(rs.getInt("ref_level"));
 					dto.setReg_date(rs.getTimestamp("reg_date"));
 					dto.setIp(rs.getString("ip"));
+					dto.setAnnounce(rs.getString("announce"));
 					//4.큰 바구니(dtos)에 작은 바구니(dto, 게시글 1건씩)를 담는다.
 					dtos.add(dto);
 				} while(rs.next());
@@ -1349,6 +1350,7 @@ public class BMSDAOImpl implements BMSDAO{
 				dto.setRef_level(rs.getInt("ref_level"));
 				dto.setReg_date(rs.getTimestamp("reg_date"));
 				dto.setIp(rs.getString("ip"));
+				dto.setAnnounce(rs.getString("announce"));
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -1669,10 +1671,63 @@ public class BMSDAOImpl implements BMSDAO{
 		return cnt;
 	}
 
-	
-	
-
-	
-	
+	@Override
+	public ArrayList<Board> getAnnounce() {
+		ArrayList<Board> dtos = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = datasource.getConnection();
+			String sql = "SELECT * "
+						+"FROM 	(SELECT num, writer, passwd, subject, content, readCnt, "
+									+"ref, ref_step, ref_level, reg_date, ip, announce, rownum rNum "
+								+"FROM 	( "
+										+"SELECT * FROM bms_board "
+										+"ORDER BY ref DESC, ref_step ASC " //1.최신글부터 SELECT
+										+") "
+								+") "
+								+"WHERE announce = 'Y' "; //2.최신글부터 SELECT한 레코드에 rowNum을 추가한다(삭제데이터 제외한 실제데이터를 넘버링)
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				//1.큰 바구니 생성(dtos)
+				dtos = new ArrayList<Board>();
+				do {
+					//2.작은 바구니를 생성(dto)
+					Board dto = new Board();
+					//3.게시글 1건을 읽어서 rs를 작은 바구니(dto)에 담는다.
+					dto.setNum(rs.getInt("num"));
+					dto.setWriter(rs.getString("writer"));
+					dto.setPasswd(rs.getString("passwd"));
+					dto.setSubject(rs.getString("subject"));
+					dto.setContent(rs.getString("content"));
+					dto.setReadCnt(rs.getInt("readCnt"));
+					dto.setRef(rs.getInt("ref"));
+					dto.setRef_step(rs.getInt("ref_step"));
+					dto.setRef_level(rs.getInt("ref_level"));
+					dto.setReg_date(rs.getTimestamp("reg_date"));
+					dto.setIp(rs.getString("ip"));
+					dto.setAnnounce(rs.getString("announce"));
+					//4.큰 바구니(dtos)에 작은 바구니(dto, 게시글 1건씩)를 담는다.
+					dtos.add(dto);
+				} while(rs.next());
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close(); 
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		//5.큰 바구니(dtos)를 반환한다.
+		return dtos;
+	}
 
 }

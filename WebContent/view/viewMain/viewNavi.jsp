@@ -12,6 +12,7 @@
 			<li id="sales"><span class="menuName">sales</span>
 				<ul class="sub_menu" id="sub_sales">
 					<li><a href="viewSales.do">상점메인</a></li>
+					<li><a href="viewCartBuy.do">장바구니</a></li>
 				</ul>
 			</li>
 			<li id="stock"><span class="menuName">stock</span>

@@ -15,6 +15,14 @@ public class Board {
 	private int ref_level; //그룹 레벨
 	private Timestamp reg_date; //작성일
 	private String ip; //ip
+	private String announce; //공지사항
+	
+	public String getAnnounce() {
+		return announce;
+	}
+	public void setAnnounce(String announce) {
+		this.announce = announce;
+	}
 	public int getNum() {
 		return num;
 	}
