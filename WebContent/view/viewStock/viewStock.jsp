@@ -104,7 +104,7 @@
 						<div class="tab_container">
 							<c:forEach var="i" begin="1" end="2" step="1">
 								<div id="tab${i}" class="tab_content">
-									<form action="" method="post" id="stockReqForm" name="stock_req${i}">
+									<form action="reqOrder.do" method="post" id="stockReqForm" name="stock_req${i}">
 										<table id="stock_table3">
 											<tr>
 												<td>비용/EA</td>

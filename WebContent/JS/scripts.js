@@ -130,15 +130,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#stockReqForm').unbind('submit');
-	$('#stockReqForm').bind('submit', function() {
-		var formData = $(this).serialize();
-		$.post('reqOrder.do', formData);
-		$('#reqQty').val('');
-		return false;
-	});
-	
-
 /****************************************************************************************/
 	$("#order_table1 td").click(function() {
 		var col = $(this).parent().children().index($(this));
@@ -411,8 +402,7 @@ function addBookCheck() {
 	} else if(document.addBookProForm.searchPublisher.value == 0) {
 		$(".consoleInfo").html(msg_publisher_id);
 		document.addBookProForm.searchPublisher.focus();
-		return false;
-	} else if(!document.addBookProForm.book_title.value) {
+		return false;	} else if(!document.addBookProForm.book_title.value) {
 		$(".consoleInfo").html(msg_book_title);
 		document.addBookProForm.book_title.focus();
 		return false;
