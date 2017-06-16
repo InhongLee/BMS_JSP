@@ -42,6 +42,10 @@
 			<hr>
 			<div id="cartBuy_box3">
 				<div id="cartBuy_btn1">
+					<input class="inputButton fontSizeM" type="button" value="일괄구매"
+					onclick="window.location='cartBuyAll.do'">
+				</div>
+				<div id="cartBuy_btn1">
 					<input class="inputButton fontSizeM" type="button" value="카트비우기"
 					onclick="window.location='deSelectCartAll.do'">
 				</div>

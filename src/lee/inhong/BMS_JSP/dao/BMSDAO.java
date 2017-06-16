@@ -44,8 +44,8 @@ public interface BMSDAO extends BMSCode{
 	public int updateStock(String ISBN, int columnNo, String updateStr); //재고정보 업데이트(재고번호,업데이트칼럼,업데이트내용)
 	public ArrayList<Publisher> getPublisher();// 출판사 정보 검색
 	public ArrayList<ViewStock> getOpSearchStocks(String searchTitleAuthor, int publisher_id, int stock_state, int stock); //검색조건 부여 재고 검색
-	public String addOrder(String order_code,int publisher_id, String customer_id, int employee_id); //오더추가
-	public int addOrderDetail(String order_id, String ISBN, int pCost, int sPrice, int order_quentity, int order_state); //오더새부사항등록
+	public String addOrder(String order_code, String customer_id, int employee_id); //오더추가
+	public int addOrderDetail(String order_id, int detail_number, String ISBN, int pCost, int sPrice, int order_quentity, int order_state); //오더새부사항등록
 	public int resetOrderSerial();//order_id의 하위 시리얼넘버 초기화(날짜변경시)
 	public int addBook(Book dto); //책 등록
 	/****************************************************************/

@@ -715,7 +715,7 @@ public class BMSDAOImpl implements BMSDAO{
 	}
 
 	@Override
-	public String addOrder(String order_code,int publisher_id, String customer_id, int employee_id) {
+	public String addOrder(String order_code, String customer_id, int employee_id) {
 		String orderId = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -724,21 +724,17 @@ public class BMSDAOImpl implements BMSDAO{
 			conn = datasource.getConnection();
 			
 			if(order_code.equals("PU") || order_code.equals("RP")) {
-				String sql =	"INSERT INTO orders(ORDER_ID,PUBLISHER_ID,EMPLOYEE_ID) "+
-						"VALUES (?||TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.NEXTVAL,2,0), "+
-						"		?,?) ";
+				String sql =	"INSERT INTO orders(ORDER_ID,EMPLOYEE_ID) "+
+						"VALUES (?||TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.NEXTVAL,2,0), ?) ";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, order_code);
-				pstmt.setInt(2, publisher_id);
-				pstmt.setInt(3, employee_id);
+				pstmt.setInt(2, employee_id);
 			} else if(order_code.equals("SE") || order_code.equals("RE")) {
-				String sql =	"INSERT INTO orders(ORDER_ID,PUBLISHER_ID,customer_id) "+
-						"VALUES (?||TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.NEXTVAL,2,0), "+
-						"		?,?) ";
+				String sql =	"INSERT INTO orders(ORDER_ID,customer_id) "+
+						"VALUES (?||TO_CHAR(SYSDATE,'YYMMDD')||LPAD(orderid_serialNo_seq.NEXTVAL,2,0), ?) ";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, order_code);
-				pstmt.setInt(2, publisher_id);
-				pstmt.setString(3, customer_id);
+				pstmt.setString(2, customer_id);
 			}
 			
 			pstmt.executeUpdate();
@@ -767,7 +763,7 @@ public class BMSDAOImpl implements BMSDAO{
 	}
 
 	@Override
-	public int addOrderDetail(String order_id, String ISBN, int pCost, int sPrice, int order_quentity, int order_state) {
+	public int addOrderDetail(String order_id, int detail_number, String ISBN, int pCost, int sPrice, int order_quentity, int order_state) {
 		int addCnt = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -775,14 +771,15 @@ public class BMSDAOImpl implements BMSDAO{
 			conn = datasource.getConnection();
 			String sql =	"INSERT INTO orderdetail(order_id,detail_number,ISBN, "+
 							"purchase_price,sell_price,order_quantity,order_state) "+
-							"VALUES (?,1,?,?,?,?,?)";
+							"VALUES (?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, order_id);
-			pstmt.setString(2, ISBN);
-			pstmt.setInt(3, pCost);
-			pstmt.setInt(4, sPrice);
-			pstmt.setInt(5, order_quentity);
-			pstmt.setInt(6, order_state);
+			pstmt.setInt(2, detail_number);
+			pstmt.setString(3, ISBN);
+			pstmt.setInt(4, pCost);
+			pstmt.setInt(5, sPrice);
+			pstmt.setInt(6, order_quentity);
+			pstmt.setInt(7, order_state);
 			addCnt = pstmt.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();

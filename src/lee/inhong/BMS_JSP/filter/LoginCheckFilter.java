@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * customer_id : session에 저장된 로그인계정의 id
  */
 @WebFilter(filterName="LoginCheckFilter",
-		   urlPatterns={"/viewMembe rInfo.do",
+		   urlPatterns={"/viewMemberInfo.do",
 				   		"/buyOrder.do",
 				   		"/reviewPro.do",
 				   		"/viewCartBuy.do"})

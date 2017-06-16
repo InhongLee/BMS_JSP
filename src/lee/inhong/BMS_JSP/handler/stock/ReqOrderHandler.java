@@ -30,15 +30,13 @@ public class ReqOrderHandler implements CommandHandler {
 		ViewBook dto = dao.selectBookInfo(ISBN);
 		System.out.println("DB|selectBookInfo() result : "+dto);
 		
-		int publisher_id = dto.getPublisher_id();
-		
-		System.out.println("DB|addOrder(order_code, publisher_id, customer_id, employee_id) : "+order_code+","+publisher_id+","+customer_id+","+employee_id);
-		String order_id = dao.addOrder(order_code, publisher_id, customer_id, employee_id);
+		System.out.println("DB|addOrder(order_code, customer_id, employee_id) : "+order_code+","+customer_id+","+employee_id);
+		String order_id = dao.addOrder(order_code, customer_id, employee_id);
 		System.out.println("DB|addOrder() result : "+order_id);
 		
 		System.out.println("DB|addOrderDetail(order_id,ISBN,purchase_price,sell_price,order_quantity,order_state) : "+
 							order_id+","+ISBN+","+dto.getPurchase_price()+","+dto.getSell_price()+","+order_quantity+","+order_state);
-		int addCnt = dao.addOrderDetail(order_id, ISBN, dto.getPurchase_price(), dto.getSell_price(), order_quantity, order_state);
+		int addCnt = dao.addOrderDetail(order_id, 1, ISBN, dto.getPurchase_price(), dto.getSell_price(), order_quantity, order_state);
 		System.out.println("DB|addOrderDetail() result : "+addCnt);
 		
 		return "/viewStock.do";

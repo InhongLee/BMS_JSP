@@ -27,12 +27,12 @@ public class BuyOrderHandler implements CommandHandler {
 		ViewBook dto = dao.selectBookInfo(ISBN);
 		System.out.println("DB|selectBookInfo() result : "+dto);
 		
-		System.out.println("DB|addOrder('SE', publisher_id, customer_id, employee_id) : "+dto.getPublisher_id()+","+customer_id+","+employee_id);
-		String order_id = dao.addOrder("SE", dto.getPublisher_id(), customer_id, employee_id);
+		System.out.println("DB|addOrder('SE', customer_id, employee_id) : "+customer_id+","+employee_id);
+		String order_id = dao.addOrder("SE", customer_id, employee_id);
 		System.out.println("DB|addOrder() result : "+order_id);
 		
-		System.out.println("DB|addOrderDetail(order_id, ISBN, order_quentity) : "+order_id+","+ISBN+","+order_quentity);
-		int cnt = dao.addOrderDetail(order_id, ISBN, dto.getPurchase_price(), dto.getSell_price(), order_quentity, REQ_SALES);
+		System.out.println("DB|addOrderDetail(order_id, 1, ISBN, order_quentity) : "+order_id+","+ISBN+","+order_quentity);
+		int cnt = dao.addOrderDetail(order_id, 1, ISBN, dto.getPurchase_price(), dto.getSell_price(), order_quentity, REQ_SALES);
 		System.out.println("DB|addOrderDetail() result : "+cnt);
 		
 		req.setAttribute("cnt", cnt);
