@@ -10,8 +10,8 @@
 		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp"	flush="false"/></td></tr>
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
-			<h2><center>상세 페이지</center></h2>
-			<table class="boardTable" align="center">
+			<h2 style="text-align: center;">상세 페이지</h2>
+			<table class="boardTable" style="text-align: center;">
 				<tr>
 					<th style="width:150px;">글번호</th>
 					<td style="width:150px;" align="center">${number}</td> <!-- db 글번호num이 아닌 number -->

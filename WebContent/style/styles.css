@@ -56,13 +56,16 @@ a,ul,li{margin:0; padding:0;}
 
 .main_section {border:1px solid white;}
 	/* viewLogIn.jsp */
-		#catch_PR{border:1px solid green; width:60%; margin:0 auto; margin-top:50px; padding:50px 25px 50px 25px; text-align:center;}
+		#viewLoginBox{width:300px; height:300px; margin:0 auto; vertical-align:top;}
+		.tab_container2{height:240px; border:1px solid green; border-top:none; clear:both; float:left; width:99%; background:white;}
+		#catch_PR{border:1px solid green; width:60%; margin:0 auto; margin-top:50px; margin-bottom:10px; padding:50px 25px 50px 25px; text-align:center;}
 		#customer_id{margin:0 auto; margin-top:20px; padding:0px; text-align:center;}
 		#customer_id input{height:40px; width:250px; font-size:large; font-weight:bold; border:1px solid green;}
 		#customer_pw{margin:0 auto; margin-top:5px; padding:0px; text-align:center;}
 		#customer_pw input{height:40px; width:250px; font-size:large; font-weight:bold; border:1px solid green;}
 		#btn_logIn	{width:250px; height:50px; margin:0 auto; margin-top:10px; padding:0px;}
 		#btn_signIn	{width:250px; height:50px; margin:0 auto; margin-top:5px; padding:0px;}
+		#memLv {width:250px; height:50px; margin:0 auto; margin-top:5px; padding:0px; vertical-align:middle; background-color:aqua;}
 	/* viewSignIn.jsp */
 		#signIn{border:1px solid green;}
 			form[name="form_signIn"]{margin:10px;}

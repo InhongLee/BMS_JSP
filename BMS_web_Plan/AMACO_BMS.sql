@@ -42,11 +42,12 @@ INSERT INTO department(department_id,department_name) VALUES(1400,'회계');
 
 CREATE TABLE employee (
     employee_id NUMBER(4) PRIMARY KEY,
+    employee_pw VARCHAR2(10) NOT NULL,
     employee_name VARCHAR2(50)NOT NULL,
     department_id NUMBER(4)NOT NULL,
     CONSTRAINT employee_department_id_fk FOREIGN KEY(department_id) REFERENCES department(department_id)
 );
-INSERT INTO employee(employee_id,employee_name,department_id) VALUES(1001,'이인홍',1200);
+INSERT INTO employee(employee_id,employee_name,department_id) VALUES(1001,'carrot','이인홍',1200);
 
 CREATE TABLE book (
     ISBN CHAR(13) PRIMARY KEY,
@@ -120,7 +121,7 @@ CREATE TABLE bms_board (
      num NUMBER(5), --글번호
 	 writer     VARCHAR2(20)    NOT NULL, --작성자
 	 passwd     VARCHAR2(10)    NOT NULL, --비밀번호
-	 subject    VARCHAR2(50)    NOT NULL, --글제목
+	 subject    VARCHAR2(255)    NOT NULL, --글제목
 	 content    VARCHAR2(500), --글내용
 	 readCnt    NUMBER(5)       DEFAULT 0, --조회수
 	 ref        NUMBER(5)       DEFAULT 0, --그룹화 아이디
@@ -128,11 +129,9 @@ CREATE TABLE bms_board (
 	 ref_level  NUMBER(5)       DEFAULT 0, --그룹 레벨
 	 reg_date   TIMESTAMP       DEFAULT SYSDATE, --작성일
 	 ip         VARCHAR2(15),
+     announce   CHAR(1)         DEFAULT 'N'
      CONSTRAINT mvc_board_num_pk PRIMARY KEY(num)--ip
 );
-ALTER TABLE bms_board ADD announce CHAR(1) DEFAULT 'N';
-ALTER TABLE bms_board DROP COLUMN ISBN;
-ALTER TABLE bms_board MODIFY subject VARCHAR(255);
 
 INSERT INTO bms_board(num,writer,passwd,subject,content,readCnt,ref,ref_step,ref_level,reg_date,ip)
 VALUES(BOARD_SEQ.NEXTVAL,'이인홍1','carrot','테스트제목1','테스트내용입니다1.',0,BOARD_SEQ.CURRVAL,0,0,SYSDATE,'192.168.1.4');
@@ -357,17 +356,28 @@ AND     O.CUSTOMER_ID = 'in6121';
 --------------------------------------------------------------------------------
 SELECT  *
 FROM    (SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author,
-                B.purchase_price, B.sell_price, P.publisher_name,
+                B.purchase_price, B.sell_price, P.publisher_name, O.order_id,
                 SUM(O.ORDER_QUANTITY), rownum rNum
         FROM    book B INNER JOIN publisher P
         ON      (B.publisher_id = P.publisher_id) INNER JOIN stock S
         ON      (B.ISBN = S.ISBN AND S.STOCK_STATE IN (3120,3130)) INNER JOIN orderDetail O
         ON      (S.ISBN = O.ISBN AND O.ORDER_STATE IN (2120,2210,2230))
         GROUP BY B.ISBN, B.publisher_id, B.book_title, B.book_author,
-        B.purchase_price, B.sell_price, P.publisher_name, rownum
+        B.purchase_price, B.sell_price, P.publisher_name, O.order_id, rownum
         ORDER BY SUM(O.ORDER_QUANTITY) DESC
         )
 WHERE rNum >=1 AND rNum <= 10;
+
+SELECT ISBN, SUM(order_quantity)
+FROM (
+        SELECT *
+        FROM orderdetail
+        WHERE order_state IN (2120,2210,2230)
+    )
+GROUP BY ISBN
+ORDER BY SUM(order_quantity) DESC;
+
+
 
 SELECT *
 FROM    (SELECT num, writer, passwd, subject, content, readCnt,

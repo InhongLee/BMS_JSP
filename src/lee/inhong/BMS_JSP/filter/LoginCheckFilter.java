@@ -20,11 +20,8 @@ import javax.servlet.http.HttpSession;
  * customer_id : session에 저장된 로그인계정의 id
  */
 @WebFilter(filterName="LoginCheckFilter",
-		   urlPatterns={"/viewStock.do",
-				   		"/viewMemberInfo.do",
-				   		"/stockOpSearch.do",
+		   urlPatterns={"/viewMembe rInfo.do",
 				   		"/buyOrder.do",
-				   		"/viewOrder.do",
 				   		"/reviewPro.do",
 				   		"/viewCartBuy.do"})
 public class LoginCheckFilter implements Filter {

@@ -6,7 +6,7 @@
 <h2 style="text-align: center;">책 추가</h2>
 <form action="addBookPro.do" method="post" name="addBookProForm"
 onsubmit="return addBookCheck();">
-	<table border="1" align="center" style="border-collapse: collapse; width:400px;">
+	<table border="1" style="border-collapse: collapse; width:400px; text-align: center;">
 		<tr>
 			<th width="100px">ISBN</th>
 			<td width="250px">

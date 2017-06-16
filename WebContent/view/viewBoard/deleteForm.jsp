@@ -9,9 +9,9 @@
 		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp"	flush="false"/></td></tr>
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
-			<h2><center>글 삭제</center></h2>
+			<h2 style="text-align: center;">글 삭제</h2>
 			<form action="deletePro.do" method="post" name="passwdform" onsubmit="return passwdCheck();">
-				<table class="boardTable" align="center" style="width:300px;">
+				<table class="boardTable" style="width:300px; margin:0 auto;">
 					<tr>
 						<th colspan="2">비밀번호를 다시 입력하세요.</th>
 					</tr>

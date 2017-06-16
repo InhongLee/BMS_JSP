@@ -45,6 +45,7 @@ $(document).ready(function() {
 		$(activeTab).fadeIn();
 		return false;
 	});
+
 	/**************************************************************************/
 	/* table interface */
 	/**************************************************************************/
@@ -86,6 +87,7 @@ $(document).ready(function() {
 		} 
 		return false;
 	});
+	
 /**************************************************************************************/	
 	$("#stock_table1 td").unbind("keyup");
 	$("#stock_table1 td").bind("keyup", (function(key) {
@@ -201,9 +203,23 @@ $(document).ready(function() {
 });
 
 function viewLogIn_check() { //로그인 정보(id,pw)입력 후 로그인 버튼 클릭 > 입력정보 검증
-	if(!$(".idChk").val())								{$(".consoleInfo").html(msg_id);	$(".idChk").focus();	return false;}
-	else if(!$(".pwChk").val())							{$(".consoleInfo").html(msg_pwd);	$(".pwChk").focus();	return false;}
-	else 												{$(".consoleInfo").html("&nbsp;");}
+	var activeTab = $(".active").find("a").attr("href");
+	if(!$(activeTab + " .idChk").val()) {
+		$(".consoleInfo").html(msg_id);
+		$(".idChk").focus();
+		return false;
+	}
+	else if(!$(activeTab + " .pwChk").val()) {
+		$(".consoleInfo").html(msg_pwd);
+		$(".pwChk").focus();
+		return false;
+	}
+	else {
+		$(".consoleInfo").html("&nbsp;");
+		var strId = $(activeTab + " #strId").val();
+		var strPw = $(activeTab + " #strPw").val();
+		var tabNo = $(activeTab + " #tabNo").val();
+	}
 }
 
 function viewSignIn_check() { //회원가입 정보(id,pw,이름,주민번호,연락처,이메일)입력 후 회원가입 버튼 클릭 > 입력정보 검증
@@ -271,10 +287,8 @@ function viewSignIn_check() { //회원가입 정보(id,pw,이름,주민번호,�
 	for(var i in tld) 									{checkTLD = (customer_email2.value.indexOf(tld[i]) == -1) ? false : true; if(checkTLD) break;}
 	if		(!result_email1)							{$(".consoleInfo").html(msg_emailChk); $customer_email1.val(""); $customer_email1.focus(); return false;}
 	else if	(!result_email2)							{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
-	else if	(!checkTLD) 								{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}
-	
+	else if	(!checkTLD) 								{$(".consoleInfo").html(msg_emailChk); $customer_email2.val(""); $customer_email2.focus(); return false;}	
 }
-
 function confirmId() { //회원가입 페이지에서 입력한 id가 이미 있는 아이디인지 확인
 	if(!document.form_signIn.customer_id.value)			{$(".consoleInfo").html(msg_id);	document.form_signIn.customer_id.focus();	return false;}
 	var url = "confirmId.do?customer_id=" + document.form_signIn.customer_id.value;

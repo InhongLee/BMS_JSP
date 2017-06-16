@@ -10,7 +10,7 @@
 		<tr class="mainRow3"><td><jsp:include page="/view/viewMain/viewRollUpNews.jsp"	flush="false"/></td></tr>
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
-			<h2><center>글 수정</center></h2>
+			<h2 style="text-align: center;">글 수정</h2>
 			<c:if test="${selectCnt == 0}">
 				<script type="text/javascript">
 					errorAlert(passwdError);
@@ -19,7 +19,7 @@
 			<c:if test="${selectCnt == 1}">
 				<form action="modifyPro.do" method="post" name="modifyform"
 				onsubmit="return modifyCheck();">
-					<table class="boardTable" align="center">
+					<table class="boardTable" style="text-align:center;">
 						<tr><th colspan="2">수정할 정보를 입력하세요.</th></tr>
 						<tr><th>작성자</th>
 							<td>${dto.writer}</td></tr>

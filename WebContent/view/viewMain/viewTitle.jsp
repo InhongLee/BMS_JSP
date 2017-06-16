@@ -14,7 +14,14 @@
 					onclick="window.location='viewLogOut.do';">
 				</div>
 			</c:if>
-			<c:if test="${sessionScope.customer_id == null}">
+			<c:if test="${sessionScope.employee_id != null}">
+				${sessionScope.employee_id}
+				<div id="title_btn1">
+					<input class="inputButton fontSizeL" type="button" value="로그아웃" 
+					onclick="window.location='viewLogOut.do';">
+				</div>
+			</c:if>
+			<c:if test="${sessionScope.customer_id == null && sessionScope.employee_id == null}">
 				<div id="title_btn2">
 					<input class="inputButton fontSizeL" type="button" value="로그인"
 					onclick="window.location='viewLogIn.do';">

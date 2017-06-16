@@ -139,6 +139,38 @@ public class BMSDAOImpl implements BMSDAO{
 	}
 
 	@Override
+	public int logInCheck2(String strId, String strPw) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = datasource.getConnection();
+			String sql = "SELECT * FROM employee WHERE employee_id = ? AND employee_pw = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, strId);
+			pstmt.setString(2, strPw);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next())	cnt = 1;
+			else 			cnt = 0;
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) 		rs.close();
+				if(pstmt != null)	pstmt.close();
+				if(conn != null)	conn.close();
+			} catch(SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+	
+	@Override
 	public Customer selectCustomer(String strId) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -295,19 +327,14 @@ public class BMSDAOImpl implements BMSDAO{
 		try {
 			conn = datasource.getConnection();
 			String sql =	
-					"SELECT  * "+
-					"FROM    (SELECT B.ISBN, B.publisher_id, B.book_title, B.book_author, "+
-					"                B.purchase_price, B.sell_price, P.publisher_name, "+
-					"                SUM(O.ORDER_QUANTITY), rownum rNum "+
-					"        FROM    book B INNER JOIN publisher P "+
-					"        ON      (B.publisher_id = P.publisher_id) INNER JOIN stock S "+
-					"        ON      (B.ISBN = S.ISBN AND S.STOCK_STATE IN (3120,3130)) INNER JOIN orderDetail O "+
-					"        ON      (S.ISBN = O.ISBN AND O.ORDER_STATE IN (2120,2210,2230)) "+
-					"        GROUP BY B.ISBN, B.publisher_id, B.book_title, B.book_author, "+
-					"        B.purchase_price, B.sell_price, P.publisher_name, rownum "+
-					"        ORDER BY SUM(O.ORDER_QUANTITY) DESC "+
-					"        ) "+
-					"WHERE rNum >=1 AND rNum <= 10 ";
+					"SELECT ISBN, SUM(order_quantity) "+
+					"FROM ( "+
+					"        SELECT * "+
+					"        FROM orderdetail "+
+					"        WHERE order_state IN (2120,2210,2230) "+
+					"     ) "+
+					"GROUP BY ISBN "+
+					"ORDER BY SUM(order_quantity) DESC ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -316,12 +343,6 @@ public class BMSDAOImpl implements BMSDAO{
 			while(rs.next()) {
 				dto = new ViewBook();
 				dto.setISBN(rs.getString("ISBN"));
-				dto.setPublisher_id(rs.getInt("publisher_id"));
-				dto.setBook_title(rs.getString("book_title"));
-				dto.setBook_author(rs.getString("book_author"));
-				dto.setPurchase_price(rs.getInt("purchase_price"));
-				dto.setSell_price(rs.getInt("sell_price"));
-				dto.setPublisher_name(rs.getString("publisher_name"));
 				dtos.add(dto);
 			}
 			
@@ -1773,5 +1794,7 @@ public class BMSDAOImpl implements BMSDAO{
 		}
 		return dtos;
 	}
+
+	
 
 }

@@ -13,19 +13,31 @@ public class ViewLogIn_checkHandler implements CommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("■■■SERVICE■■■ ViewLogIn_checkHandler");
 		
-		String customer_id = req.getParameter("customer_id");
-		String customer_pw = req.getParameter("customer_pw");
-		
+		String strId = req.getParameter("customer_id");
+		String strPw = req.getParameter("customer_pw");
+		String tabNo = req.getParameter("tabNo");
+
 		BMSDAO dao = BMSDAOImpl.getInstance();
-		System.out.println("DB|logInCheck(customer_id,customer_pw) result : "+customer_id+","+customer_pw);
-		int cnt = dao.logInCheck(customer_id, customer_pw);
-		System.out.println("DB|logInCheck() result : "+cnt);
+		int cnt = 0;
+		if(tabNo.equals("1")) {
+			System.out.println("DB|logInCheck(customer_id,customer_pw) result : "+strId+","+strPw);
+			cnt = dao.logInCheck(strId, strPw);
+			System.out.println("DB|logInCheck() result : "+cnt);	
+			if(cnt == 1) {
+				req.getSession().setAttribute("employee_id", null);
+				req.getSession().setAttribute("customer_id", strId);
+			}
+		} else if(tabNo.equals("2")) {
+			System.out.println("DB|logInCheck2(employee_id,employee_pw) result : "+strId+","+strPw);
+			cnt = dao.logInCheck2(strId, strPw);
+			System.out.println("DB|logInCheck2() result : "+cnt);	
+			if(cnt == 1) {
+				req.getSession().setAttribute("customer_id", null);
+				req.getSession().setAttribute("employee_id", strId);
+			}
+		}
 		
 		req.setAttribute("cnt", cnt);
-		if(cnt == 1) {
-			req.getSession().setAttribute("employee_id", 1001);
-			req.getSession().setAttribute("customer_id", customer_id);
-		}
 		
 		return "/view/viewLogIn/viewLogIn_check.jsp";
 	}

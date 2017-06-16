@@ -6,7 +6,7 @@
 <h2 style="text-align: center;">사진 추가</h2>
  	<form method="POST" action="upload" enctype="multipart/form-data"
  	name="addPictureForm" onsubmit="return addPictureFormCheck();">
-		<table border="1" align="center" style="border-collapse: collapse; width:400px;">
+		<table border="1" style="border-collapse: collapse; width:400px; text-align: center;">
 			<tr>
 				<th colspan="2">
 					이미지 업로드는 확장자가 .jpg인 파일만 가능합니다.

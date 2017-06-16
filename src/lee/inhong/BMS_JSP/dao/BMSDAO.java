@@ -20,6 +20,7 @@ import lee.inhong.BMS_JSP.dto.ViewStockInfo;
 public interface BMSDAO extends BMSCode{
 
 	public int logInCheck(String strId, String strPw); //로그인 페이지 > id,pw 확인
+	public int logInCheck2(String strId, String strPw); //관리자 로그인 페이지
 	public int idCheck(String strId); //회원가입 페이지 > id 중복확인
 	public int addCustomer(Customer dto); //회원가입 페이지 > 회원DB에 회원추가
 	public Customer selectCustomer(String strId); //내정보 페이지 > 회원정보 보기
@@ -72,4 +73,5 @@ public interface BMSDAO extends BMSCode{
 	/*****************************************************************/
 	public ArrayList<ViewReview> getReviews(String ISBN); //제품리뷰 리스트 호출
 	public int addReview(Review dto); //리뷰등록
+	
 }

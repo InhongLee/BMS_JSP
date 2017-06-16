@@ -17,13 +17,20 @@ public class ViewSalesHandler implements CommandHandler {
 		System.out.println("■■■SERVICE■■■ ViewSalesHandler");
 		
 		ArrayList<ViewBook> dtos = new ArrayList<ViewBook>();
+		ArrayList<ViewBook> bestSeller2 = new ArrayList<ViewBook>();
 		ArrayList<ViewBook> bestSeller = new ArrayList<ViewBook>();
 		BMSDAO dao = BMSDAOImpl.getInstance();
 		dtos = dao.selectBookList();
 		System.out.println("DB|selectBookList() result : "+dtos.size());
 		
-		bestSeller = dao.getBestSeller();
-		System.out.println("DB|getBestSeller() result : "+bestSeller.size());
+		bestSeller2 = dao.getBestSeller(); //판매량 많은 순으로 ISBN을 반환
+		System.out.println("DB|getBestSeller() result : "+bestSeller2.size());
+		
+		for(int i=0; i<bestSeller2.size(); i++) {
+			String ISBN = bestSeller2.get(i).getISBN();
+			ViewBook tempBook = dao.selectBookInfo(ISBN);
+			bestSeller.add(tempBook);
+		}
 		
 		req.setAttribute("bookList", dtos);
 		req.setAttribute("bestSeller", bestSeller);

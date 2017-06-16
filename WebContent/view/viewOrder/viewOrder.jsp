@@ -211,14 +211,14 @@
 var graphData = [{
     data: [ 
     	<c:forEach var="trendQty" items="${trend}">
-    		[${trendQty.week},${trendQty.weekQty}],
+    		[${trendQty.week}, ${trendQty.weekQty}],
     	</c:forEach>
     ],
     color: '#71c73e'
 }, {
     data: [
     	<c:forEach var="trendSales" items="${trend}">
-    		[${trendSales.week},${trendSales.weekSales}],
+    		[${trendSales.week}, ${trendSales.weekSales}],
     	</c:forEach>
     ],
     color: '#77b7c5',

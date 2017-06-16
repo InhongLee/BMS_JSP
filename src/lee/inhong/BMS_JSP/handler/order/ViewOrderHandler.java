@@ -39,6 +39,7 @@ public class ViewOrderHandler implements CommandHandler {
 		
 		if(cnt > 0) {
 			
+			@SuppressWarnings("unchecked")
 			ArrayList<ViewOrder> dtos = (ArrayList<ViewOrder>) req.getAttribute("dtos");
 			if(dtos == null) {
 				dtos = dao.getOrders(start, end);
