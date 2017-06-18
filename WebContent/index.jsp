@@ -6,6 +6,7 @@
 	<script type="text/javascript">
 		<%
 		session.removeAttribute("customer_id");
+		session.removeAttribute("employee_id");
 		%>
 		setTimeout(function() {window.location='viewSales.do';}, 1000);
 	</script>

@@ -24,7 +24,7 @@ a,ul,li{margin:0; padding:0;}
 .blue			{background-color: blue; border:1px solid blue;}
 .orange			{background-color: orange; border:1px solid orange;}
 .scrollBox		{width:100%; height:150px; overflow: auto;}
-
+.scrollBox400	{width:100%; height:400px; overflow: auto; border:1px solid gray;}
 
 .main_header{}
 	.title a:link, .title a:visited{color:green; text-decoration:none;}
@@ -102,17 +102,69 @@ a,ul,li{margin:0; padding:0;}
 				#myInfo_box4{margin-top:10px; text-align:center; color:white; background:green;}
 				
 	/* viewSales.jsp */
-		.issue {width: 95%; margin: 0 auto; margin-top: 10px; padding: 0px;}
-		.issue .open-event {height:350px; position:relative; border:1px solid gray; overflow:hidden;}
-		.issue .open-event ul{position:absolute; top:10px;}
-		.issue .open-event ul li {width:200px; height:350px; display:inline-block; vertical-align:top; margin-right:10px;}
+		.issue {width: 400px; margin: 0 auto; margin-top: 10px; padding: 0px; display:inline-block; vertical-align:top;}
+		.issue .open-event {height:350px; padding:0; position:relative; border:1px solid gray; overflow:hidden;}
+		.issue .open-event ul{list-style-type:none; position:absolute; top:5px;}
+		.issue .open-event ul li {width:200px; height:340px; margin-top:5px; float:left; vertical-align:top;}
 		.issue .open-event .prev{position:absolute; bottom:200px; left:0px; width:30px; height:30px; line-height:0; font-size:0;}
 		.issue .open-event .next{position:absolute; bottom:200px; right:0px; width:30px; height:30px; line-height:0; font-size:0;}
-		.img_book{width:200px; height:240px;}
+		.img_book{margin:0 auto; width:200px; height:240px;}
 		.bookTitle{width:200px; height:20px; overflow:hidden; font-size:small; font-weight:bold; text-align:center;}
 		.bookComment{width:200px; height:20px; overflow:hidden; font-size:small; text-align:center; color:#2471A3;}
 		.bookPrice{width:200px; height:20px; overflow:hidden; font-size:small; text-align:center;}
 		.bookAuthor{width:200px; height:20px; overflow:hidden; font-size:small; text-align:center; color:gray;}
+		#booklistBox {
+			width: 400px;
+			margin: 0 auto;
+			margin-top: 10px;
+			padding: 0px;
+			display:inline-block;
+			vertical-align: top;
+		}
+		#booklist {
+			width: 100%;
+			border: 1px solid gray;
+			border-collapse: collapse;
+		}
+		#booklist th {
+			background-color: green;
+			color: white;
+		}
+		#booklist td, th {
+			height: 20px;
+			border: 1px solid gray;
+			text-align: center;	
+			font-size: small;
+		}
+		#booklist tr td:nth-child(1) {
+			max-width: 175px;
+			overflow: hidden;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space:nowrap;
+		}
+		#booklist tr td:nth-child(2) {
+			max-width: 100px;
+			overfolow: hidden;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		#booklist tr td:nth-child(3) {
+			max-width: 100px;
+			overfolow: hidden;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		#booklist a:link, a:visited {
+			color: black;
+			text-decoration: none;
+		}
+		#booklist a:hover, a:focus {
+			background-color: green;
+			color: white;
+		}
 	/* viewBuyNow.jsp */
 	#viewBuyNow{}
 		#buyNow_box1{width:90%; margin:0 auto; margin-top:10px;}
@@ -179,9 +231,9 @@ a,ul,li{margin:0; padding:0;}
 		.board_addBox{margin-top:5px; font-size:small; text-align:center; border:1px solid green;}
 	/* viewStock.jsp */
 	#stock_box1{}
-		#stock_Options{width:100%; height:100%; border-collapse:collapse;}
+		#stock_Options{width:100%; height:100%; border-collapse:collapse; background-color: lightgray; border:1px solid lightgray;}
 		#stock_box2{}
-			#stock_table1{width:1000px; font-size:small; border-collapse:collapse; }
+			#stock_table1{width:1000px; margin:0 auto; font-size:small; border-collapse:collapse; }
 			#stock_table1 th, #stock_table1 td{height:25px; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid gray;}
 			#stock_table1 td:HOVER{background:lightgray;}
 			#stock_table1 tr:nth-child(1){background:lightgreen;}
@@ -233,9 +285,9 @@ a,ul,li{margin:0; padding:0;}
 		#stock_table1 td input, #stock_table1 td select{width:100%; height:100%; box-sizing:border-box;}
 	/* viewOrder.jsp */
 	#order_box1{}
-		#order_Options{width:100%; height:100%; border-collapse:collapse;}
+		#order_Options{width:100%; height:100%; border-collapse:collapse; background-color: lightgray;}
 		#order_box2{}
-			#order_table1{width:1000px; font-size:small; border-collapse:collapse;}
+			#order_table1{width:1000px; margin:0 auto; font-size:small; border-collapse:collapse;}
 			#order_table1 th, #order_table1 td{height:25px; max-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid gray;}
 			#order_table1 td:HOVER{background:lightgray;}
 			#order_table1 tr:nth-child(1){background:lightgreen;}
@@ -247,6 +299,7 @@ a,ul,li{margin:0; padding:0;}
 			#order_table1 tr td:nth-child(6){width:50px; text-align:center;}
 			#order_table1 tr td:nth-child(7){width:50px; text-align:center;}
 			#order_table1 tr td:nth-child(8){width:100px; text-align:center;}
+			#order_table1 tr td:nth-child(9){width:100px; text-align:center;}
 		#order_box3{height:200px;}
 			#order_box3_1{width:300px; height:190px; vertical-align:top; float:left; border:1px solid gray;}
 				#order_table2{width:280px; margin:10px 10px 0px 10px; font-size:small;}

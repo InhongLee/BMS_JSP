@@ -91,6 +91,8 @@ CREATE TABLE orders (
     CONSTRAINT orders_customer_id_fk FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
     CONSTRAINT orders_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
+ALTER TABLE orders DROP COLUMN publisher_id;
+ALTER TABLE orders ADD publisher_id NUMBER(4);
 
 CREATE TABLE orderDetail (
     order_id CHAR(10) NOT NULL,

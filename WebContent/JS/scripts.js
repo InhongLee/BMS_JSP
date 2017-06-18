@@ -669,7 +669,7 @@ function fn_issue(buttonID,containerID){
 	
 	var speed = 5000;
 	var timer = null;
-	var move = $element.children().outerWidth();
+	var move = $element.children().outerWidth(); 
 	var first = false;
 	var lastChild;
 

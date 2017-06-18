@@ -58,6 +58,28 @@
 			</div>
 			<script type="text/javascript">fn_issue('btn_bestseller','bestseller')</script>
 		</div>
+		
+		<div id="booklistBox" class="scrollBox400">
+			<table id="booklist" >
+				<tr>
+					<th colspan="3">
+						■■■■ BOOK LIST ■■■■
+					</th>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<th>저자</th>
+					<th>출판사</th>
+				</tr>
+				<c:forEach var="dto" items="${bookList}">
+				<tr>
+					<td><a href="viewBuyNow.do?ISBN=${dto.ISBN}">${dto.book_title}</a></td>
+					<td>${dto.book_author}</td>
+					<td>${dto.publisher_name}</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 		</td></tr>
 		<tr class="mainRow6"><td><div class="consoleInfo">콘솔정보창</div></td></tr>
 		<tr class="mainRow7"><td><jsp:include page="/view/viewMain/viewFooter.jsp" flush="false"/></td></tr>

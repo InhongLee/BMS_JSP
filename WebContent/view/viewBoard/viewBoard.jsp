@@ -11,7 +11,7 @@
 		<tr class="mainRow4"><td><jsp:include page="/view/viewMain/viewSearch.jsp"		flush="false"/></td></tr>
 		<tr class="mainRow5"><td>
 			<h2 style="text-align: center;">자유 게시판</h2>
-				<table class="boardTable" style="width:1000px; text-align: center;">
+				<table class="boardTable" style="width:1000px; margin:0 auto; text-align: center;">
 					<tr>
 						<th colspan="6" align="right" style="height:25px;">
 							글목록(글갯수 : ${cnt}) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -89,7 +89,7 @@
 				</table>
 				
 				<!-- 페이지 컨트롤러 -->
-				<table class="boardTable" style="width:1000px; text-align:center;">
+				<table class="boardTable" style="width:1000px; margin:0 auto; text-align:center;">
 					<th style="text-align:center;">
 						<c:if test="${cnt > 0}">
 							<!-- 처음(◀◀)/ 이전블록(◀)을 만들어 준다 -->

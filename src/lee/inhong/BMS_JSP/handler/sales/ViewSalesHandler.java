@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import lee.inhong.BMS_JSP.dao.BMSDAO;
 import lee.inhong.BMS_JSP.dao.BMSDAOImpl;
+import lee.inhong.BMS_JSP.dto.Board;
 import lee.inhong.BMS_JSP.dto.ViewBook;
 import lee.inhong.BMS_JSP.handler.CommandHandler;
 
@@ -34,6 +35,11 @@ public class ViewSalesHandler implements CommandHandler {
 		
 		req.setAttribute("bookList", dtos);
 		req.setAttribute("bestSeller", bestSeller);
+		
+		//공지사항 롤업 업데이트
+		ArrayList<Board> announces = dao.getAnnounce();
+		req.setAttribute("announces", announces);
+		
 		return "/view/viewSales/viewSales.jsp";
 	}
 
